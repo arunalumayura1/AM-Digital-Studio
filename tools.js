@@ -1,135 +1,57 @@
 
-/* =========================================================
+/* ==========================================
    AM DIGITAL STUDIO
-   FREE DIGITAL TOOLS - JAVASCRIPT
-   File: tools.js
-========================================================= */
+   FREE DIGITAL TOOLS - COMPLETE JAVASCRIPT
+========================================== */
 
-"use strict";
+document.addEventListener("DOMContentLoaded", function () {
 
-document.addEventListener("DOMContentLoaded", () => {
+    "use strict";
 
-    /* =========================
-       GLOBAL HELPERS
-    ========================= */
+    const $ = (selector) => document.querySelector(selector);
 
-    const $ = (id) => document.getElementById(id);
+    const $$ = (selector) => document.querySelectorAll(selector);
 
-    const show = (element) => {
-        if (element) element.hidden = false;
-    };
+    /* ======================================
+       1. SEARCH AND FILTER
+    ====================================== */
 
-    const hide = (element) => {
-        if (element) element.hidden = true;
-    };
-
-    const setText = (id, value) => {
-        const element = $(id);
-        if (element) element.textContent = value;
-    };
-
-    const downloadBlob = (blob, filename) => {
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-
-        link.href = url;
-        link.download = filename;
-
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-
-        setTimeout(() => URL.revokeObjectURL(url), 1000);
-    };
-
-    const showMessage = (container, message) => {
-        if (!container) return;
-
-        container.replaceChildren();
-
-        const paragraph = document.createElement("p");
-        paragraph.textContent = message;
-
-        container.appendChild(paragraph);
-        show(container);
-    };
-
-    const loadImage = (file) => {
-        return new Promise((resolve, reject) => {
-            const url = URL.createObjectURL(file);
-            const image = new Image();
-
-            image.onload = () => {
-                URL.revokeObjectURL(url);
-                resolve(image);
-            };
-
-            image.onerror = () => {
-                URL.revokeObjectURL(url);
-                reject(new Error("Unable to load this image."));
-            };
-
-            image.src = url;
-        });
-    };
-
-    const getImageExtension = (type) => {
-        if (type === "image/png") return "png";
-        if (type === "image/webp") return "webp";
-        return "jpg";
-    };
-
-
-    /* =========================
-       FOOTER YEAR
-    ========================= */
-
-    setText("toolsYear", new Date().getFullYear());
-
-
-    /* =========================
-       TOOL SEARCH & FILTER
-    ========================= */
-
-    const searchInput = $("toolSearch");
-    const filterButtons = document.querySelectorAll(".tool-filter");
-    const toolCards = document.querySelectorAll(".tool-card");
-    const noResults = $("noToolsResults");
+    const searchInput = $("#toolSearch");
+    const filterButtons = $$(".tool-filter");
+    const toolCards = $$(".tool-card");
+    const noResults = $("#noToolsResults");
 
     let activeFilter = "all";
 
     function filterTools() {
 
-        const query = searchInput
-            ? searchInput.value.trim().toLowerCase()
+        const searchText = searchInput
+            ? searchInput.value.toLowerCase().trim()
             : "";
 
         let visibleCount = 0;
 
         toolCards.forEach(card => {
 
-            const name = (
-                card.dataset.name || ""
-            ).toLowerCase();
-
             const category = card.dataset.category || "";
+            const text = card.innerText.toLowerCase();
 
-            const matchesSearch = name.includes(query);
+            const matchesCategory =
+                activeFilter === "all" || category === activeFilter;
 
-            const matchesFilter =
-                activeFilter === "all" ||
-                category === activeFilter;
+            const matchesSearch = text.includes(searchText);
 
-            const visible = matchesSearch && matchesFilter;
+            const visible = matchesCategory && matchesSearch;
 
-            card.hidden = !visible;
+            card.style.display = visible ? "" : "none";
 
             if (visible) visibleCount++;
 
         });
 
         if (noResults) {
-            noResults.hidden = visibleCount !== 0;
+            noResults.style.display =
+                visibleCount === 0 ? "block" : "none";
         }
     }
 
@@ -139,15 +61,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     filterButtons.forEach(button => {
 
-        button.addEventListener("click", () => {
+        button.addEventListener("click", function () {
 
-            filterButtons.forEach(item => {
-                item.classList.remove("active");
+            filterButtons.forEach(btn => {
+                btn.classList.remove("active");
             });
 
-            button.classList.add("active");
+            this.classList.add("active");
 
-            activeFilter = button.dataset.filter || "all";
+            activeFilter = this.dataset.filter || "all";
 
             filterTools();
 
@@ -156,62 +78,64 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
-    /* =========================
-       TOOL WORKSPACE NAVIGATION
-    ========================= */
+    /* ======================================
+       2. TOOL WORKSPACE
+    ====================================== */
 
-    const workspace = $("toolWorkspace");
-    const workspaceTitle = $("workspaceTitle");
-    const workspaceDescription = $("workspaceDescription");
-    const closeWorkspace = $("closeWorkspace");
+    const workspace = $("#toolWorkspace");
+    const workspaceTitle = $("#workspaceTitle");
+    const workspaceDescription = $("#workspaceDescription");
+    const closeWorkspace = $("#closeWorkspace");
 
     const toolInformation = {
+
         compressor: {
             title: "Image Compressor",
-            description: "Reduce your image file size while maintaining quality."
+            description: "Compress images and download smaller files."
         },
 
         qr: {
             title: "QR Code Generator",
-            description: "Generate downloadable QR codes from text and URLs."
+            description: "Create and download custom QR codes."
         },
 
         palette: {
             title: "Color Palette Generator",
-            description: "Create beautiful color combinations."
+            description: "Generate beautiful color combinations."
         },
 
         word: {
             title: "Word Counter",
-            description: "Analyze words, characters and paragraphs."
+            description: "Count words, characters and paragraphs."
         },
 
         resizer: {
             title: "Image Resizer",
             description: "Resize images to your preferred dimensions."
         }
+
     };
 
     function openTool(toolName) {
 
-        if (!toolInformation[toolName] || !workspace) return;
+        const information = toolInformation[toolName];
 
-        document.querySelectorAll(".tool-panel").forEach(panel => {
-            hide(panel);
+        if (!information || !workspace) return;
+
+        $$(".tool-panel").forEach(panel => {
+            panel.classList.remove("active");
         });
 
-        const selectedPanel = $("panel-" + toolName);
+        const selectedPanel = $("#panel-" + toolName);
 
         if (!selectedPanel) return;
 
-        show(selectedPanel);
-        show(workspace);
+        selectedPanel.classList.add("active");
 
-        workspaceTitle.textContent =
-            toolInformation[toolName].title;
+        workspaceTitle.textContent = information.title;
+        workspaceDescription.textContent = information.description;
 
-        workspaceDescription.textContent =
-            toolInformation[toolName].description;
+        workspace.style.display = "block";
 
         workspace.scrollIntoView({
             behavior: "smooth",
@@ -220,27 +144,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-    document.querySelectorAll(".tool-open-btn").forEach(button => {
+    $$("[data-open-tool]").forEach(button => {
 
-        button.addEventListener("click", () => {
-            openTool(button.dataset.tool);
+        button.addEventListener("click", function () {
+
+            openTool(this.dataset.openTool);
+
         });
 
     });
 
     if (closeWorkspace) {
 
-        closeWorkspace.addEventListener("click", () => {
+        closeWorkspace.addEventListener("click", function () {
 
-            hide(workspace);
+            workspace.style.display = "none";
 
-            document.querySelectorAll(".tool-panel").forEach(panel => {
-                hide(panel);
-            });
-
-            $("tools-library")?.scrollIntoView({
-                behavior: "smooth",
-                block: "start"
+            $$(".tool-panel").forEach(panel => {
+                panel.classList.remove("active");
             });
 
         });
@@ -248,55 +169,150 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    /* =====================================================
-       TOOL 01 - IMAGE COMPRESSOR
-    ===================================================== */
+    /* ======================================
+       3. COMMON HELPERS
+    ====================================== */
 
-    const compressInput = $("compressInput");
-    const compressControls = $("compressControls");
-    const compressQuality = $("compressQuality");
-    const compressQualityValue = $("compressQualityValue");
-    const compressButton = $("compressBtn");
-    const compressResult = $("compressResult");
+    function showMessage(container, message) {
 
-    let compressFile = null;
+        if (!container) return;
 
-    if (compressInput) {
+        container.textContent = message;
 
-        compressInput.addEventListener("change", () => {
+    }
 
-            const file = compressInput.files[0];
+    function readImage(file, callback, errorCallback) {
 
-            if (!file) return;
+        if (!file || !file.type.startsWith("image/")) {
 
-            if (!file.type.startsWith("image/")) {
-                alert("Please select a valid image.");
-                return;
-            }
+            errorCallback("Please select a valid image file.");
 
-            if (file.size > 20 * 1024 * 1024) {
-                alert("Please select an image smaller than 20 MB.");
-                compressInput.value = "";
-                return;
-            }
+            return;
 
-            compressFile = file;
+        }
 
-            show(compressControls);
-            hide(compressResult);
+        const image = new Image();
+
+        const objectURL = URL.createObjectURL(file);
+
+        image.onload = function () {
+
+            callback(image, objectURL);
+
+        };
+
+        image.onerror = function () {
+
+            URL.revokeObjectURL(objectURL);
+
+            errorCallback("Unable to load this image.");
+
+        };
+
+        image.src = objectURL;
+
+    }
+
+    function canvasToBlob(canvas, type, quality) {
+
+        return new Promise((resolve, reject) => {
+
+            canvas.toBlob(blob => {
+
+                if (blob) {
+                    resolve(blob);
+                } else {
+                    reject(new Error("Image processing failed."));
+                }
+
+            }, type, quality);
 
         });
 
     }
 
-    if (compressQuality) {
+    function downloadBlob(blob, filename) {
 
-        compressQuality.addEventListener("input", () => {
+        const url = URL.createObjectURL(blob);
 
-            setText(
-                "compressQualityValue",
-                compressQuality.value + "%"
-            );
+        const link = document.createElement("a");
+
+        link.href = url;
+        link.download = filename;
+
+        document.body.appendChild(link);
+
+        link.click();
+
+        link.remove();
+
+        setTimeout(() => {
+            URL.revokeObjectURL(url);
+        }, 1000);
+
+    }
+
+    async function copyText(text) {
+
+        try {
+
+            if (navigator.clipboard && window.isSecureContext) {
+
+                await navigator.clipboard.writeText(text);
+
+            } else {
+
+                const temporaryInput = document.createElement("textarea");
+
+                temporaryInput.value = text;
+
+                temporaryInput.style.position = "fixed";
+                temporaryInput.style.opacity = "0";
+
+                document.body.appendChild(temporaryInput);
+
+                temporaryInput.select();
+
+                const copied = document.execCommand("copy");
+
+                temporaryInput.remove();
+
+                if (!copied) {
+                    throw new Error("Copy failed");
+                }
+
+            }
+
+            return true;
+
+        } catch (error) {
+
+            console.error("Clipboard error:", error);
+
+            return false;
+
+        }
+
+    }
+
+
+    /* ======================================
+       4. IMAGE COMPRESSOR
+    ====================================== */
+
+    const compressInput = $("#compressInput");
+    const compressQuality = $("#compressQuality");
+    const compressQualityValue = $("#compressQualityValue");
+    const compressButton = $("#compressBtn");
+    const compressResult = $("#compressResult");
+
+    let compressedImageBlob = null;
+
+    if (compressQuality && compressQualityValue) {
+
+        compressQuality.addEventListener("input", function () {
+
+            compressQualityValue.textContent = this.value + "%";
 
         });
 
@@ -304,149 +320,177 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (compressButton) {
 
-        compressButton.addEventListener("click", async () => {
+        compressButton.addEventListener("click", async function () {
 
-            if (!compressFile) {
-                alert("Please select an image first.");
+            const file = compressInput?.files?.[0];
+
+            if (!file) {
+
+                showMessage(compressResult, "Please select an image first.");
+
                 return;
+
             }
 
-            compressButton.disabled = true;
-            compressButton.textContent = "Compressing...";
+            if (file.size > 20 * 1024 * 1024) {
 
-            try {
+                showMessage(compressResult, "Maximum image size is 20 MB.");
 
-                const image = await loadImage(compressFile);
+                return;
 
-                const canvas = document.createElement("canvas");
-                const context = canvas.getContext("2d");
+            }
 
-                canvas.width = image.naturalWidth;
-                canvas.height = image.naturalHeight;
+            this.disabled = true;
+            this.textContent = "Compressing...";
 
-                if (!context) {
-                    throw new Error("Canvas is not supported.");
-                }
+            readImage(file, async function (image, objectURL) {
 
-                context.drawImage(image, 0, 0);
+                try {
 
-                const quality =
-                    Number(compressQuality.value) / 100;
+                    const canvas = document.createElement("canvas");
 
-                const outputType =
-                    compressFile.type === "image/png"
+                    canvas.width = image.naturalWidth;
+                    canvas.height = image.naturalHeight;
+
+                    const context = canvas.getContext("2d");
+
+                    context.drawImage(image, 0, 0);
+
+                    const quality = Number(compressQuality.value) / 100;
+
+                    const isPNG = file.type === "image/png";
+
+                    const outputType = isPNG
                         ? "image/png"
                         : "image/jpeg";
 
-                const blob = await new Promise(resolve => {
-
-                    canvas.toBlob(
-                        resolve,
+                    compressedImageBlob = await canvasToBlob(
+                        canvas,
                         outputType,
                         quality
                     );
 
-                });
+                    const originalSize = file.size;
+                    const compressedSize = compressedImageBlob.size;
 
-                if (!blob) {
-                    throw new Error("Image compression failed.");
-                }
-
-                const originalSize = compressFile.size;
-                const compressedSize = blob.size;
-
-                const saved = Math.max(
-                    0,
-                    ((originalSize - compressedSize) / originalSize) * 100
-                );
-
-                compressResult.replaceChildren();
-
-                const title = document.createElement("h3");
-                title.textContent = "Compression Complete!";
-
-                const imagePreview = document.createElement("img");
-                const previewURL = URL.createObjectURL(blob);
-
-                imagePreview.src = previewURL;
-                imagePreview.alt = "Compressed image preview";
-
-                imagePreview.onload = () => {
-                    URL.revokeObjectURL(previewURL);
-                };
-
-                const details = document.createElement("p");
-
-                details.textContent =
-                    `Original: ${(originalSize / 1024).toFixed(2)} KB | ` +
-                    `Compressed: ${(compressedSize / 1024).toFixed(2)} KB | ` +
-                    `Saved: ${saved.toFixed(1)}%`;
-
-                const downloadButton = document.createElement("button");
-
-                downloadButton.className = "tools-secondary-btn";
-                downloadButton.innerHTML =
-                    '<i class="fa-solid fa-download"></i> Download Image';
-
-                downloadButton.addEventListener("click", () => {
-
-                    downloadBlob(
-                        blob,
-                        "am-digital-compressed." +
-                        getImageExtension(outputType)
+                    const savedPercentage = Math.max(
+                        0,
+                        ((originalSize - compressedSize) / originalSize) * 100
                     );
 
-                });
+                    const downloadName =
+                        file.name.replace(/\.[^/.]+$/, "") + "-compressed." +
+                        (isPNG ? "png" : "jpg");
 
-                compressResult.append(
-                    title,
-                    imagePreview,
-                    details,
-                    downloadButton
-                );
+                    compressResult.innerHTML = "";
 
-                show(compressResult);
+                    const heading = document.createElement("h4");
+                    heading.textContent = "Compression Complete";
 
-            } catch (error) {
+                    const details = document.createElement("p");
 
-                console.error(error);
-                alert(error.message || "Unable to compress image.");
+                    details.textContent =
+                        "Original: " + formatBytes(originalSize) +
+                        " | Compressed: " + formatBytes(compressedSize) +
+                        " | Saved: " + savedPercentage.toFixed(1) + "%";
 
-            } finally {
+                    const preview = document.createElement("img");
+
+                    preview.src = URL.createObjectURL(compressedImageBlob);
+                    preview.alt = "Compressed image preview";
+
+                    const downloadButton = document.createElement("button");
+
+                    downloadButton.textContent = "Download Compressed Image";
+
+                    downloadButton.addEventListener("click", function () {
+
+                        downloadBlob(compressedImageBlob, downloadName);
+
+                    });
+
+                    compressResult.append(
+                        heading,
+                        details,
+                        preview,
+                        downloadButton
+                    );
+
+                    URL.revokeObjectURL(objectURL);
+
+                } catch (error) {
+
+                    console.error(error);
+
+                    showMessage(compressResult, "Image compression failed.");
+
+                } finally {
+
+                    compressButton.disabled = false;
+                    compressButton.innerHTML =
+                        '<i class="fas fa-compress"></i> Compress Image';
+
+                }
+
+            }, function (message) {
+
+                showMessage(compressResult, message);
 
                 compressButton.disabled = false;
+                compressButton.textContent = "Compress Image";
 
-                compressButton.innerHTML =
-                    '<i class="fa-solid fa-compress"></i> Compress Image';
-
-            }
+            });
 
         });
 
     }
 
+    function formatBytes(bytes) {
 
-    /* =====================================================
-       TOOL 02 - QR CODE GENERATOR
-    ===================================================== */
+        if (bytes === 0) return "0 Bytes";
 
-    let qrInstance = null;
+        const units = ["Bytes", "KB", "MB", "GB"];
 
-    const qrText = $("qrText");
-    const qrColor = $("qrColor");
-    const qrBackground = $("qrBackground");
-    const generateQR = $("generateQR");
-    const qrCanvas = $("qrCanvas");
-    const qrResult = $("qrResult");
-    const downloadQR = $("downloadQR");
+        const index = Math.floor(Math.log(bytes) / Math.log(1024));
+
+        return (
+            (bytes / Math.pow(1024, index)).toFixed(2) +
+            " " +
+            units[index]
+        );
+
+    }
+
+
+    /* ======================================
+       5. QR CODE GENERATOR
+    ====================================== */
+
+    const qrText = $("#qrText");
+    const qrColor = $("#qrColor");
+    const qrBackground = $("#qrBackground");
+    const generateQR = $("#generateQR");
+    const qrCanvas = $("#qrCanvas");
+    const qrResult = $("#qrResult");
+    const downloadQR = $("#downloadQR");
+
+    let qrGenerated = false;
+
+    if (qrResult) {
+        qrResult.style.display = "none";
+    }
 
     function loadQRCodeLibrary() {
 
-        if (window.QRCode) {
-            return Promise.resolve();
-        }
-
         return new Promise((resolve, reject) => {
+
+            if (window.QRCode) {
+
+                resolve();
+
+                return;
+
+            }
 
             const script = document.createElement("script");
 
@@ -456,7 +500,7 @@ document.addEventListener("DOMContentLoaded", () => {
             script.onload = resolve;
 
             script.onerror = () => {
-                reject(new Error("Unable to load QR Code library. Check your internet connection."));
+                reject(new Error("QR library could not be loaded."));
             };
 
             document.head.appendChild(script);
@@ -467,13 +511,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (generateQR) {
 
-        generateQR.addEventListener("click", async () => {
+        generateQR.addEventListener("click", async function () {
 
-            const text = qrText.value.trim();
+            const value = qrText.value.trim();
 
-            if (!text) {
-                alert("Please enter some text or a URL.");
+            if (!value) {
+
+                alert("Please enter text or a website URL.");
+
                 return;
+
             }
 
             generateQR.disabled = true;
@@ -483,30 +530,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 await loadQRCodeLibrary();
 
-                qrCanvas.replaceChildren();
+                qrCanvas.innerHTML = "";
 
-                qrInstance = new QRCode(qrCanvas, {
-                    text: text,
+                new QRCode(qrCanvas, {
+
+                    text: value,
+
                     width: 220,
                     height: 220,
+
                     colorDark: qrColor.value,
                     colorLight: qrBackground.value,
+
                     correctLevel: QRCode.CorrectLevel.H
+
                 });
 
-                show(qrResult);
+                qrGenerated = true;
+
+                if (qrResult) {
+                    qrResult.style.display = "block";
+                }
 
             } catch (error) {
 
                 console.error(error);
-                alert(error.message || "QR generation failed.");
+
+                alert("QR Code generation failed. Please check your internet connection.");
 
             } finally {
 
                 generateQR.disabled = false;
-
                 generateQR.innerHTML =
-                    '<i class="fa-solid fa-qrcode"></i> Generate QR Code';
+                    '<i class="fas fa-qrcode"></i> Generate QR Code';
 
             }
 
@@ -516,40 +572,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (downloadQR) {
 
-        downloadQR.addEventListener("click", () => {
+        downloadQR.addEventListener("click", function () {
 
-            if (!qrInstance || !qrCanvas.children.length) {
+            if (!qrGenerated) {
+
                 alert("Generate a QR code first.");
+
                 return;
+
             }
 
             const canvas = qrCanvas.querySelector("canvas");
+
+            const image = qrCanvas.querySelector("img");
 
             if (canvas) {
 
                 canvas.toBlob(blob => {
 
                     if (blob) {
-                        downloadBlob(blob, "am-digital-qr-code.png");
+                        downloadBlob(blob, "am-digital-studio-qr.png");
                     }
 
-                }, "image/png");
+                });
 
-                return;
-            }
+            } else if (image && image.src) {
 
-            const image = qrCanvas.querySelector("img");
+                const link = document.createElement("a");
 
-            if (image) {
+                link.href = image.src;
+                link.download = "am-digital-studio-qr.png";
 
-                fetch(image.src)
-                    .then(response => response.blob())
-                    .then(blob => {
-                        downloadBlob(blob, "am-digital-qr-code.png");
-                    })
-                    .catch(() => {
-                        alert("Unable to download QR code.");
-                    });
+                link.click();
 
             }
 
@@ -558,125 +612,104 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    /* =====================================================
-       TOOL 03 - COLOR PALETTE GENERATOR
-    ===================================================== */
+    /* ======================================
+       6. COLOR PALETTE GENERATOR
+    ====================================== */
 
-    const palettePreview = $("palettePreview");
-    const generatePalette = $("generatePalette");
-    const copyPalette = $("copyPalette");
+    const palettePreview = $("#palettePreview");
+    const generatePalette = $("#generatePalette");
+    const copyPalette = $("#copyPalette");
 
     let currentPalette = [];
 
-    function randomHex() {
+    function randomHexColor() {
 
-        return "#" +
-            Math.floor(Math.random() * 16777216)
-                .toString(16)
-                .padStart(6, "0")
-                .toUpperCase();
+        return "#" + Math.floor(
+            Math.random() * 16777215
+        ).toString(16).padStart(6, "0").toUpperCase();
 
     }
 
-    function generateNewPalette() {
-
-        currentPalette = Array.from(
-            { length: 5 },
-            () => randomHex()
-        );
-
-        renderPalette();
-
-    }
-
-    function renderPalette() {
+    function createPalette() {
 
         if (!palettePreview) return;
 
-        palettePreview.replaceChildren();
+        currentPalette = [];
 
-        currentPalette.forEach(color => {
+        palettePreview.innerHTML = "";
+
+        for (let i = 0; i < 5; i++) {
+
+            const color = randomHexColor();
+
+            currentPalette.push(color);
 
             const colorBox = document.createElement("div");
 
             colorBox.className = "palette-color";
+
             colorBox.style.backgroundColor = color;
 
-            const label = document.createElement("span");
-            label.textContent = color;
+            colorBox.textContent = color;
 
-            colorBox.appendChild(label);
+            colorBox.title = "Click to copy " + color;
 
-            colorBox.addEventListener("click", async () => {
+            colorBox.addEventListener("click", async function () {
 
-                try {
+                const copied = await copyText(color);
 
-                    await navigator.clipboard.writeText(color);
-
-                    label.textContent = "COPIED!";
-
-                    setTimeout(() => {
-                        label.textContent = color;
-                    }, 1000);
-
-                } catch {
-                    alert("Unable to copy color. HEX: " + color);
-                }
+                alert(copied ? color + " copied!" : "Could not copy color.");
 
             });
 
             palettePreview.appendChild(colorBox);
 
-        });
+        }
 
     }
 
     if (generatePalette) {
 
-        generatePalette.addEventListener("click", generateNewPalette);
+        generatePalette.addEventListener("click", createPalette);
 
     }
 
     if (copyPalette) {
 
-        copyPalette.addEventListener("click", async () => {
+        copyPalette.addEventListener("click", async function () {
 
-            if (!currentPalette.length) return;
+            if (!currentPalette.length) {
 
-            const text = currentPalette.join("\n");
+                alert("Generate a palette first.");
 
-            try {
-
-                await navigator.clipboard.writeText(text);
-
-                copyPalette.innerHTML =
-                    '<i class="fa-solid fa-check"></i> Copied!';
-
-                setTimeout(() => {
-
-                    copyPalette.innerHTML =
-                        '<i class="fa-regular fa-copy"></i> Copy Color Codes';
-
-                }, 1500);
-
-            } catch {
-
-                alert("Unable to copy colors.");
+                return;
 
             }
+
+            const copied = await copyText(currentPalette.join("\n"));
+
+            alert(copied ? "Palette copied successfully!" : "Could not copy palette.");
 
         });
 
     }
 
-    generateNewPalette();
+    createPalette();
 
 
-    /* =====================================================
-       TOOL 04 - WORD COUNTER
-    ===================================================== */
+    /* ======================================
+       7. WORD COUNTER
+    ====================================== */
 
-    const wordInput = $("wordInput");
+    const wordInput = $("#wordInput");
+
+    const wordCount = $("#wordCount");
+    const characterCount = $("#characterCount");
+    const sentenceCount = $("#sentenceCount");
+    const paragraphCount = $("#paragraphCount");
+
+    const copyWordText = $("#copyWordText");
+    const clearWordText = $("#clearWordText");
 
     function updateWordStatistics() {
 
@@ -684,186 +717,164 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const text = wordInput.value;
 
-        const trimmed = text.trim();
+        const trimmedText = text.trim();
 
-        const words = trimmed
-            ? trimmed.split(/\s+/u).length
-            : 0;
+        const words = trimmedText
+            ? trimmedText.split(/\s+/).filter(Boolean)
+            : [];
 
         const characters = text.length;
 
-        const sentences = (
-            text.match(/[.!?]+(?=\s|$)/g) || []
-        ).length;
-
-        const paragraphs = trimmed
-            ? text.split(/\n+/).filter(p => p.trim().length > 0).length
+        const sentences = trimmedText
+            ? (trimmedText.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [])
+                .filter(sentence => sentence.trim()).length
             : 0;
 
-        setText("wordCount", words);
-        setText("characterCount", characters);
-        setText("sentenceCount", sentences);
-        setText("paragraphCount", paragraphs);
+        const paragraphs = trimmedText
+            ? trimmedText.split(/\n+/).filter(p => p.trim()).length
+            : 0;
+
+        if (wordCount) wordCount.textContent = words.length;
+
+        if (characterCount) characterCount.textContent = characters;
+
+        if (sentenceCount) sentenceCount.textContent = sentences;
+
+        if (paragraphCount) paragraphCount.textContent = paragraphs;
 
     }
 
     if (wordInput) {
 
-        wordInput.addEventListener(
-            "input",
-            updateWordStatistics
-        );
+        wordInput.addEventListener("input", updateWordStatistics);
 
     }
 
-    const copyWordText = $("copyWordText");
-
     if (copyWordText) {
 
-        copyWordText.addEventListener("click", async () => {
+        copyWordText.addEventListener("click", async function () {
 
-            const text = wordInput.value;
+            if (!wordInput.value.trim()) {
 
-            if (!text.trim()) {
                 alert("There is no text to copy.");
+
                 return;
-            }
-
-            try {
-
-                await navigator.clipboard.writeText(text);
-
-                copyWordText.innerHTML =
-                    '<i class="fa-solid fa-check"></i> Copied!';
-
-                setTimeout(() => {
-
-                    copyWordText.innerHTML =
-                        '<i class="fa-regular fa-copy"></i> Copy Text';
-
-                }, 1500);
-
-            } catch {
-
-                alert("Unable to copy text.");
 
             }
+
+            const copied = await copyText(wordInput.value);
+
+            alert(copied ? "Text copied successfully!" : "Could not copy text.");
 
         });
 
     }
 
-    const clearWordText = $("clearWordText");
-
     if (clearWordText) {
 
-        clearWordText.addEventListener("click", () => {
+        clearWordText.addEventListener("click", function () {
+
+            if (!wordInput) return;
 
             wordInput.value = "";
 
             updateWordStatistics();
 
-            wordInput.focus();
-
         });
 
     }
 
 
-    /* =====================================================
-       TOOL 05 - IMAGE RESIZER
-    ===================================================== */
+    /* ======================================
+       8. IMAGE RESIZER
+    ====================================== */
 
-    const resizeInput = $("resizeInput");
-    const resizeControls = $("resizeControls");
-    const resizeWidth = $("resizeWidth");
-    const resizeHeight = $("resizeHeight");
-    const maintainRatio = $("maintainRatio");
-    const resizeButton = $("resizeBtn");
-    const resizeResult = $("resizeResult");
+    const resizeInput = $("#resizeInput");
+    const resizeWidth = $("#resizeWidth");
+    const resizeHeight = $("#resizeHeight");
+    const maintainRatio = $("#maintainRatio");
+    const resizeButton = $("#resizeBtn");
+    const resizeResult = $("#resizeResult");
 
-    let resizeFile = null;
-    let originalImage = null;
-    let originalRatio = 1;
+    let originalImageWidth = 0;
+    let originalImageHeight = 0;
+    let resizedImageBlob = null;
 
     if (resizeInput) {
 
-        resizeInput.addEventListener("change", async () => {
+        resizeInput.addEventListener("change", function () {
 
-            const file = resizeInput.files[0];
+            const file = this.files[0];
 
             if (!file) return;
 
-            if (!file.type.startsWith("image/")) {
-                alert("Please select a valid image.");
-                return;
-            }
+            readImage(file, function (image, objectURL) {
 
-            if (file.size > 20 * 1024 * 1024) {
-                alert("Please select an image smaller than 20 MB.");
-                resizeInput.value = "";
-                return;
-            }
+                originalImageWidth = image.naturalWidth;
+                originalImageHeight = image.naturalHeight;
 
-            try {
+                resizeWidth.value = originalImageWidth;
+                resizeHeight.value = originalImageHeight;
 
-                resizeFile = file;
+                URL.revokeObjectURL(objectURL);
 
-                originalImage = await loadImage(file);
+                showMessage(
+                    resizeResult,
+                    "Image loaded: " +
+                    originalImageWidth + " × " + originalImageHeight + " px"
+                );
 
-                originalRatio =
-                    originalImage.naturalWidth /
-                    originalImage.naturalHeight;
+            }, function (message) {
 
-                resizeWidth.value = originalImage.naturalWidth;
-                resizeHeight.value = originalImage.naturalHeight;
+                showMessage(resizeResult, message);
 
-                show(resizeControls);
-                hide(resizeResult);
-
-            } catch (error) {
-
-                alert(error.message);
-
-            }
+            });
 
         });
 
     }
 
-    if (resizeWidth) {
+    if (resizeWidth && resizeHeight && maintainRatio) {
 
-        resizeWidth.addEventListener("input", () => {
+        resizeWidth.addEventListener("input", function () {
 
             if (
                 maintainRatio.checked &&
-                originalImage &&
-                resizeWidth.value
+                originalImageWidth &&
+                originalImageHeight
             ) {
 
-                resizeHeight.value = Math.round(
-                    Number(resizeWidth.value) / originalRatio
-                );
+                const width = Number(this.value);
+
+                if (width > 0) {
+
+                    resizeHeight.value = Math.round(
+                        width * originalImageHeight / originalImageWidth
+                    );
+
+                }
 
             }
 
         });
 
-    }
-
-    if (resizeHeight) {
-
-        resizeHeight.addEventListener("input", () => {
+        resizeHeight.addEventListener("input", function () {
 
             if (
                 maintainRatio.checked &&
-                originalImage &&
-                resizeHeight.value
+                originalImageWidth &&
+                originalImageHeight
             ) {
 
-                resizeWidth.value = Math.round(
-                    Number(resizeHeight.value) * originalRatio
-                );
+                const height = Number(this.value);
+
+                if (height > 0) {
+
+                    resizeWidth.value = Math.round(
+                        height * originalImageWidth / originalImageHeight
+                    );
+
+                }
 
             }
 
@@ -873,15 +884,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (resizeButton) {
 
-        resizeButton.addEventListener("click", async () => {
+        resizeButton.addEventListener("click", function () {
 
-            if (!resizeFile || !originalImage) {
-                alert("Please upload an image first.");
-                return;
-            }
+            const file = resizeInput?.files?.[0];
 
             const width = Number(resizeWidth.value);
             const height = Number(resizeHeight.value);
+
+            if (!file) {
+
+                showMessage(resizeResult, "Please select an image first.");
+
+                return;
+
+            }
 
             if (
                 !Number.isInteger(width) ||
@@ -892,7 +908,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 height > 10000
             ) {
 
-                alert("Enter valid dimensions between 1 and 10000 pixels.");
+                showMessage(
+                    resizeResult,
+                    "Enter valid dimensions between 1 and 10000 pixels."
+                );
+
                 return;
 
             }
@@ -900,128 +920,104 @@ document.addEventListener("DOMContentLoaded", () => {
             resizeButton.disabled = true;
             resizeButton.textContent = "Resizing...";
 
-            try {
+            readImage(file, async function (image, objectURL) {
 
-                const canvas = document.createElement("canvas");
+                try {
 
-                canvas.width = width;
-                canvas.height = height;
+                    const canvas = document.createElement("canvas");
 
-                const context = canvas.getContext("2d");
+                    canvas.width = width;
+                    canvas.height = height;
 
-                if (!context) {
-                    throw new Error("Canvas is not supported.");
-                }
+                    const context = canvas.getContext("2d");
 
-                context.imageSmoothingEnabled = true;
-                context.imageSmoothingQuality = "high";
+                    context.drawImage(image, 0, 0, width, height);
 
-                context.drawImage(
-                    originalImage,
-                    0,
-                    0,
-                    width,
-                    height
-                );
-
-                const outputType =
-                    resizeFile.type === "image/png"
-                        ? "image/png"
-                        : "image/jpeg";
-
-                const blob = await new Promise(resolve => {
-
-                    canvas.toBlob(
-                        resolve,
-                        outputType,
-                        0.92
+                    resizedImageBlob = await canvasToBlob(
+                        canvas,
+                        "image/png"
                     );
 
-                });
+                    resizeResult.innerHTML = "";
 
-                if (!blob) {
-                    throw new Error("Unable to resize image.");
-                }
+                    const details = document.createElement("p");
 
-                const previewURL = URL.createObjectURL(blob);
+                    details.textContent =
+                        "New dimensions: " + width + " × " + height + " px";
 
-                resizeResult.replaceChildren();
+                    const preview = document.createElement("img");
 
-                const heading = document.createElement("h3");
-                heading.textContent = "Image Resized Successfully!";
+                    preview.src = URL.createObjectURL(resizedImageBlob);
+                    preview.alt = "Resized image preview";
 
-                const preview = document.createElement("img");
+                    const downloadButton = document.createElement("button");
 
-                preview.src = previewURL;
-                preview.alt = "Resized image preview";
+                    downloadButton.textContent = "Download Resized Image";
 
-                preview.onload = () => {
-                    URL.revokeObjectURL(previewURL);
-                };
+                    downloadButton.addEventListener("click", function () {
 
-                const details = document.createElement("p");
+                        downloadBlob(
+                            resizedImageBlob,
+                            "am-digital-studio-resized.png"
+                        );
 
-                details.textContent =
-                    `New dimensions: ${width} × ${height} pixels`;
+                    });
 
-                const downloadButton = document.createElement("button");
-
-                downloadButton.className = "tools-secondary-btn";
-
-                downloadButton.innerHTML =
-                    '<i class="fa-solid fa-download"></i> Download Resized Image';
-
-                downloadButton.addEventListener("click", () => {
-
-                    downloadBlob(
-                        blob,
-                        "am-digital-resized." +
-                        getImageExtension(outputType)
+                    resizeResult.append(
+                        details,
+                        preview,
+                        downloadButton
                     );
 
-                });
+                    URL.revokeObjectURL(objectURL);
 
-                resizeResult.append(
-                    heading,
-                    preview,
-                    details,
-                    downloadButton
-                );
+                } catch (error) {
 
-                show(resizeResult);
+                    console.error(error);
 
-            } catch (error) {
+                    showMessage(resizeResult, "Image resizing failed.");
 
-                console.error(error);
+                } finally {
 
-                alert(error.message || "Image resizing failed.");
+                    resizeButton.disabled = false;
+                    resizeButton.innerHTML =
+                        '<i class="fas fa-expand"></i> Resize Image';
 
-            } finally {
+                }
+
+            }, function (message) {
+
+                showMessage(resizeResult, message);
 
                 resizeButton.disabled = false;
+                resizeButton.textContent = "Resize Image";
 
-                resizeButton.innerHTML =
-                    '<i class="fa-solid fa-expand"></i> Resize Image';
-
-            }
+            });
 
         });
 
     }
 
 
-    /* =========================
-       INITIALIZATION
-    ========================= */
+    /* ======================================
+       9. FOOTER YEAR
+    ====================================== */
+
+    const yearElement = $("#toolsYear");
+
+    if (yearElement) {
+
+        yearElement.textContent = new Date().getFullYear();
+
+    }
+
+
+    /* ======================================
+       10. INITIALIZE
+    ====================================== */
 
     filterTools();
-    updateWordStatistics();
 
-    console.log(
-        "%c AM DIGITAL STUDIO ",
-        "background:#8b5cf6;color:white;padding:8px;font-weight:bold;"
-    );
-
-    console.log("Free Digital Tools initialized successfully.");
+    console.log("AM Digital Studio Tools initialized successfully.");
 
 });
