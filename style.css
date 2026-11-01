@@ -4953,4 +4953,117 @@ html[data-theme="dark"] .search-result-description {
         transform: translateY(0) scale(1);
     }
 }
+       
+/* =================================
+   AM DIGITAL AI HOME SECTION
+================================= */
+
+.am-digital-ai-section {
+    padding: 75px 20px;
+    background: var(--bg-color, #ffffff);
+    text-align: center;
+}
+
+.am-digital-ai-container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 55px 25px;
+    border: 1px solid rgba(22, 119, 255, 0.2);
+    border-radius: 22px;
+    background: linear-gradient(
+        135deg,
+        rgba(22, 119, 255, 0.07),
+        rgba(0, 184, 255, 0.09)
+    );
+}
+
+.am-ai-icon {
+    width: 75px;
+    height: 75px;
+    margin: 0 auto 22px;
+    display: grid;
+    place-items: center;
+    border-radius: 22px;
+    color: white;
+    font-size: 32px;
+    background: linear-gradient(135deg, #1677ff, #00b8ff);
+    box-shadow: 0 8px 25px rgba(22, 119, 255, 0.2);
+}
+
+.am-ai-label {
+    display: inline-block;
+    margin-bottom: 14px;
+    color: #1677ff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.am-digital-ai-container h2 {
+    margin-bottom: 15px;
+    font-size: clamp(23px, 4vw, 34px);
+    font-weight: 800;
+    color: var(--text-color, #111827);
+}
+
+.am-digital-ai-container p {
+    max-width: 620px;
+    margin: 0 auto 25px;
+    color: var(--text-color, #64748b);
+    font-size: 13px;
+    line-height: 1.9;
+}
+
+.am-ai-start-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 14px 27px;
+    border-radius: 10px;
+    color: white;
+    background: linear-gradient(135deg, #1677ff, #00b8ff);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    transition: .3s;
+}
+
+.am-ai-start-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 9px 25px rgba(22, 119, 255, .25);
+}
+
+.am-ai-powered {
+    margin-top: 22px;
+    color: #64748b;
+    font-size: 10px;
+}
+
+@media (max-width: 600px) {
+
+    .am-digital-ai-section {
+        padding: 45px 15px;
+    }
+
+    .am-digital-ai-container {
+        padding: 40px 18px;
+        border-radius: 16px;
+    }
+
+    .am-ai-icon {
+        width: 65px;
+        height: 65px;
+        font-size: 27px;
+    }
+
+    .am-digital-ai-container p {
+        font-size: 12px;
+    }
+
+}
+
+
+
+
 
