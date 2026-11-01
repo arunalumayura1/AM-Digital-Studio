@@ -1,979 +1,490 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Free Digital Tools | AM Digital Studio</title>
+    <meta name="description" content="Use free online digital tools including image compressor, QR code generator, color palette generator, word counter and image resizer.">
+    <meta name="theme-color" content="#080b16">
 
-    <meta name="description" content="Explore free online digital tools from AM Digital Studio. Compress images, generate QR codes, create color palettes, count words and resize images.">
-
-    <meta name="keywords" content="Free Digital Tools, Image Compressor, QR Code Generator, Word Counter, Image Resizer, Color Palette Generator">
-
-    <meta name="author" content="AM Digital Studio">
-    <meta name="theme-color" content="#0b1120">
-
-    <link rel="canonical" href="https://amdigitalstudio.site/tools.html">
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="wdf.png">
-
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-    <!-- Existing Website CSS -->
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="theme.css">
-
-    <!-- New Tools CSS -->
     <link rel="stylesheet" href="tools.css">
-
-    <!-- Existing Theme System -->
-    <script src="theme.js"></script>
-    <script src="loader.js"></script>
-
-    <!-- Tools JavaScript -->
     <script src="tools.js" defer></script>
 </head>
 
-<body>
+<body class="tools-page">
 
-<!-- =========================
-     HEADER
-========================= -->
+    <!-- NAVIGATION -->
+    <header class="tools-header">
+        <div class="tools-container tools-nav">
 
-<header>
+            <a href="index.html" class="tools-logo">
+                <span>AM</span> Digital Studio
+            </a>
 
-    <nav class="navbar">
-
-        <div class="logo">
-            <a href="index.html">AM Digital Studio</a>
-        </div>
-
-        <ul class="nav-links">
-
-            <li>
+            <nav class="tools-nav-links">
                 <a href="index.html">Home</a>
-            </li>
-
-            <li>
                 <a href="index.html#services">Services</a>
-            </li>
-
-            <li>
                 <a href="about.html">About Us</a>
-            </li>
+                <a href="index.html#contact">Contact</a>
+            </nav>
 
-            <li>
-                <a href="index.html#contact">Contact Us</a>
-            </li>
+            <a href="index.html" class="tools-home-btn">
+                <i class="fas fa-arrow-left"></i> Back to Website
+            </a>
 
-        </ul>
-
-        <div class="menu-toggle">
-            <span></span>
-            <span></span>
-            <span></span>
         </div>
-
-    </nav>
-
-</header>
+    </header>
 
 
-<!-- =========================
-     HERO SECTION
-========================= -->
+    <!-- HERO SECTION -->
+    <section class="tools-hero">
+        <div class="tools-container">
 
-<section class="tools-hero">
-
-    <div class="tools-container">
-
-        <div class="tools-hero-content">
-
-            <div class="tools-badge">
-                <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <span class="tools-badge">
+                <i class="fas fa-sparkles"></i>
                 100% FREE DIGITAL TOOLS
-            </div>
+            </span>
 
             <h1>
-                Your Digital Toolkit.
-                <span>All In One Place.</span>
+                Powerful Tools.<br>
+                <span>Zero Cost.</span>
             </h1>
 
             <p>
-                Powerful and easy-to-use online tools to help
-                you create, convert, calculate and work smarter.
-                Completely free. No subscription required.
+                Everything you need to create, edit and improve your digital
+                content. Simple, powerful and completely free online tools.
             </p>
 
-            <a href="#tools-library" class="tools-primary-btn">
-                Explore Free Tools
-                <i class="fa-solid fa-arrow-right"></i>
-            </a>
-
-            <div class="tools-hero-stats">
-
-                <div>
-                    <strong>05+</strong>
-                    <span>Free Tools</span>
-                </div>
-
-                <div>
-                    <strong>100%</strong>
-                    <span>Free Access</span>
-                </div>
-
-                <div>
-                    <strong>24/7</strong>
-                    <span>Available</span>
-                </div>
-
+            <div class="tools-search">
+                <i class="fas fa-search"></i>
+                <input
+                    type="search"
+                    id="toolSearch"
+                    placeholder="Search for a tool..."
+                    autocomplete="off"
+                >
             </div>
 
         </div>
+    </section>
 
-        <div class="tools-hero-decoration">
 
-            <div class="tools-floating-icon icon-one">
-                <i class="fa-solid fa-image"></i>
+    <!-- TOOLS SECTION -->
+    <section class="tools-section">
+        <div class="tools-container">
+
+            <div class="tools-section-heading">
+                <h2>Explore Our Free Tools</h2>
+                <p>Choose a tool and start using it instantly.</p>
             </div>
 
-            <div class="tools-floating-icon icon-two">
-                <i class="fa-solid fa-qrcode"></i>
-            </div>
 
-            <div class="tools-floating-icon icon-three">
-                <i class="fa-solid fa-palette"></i>
-            </div>
+            <!-- FILTER BUTTONS -->
+            <div class="tools-filters">
 
-            <div class="tools-floating-icon icon-four">
-                <i class="fa-solid fa-file-lines"></i>
-            </div>
-
-            <div class="tools-hero-center">
-                <i class="fa-solid fa-toolbox"></i>
-                <span>FREE TOOLS</span>
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     TOOLS LIBRARY
-========================= -->
-
-<section class="tools-library" id="tools-library">
-
-    <div class="tools-container">
-
-        <div class="tools-section-heading">
-
-            <span class="tools-small-heading">
-                EXPLORE OUR COLLECTION
-            </span>
-
-            <h2>
-                Free Digital Tools
-            </h2>
-
-            <p>
-                Everything you need to get your work done.
-                Choose a tool and start using it instantly.
-            </p>
-
-        </div>
-
-
-        <!-- SEARCH -->
-
-        <div class="tools-search-box">
-
-            <i class="fa-solid fa-magnifying-glass"></i>
-
-            <input
-                type="search"
-                id="toolSearch"
-                placeholder="Search for a tool..."
-                autocomplete="off"
-                aria-label="Search digital tools"
-            >
-
-            <span class="tools-search-shortcut">
-                SEARCH
-            </span>
-
-        </div>
-
-
-        <!-- FILTER BUTTONS -->
-
-        <div class="tools-filters">
-
-            <button class="tool-filter active" data-filter="all">
-                All Tools
-            </button>
-
-            <button class="tool-filter" data-filter="image">
-                Images
-            </button>
-
-            <button class="tool-filter" data-filter="design">
-                Design
-            </button>
-
-            <button class="tool-filter" data-filter="text">
-                Text
-            </button>
-
-        </div>
-
-
-        <!-- TOOLS GRID -->
-
-        <div class="tools-grid" id="toolsGrid">
-
-
-            <!-- TOOL 01: IMAGE COMPRESSOR -->
-
-            <article class="tool-card" data-category="image" data-name="image compressor">
-
-                <div class="tool-card-top">
-                    <div class="tool-icon purple">
-                        <i class="fa-solid fa-compress"></i>
-                    </div>
-
-                    <span class="tool-free-label">FREE</span>
-                </div>
-
-                <h3>Image Compressor</h3>
-
-                <p>
-                    Reduce image file sizes while maintaining
-                    excellent image quality.
-                </p>
-
-                <div class="tool-card-footer">
-
-                    <span>
-                        <i class="fa-regular fa-image"></i>
-                        Image Tools
-                    </span>
-
-                    <button class="tool-open-btn" data-tool="compressor" aria-label="Open Image Compressor">
-                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                    </button>
-
-                </div>
-
-            </article>
-
-
-            <!-- TOOL 02: QR CODE GENERATOR -->
-
-            <article class="tool-card" data-category="design" data-name="qr code generator">
-
-                <div class="tool-card-top">
-                    <div class="tool-icon blue">
-                        <i class="fa-solid fa-qrcode"></i>
-                    </div>
-
-                    <span class="tool-free-label">FREE</span>
-                </div>
-
-                <h3>QR Code Generator</h3>
-
-                <p>
-                    Create QR codes for websites, links,
-                    text and other useful information.
-                </p>
-
-                <div class="tool-card-footer">
-
-                    <span>
-                        <i class="fa-solid fa-qrcode"></i>
-                        Generator
-                    </span>
-
-                    <button class="tool-open-btn" data-tool="qr" aria-label="Open QR Code Generator">
-                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                    </button>
-
-                </div>
-
-            </article>
-
-
-            <!-- TOOL 03: COLOR PALETTE -->
-
-            <article class="tool-card" data-category="design" data-name="color palette generator">
-
-                <div class="tool-card-top">
-                    <div class="tool-icon pink">
-                        <i class="fa-solid fa-palette"></i>
-                    </div>
-
-                    <span class="tool-free-label">FREE</span>
-                </div>
-
-                <h3>Color Palette Generator</h3>
-
-                <p>
-                    Discover beautiful color combinations
-                    for websites, graphics and designs.
-                </p>
-
-                <div class="tool-card-footer">
-
-                    <span>
-                        <i class="fa-solid fa-swatchbook"></i>
-                        Design Tools
-                    </span>
-
-                    <button class="tool-open-btn" data-tool="palette" aria-label="Open Color Palette Generator">
-                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                    </button>
-
-                </div>
-
-            </article>
-
-
-            <!-- TOOL 04: WORD COUNTER -->
-
-            <article class="tool-card" data-category="text" data-name="word counter">
-
-                <div class="tool-card-top">
-                    <div class="tool-icon green">
-                        <i class="fa-solid fa-file-word"></i>
-                    </div>
-
-                    <span class="tool-free-label">FREE</span>
-                </div>
-
-                <h3>Word Counter</h3>
-
-                <p>
-                    Count words, characters, sentences
-                    and paragraphs instantly.
-                </p>
-
-                <div class="tool-card-footer">
-
-                    <span>
-                        <i class="fa-solid fa-keyboard"></i>
-                        Text Tools
-                    </span>
-
-                    <button class="tool-open-btn" data-tool="word" aria-label="Open Word Counter">
-                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                    </button>
-
-                </div>
-
-            </article>
-
-
-            <!-- TOOL 05: IMAGE RESIZER -->
-
-            <article class="tool-card" data-category="image" data-name="image resizer">
-
-                <div class="tool-card-top">
-                    <div class="tool-icon orange">
-                        <i class="fa-solid fa-expand"></i>
-                    </div>
-
-                    <span class="tool-free-label">FREE</span>
-                </div>
-
-                <h3>Image Resizer</h3>
-
-                <p>
-                    Resize images to your preferred width
-                    and height in just a few clicks.
-                </p>
-
-                <div class="tool-card-footer">
-
-                    <span>
-                        <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
-                        Image Tools
-                    </span>
-
-                    <button class="tool-open-btn" data-tool="resizer" aria-label="Open Image Resizer">
-                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                    </button>
-
-                </div>
-
-            </article>
-
-
-            <!-- NO SEARCH RESULTS -->
-
-            <div class="tools-no-results" id="noToolsResults" hidden>
-
-                <i class="fa-solid fa-magnifying-glass"></i>
-
-                <h3>No tools found</h3>
-
-                <p>Try searching with another keyword.</p>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     TOOL WORKSPACE
-========================= -->
-
-<section class="tool-workspace" id="toolWorkspace" hidden>
-
-    <div class="tools-container">
-
-        <div class="workspace-header">
-
-            <div>
-                <span class="tools-small-heading">YOUR WORKSPACE</span>
-                <h2 id="workspaceTitle">Select a Tool</h2>
-                <p id="workspaceDescription">
-                    Use our free digital tools.
-                </p>
-            </div>
-
-            <button class="workspace-close" id="closeWorkspace" aria-label="Close tool">
-                <i class="fa-solid fa-xmark"></i>
-                Close
-            </button>
-
-        </div>
-
-
-        <!-- IMAGE COMPRESSOR -->
-
-        <div class="tool-panel" id="panel-compressor" hidden>
-
-            <div class="tool-panel-inner">
-
-                <div class="panel-heading">
-                    <i class="fa-solid fa-compress"></i>
-                    <h3>Image Compressor</h3>
-                    <p>Compress your images to reduce file size.</p>
-                </div>
-
-                <label class="upload-area" for="compressInput">
-
-                    <i class="fa-solid fa-cloud-arrow-up"></i>
-
-                    <strong>Choose an image to compress</strong>
-
-                    <span>Click to browse or select an image</span>
-
-                    <small>JPG, PNG, WEBP supported</small>
-
-                </label>
-
-                <input type="file" id="compressInput" accept="image/jpeg,image/png,image/webp" hidden>
-
-                <div class="tool-controls" id="compressControls" hidden>
-
-                    <label for="compressQuality">
-                        Compression Quality:
-                        <strong id="compressQualityValue">75%</strong>
-                    </label>
-
-                    <input
-                        type="range"
-                        id="compressQuality"
-                        min="10"
-                        max="100"
-                        value="75"
-                    >
-
-                    <button class="tools-action-btn" id="compressBtn">
-                        <i class="fa-solid fa-compress"></i>
-                        Compress Image
-                    </button>
-
-                </div>
-
-                <div class="tool-result" id="compressResult" hidden></div>
-
-            </div>
-
-        </div>
-
-
-        <!-- QR CODE GENERATOR -->
-
-        <div class="tool-panel" id="panel-qr" hidden>
-
-            <div class="tool-panel-inner">
-
-                <div class="panel-heading">
-                    <i class="fa-solid fa-qrcode"></i>
-                    <h3>QR Code Generator</h3>
-                    <p>Turn your text or website link into a QR code.</p>
-                </div>
-
-                <label for="qrText">Enter your text or URL</label>
-
-                <textarea
-                    id="qrText"
-                    rows="4"
-                    placeholder="https://example.com"
-                    maxlength="2000"
-                ></textarea>
-
-                <div class="qr-options">
-
-                    <div>
-                        <label for="qrColor">QR Color</label>
-                        <input type="color" id="qrColor" value="#000000">
-                    </div>
-
-                    <div>
-                        <label for="qrBackground">Background</label>
-                        <input type="color" id="qrBackground" value="#ffffff">
-                    </div>
-
-                </div>
-
-                <button class="tools-action-btn" id="generateQR">
-                    <i class="fa-solid fa-qrcode"></i>
-                    Generate QR Code
+                <button class="tool-filter active" data-filter="all">
+                    All Tools
                 </button>
 
-                <div class="tool-result qr-result" id="qrResult" hidden>
+                <button class="tool-filter" data-filter="image">
+                    Image Tools
+                </button>
 
-                    <div id="qrCanvas"></div>
+                <button class="tool-filter" data-filter="design">
+                    Design Tools
+                </button>
 
-                    <button class="tools-secondary-btn" id="downloadQR">
-                        <i class="fa-solid fa-download"></i>
-                        Download QR Code
-                    </button>
-
-                </div>
+                <button class="tool-filter" data-filter="text">
+                    Text Tools
+                </button>
 
             </div>
 
-        </div>
+
+            <!-- TOOL CARDS -->
+            <div class="tools-grid">
+
+                <!-- IMAGE COMPRESSOR -->
+                <article class="tool-card" data-tool="compressor" data-category="image">
+
+                    <div class="tool-icon">
+                        <i class="fas fa-compress-arrows-alt"></i>
+                    </div>
+
+                    <h3>Image Compressor</h3>
+
+                    <p>
+                        Reduce image file sizes while maintaining good image
+                        quality. Perfect for websites and social media.
+                    </p>
+
+                    <button type="button" data-open-tool="compressor">
+                        Use Tool <i class="fas fa-arrow-right"></i>
+                    </button>
+
+                </article>
 
 
-        <!-- COLOR PALETTE GENERATOR -->
+                <!-- QR GENERATOR -->
+                <article class="tool-card" data-tool="qr" data-category="design">
 
-        <div class="tool-panel" id="panel-palette" hidden>
+                    <div class="tool-icon">
+                        <i class="fas fa-qrcode"></i>
+                    </div>
 
-            <div class="tool-panel-inner">
+                    <h3>QR Code Generator</h3>
 
-                <div class="panel-heading">
-                    <i class="fa-solid fa-palette"></i>
+                    <p>
+                        Create custom QR codes from website links, text
+                        and other information.
+                    </p>
+
+                    <button type="button" data-open-tool="qr">
+                        Use Tool <i class="fas fa-arrow-right"></i>
+                    </button>
+
+                </article>
+
+
+                <!-- COLOR PALETTE -->
+                <article class="tool-card" data-tool="palette" data-category="design">
+
+                    <div class="tool-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+
                     <h3>Color Palette Generator</h3>
-                    <p>Generate beautiful colors for your next design.</p>
+
+                    <p>
+                        Discover beautiful color combinations for websites,
+                        graphics and creative projects.
+                    </p>
+
+                    <button type="button" data-open-tool="palette">
+                        Use Tool <i class="fas fa-arrow-right"></i>
+                    </button>
+
+                </article>
+
+
+                <!-- WORD COUNTER -->
+                <article class="tool-card" data-tool="word" data-category="text">
+
+                    <div class="tool-icon">
+                        <i class="fas fa-file-word"></i>
+                    </div>
+
+                    <h3>Word Counter</h3>
+
+                    <p>
+                        Count words, characters, sentences and paragraphs
+                        instantly while typing.
+                    </p>
+
+                    <button type="button" data-open-tool="word">
+                        Use Tool <i class="fas fa-arrow-right"></i>
+                    </button>
+
+                </article>
+
+
+                <!-- IMAGE RESIZER -->
+                <article class="tool-card" data-tool="resizer" data-category="image">
+
+                    <div class="tool-icon">
+                        <i class="fas fa-expand"></i>
+                    </div>
+
+                    <h3>Image Resizer</h3>
+
+                    <p>
+                        Resize images to your preferred width and height
+                        while keeping the correct proportions.
+                    </p>
+
+                    <button type="button" data-open-tool="resizer">
+                        Use Tool <i class="fas fa-arrow-right"></i>
+                    </button>
+
+                </article>
+
+            </div>
+
+
+            <div id="noToolsResults">
+                <i class="fas fa-search"></i>
+                <p>No tools found. Try another search.</p>
+            </div>
+
+
+            <!-- WORKSPACE -->
+            <div id="toolWorkspace">
+
+                <div class="workspace-header">
+                    <div>
+                        <h2 id="workspaceTitle">Tool Workspace</h2>
+                        <p id="workspaceDescription">
+                            Use the selected tool below.
+                        </p>
+                    </div>
+
+                    <button type="button" id="closeWorkspace" aria-label="Close tool">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
 
-                <div class="palette-preview" id="palettePreview">
 
-                    <div class="palette-color" style="background:#7457F5">
-                        <span>#7457F5</span>
+                <!-- IMAGE COMPRESSOR PANEL -->
+                <div class="tool-panel" id="panel-compressor">
+
+                    <h3>Image Compressor</h3>
+
+                    <label for="compressInput">Choose an image</label>
+                    <input type="file" id="compressInput" accept="image/*">
+
+                    <div id="compressControls">
+
+                        <label for="compressQuality">
+                            Image Quality:
+                            <span id="compressQualityValue">70%</span>
+                        </label>
+
+                        <input
+                            type="range"
+                            id="compressQuality"
+                            min="10"
+                            max="100"
+                            value="70"
+                        >
+
+                        <button type="button" id="compressBtn">
+                            <i class="fas fa-compress"></i>
+                            Compress Image
+                        </button>
+
                     </div>
 
-                    <div class="palette-color" style="background:#26A69A">
-                        <span>#26A69A</span>
-                    </div>
+                    <div id="compressResult" class="tool-result"></div>
 
-                    <div class="palette-color" style="background:#F5A623">
-                        <span>#F5A623</span>
-                    </div>
+                </div>
 
-                    <div class="palette-color" style="background:#E85D75">
-                        <span>#E85D75</span>
-                    </div>
 
-                    <div class="palette-color" style="background:#25304A">
-                        <span>#25304A</span>
+                <!-- QR CODE PANEL -->
+                <div class="tool-panel" id="panel-qr">
+
+                    <h3>QR Code Generator</h3>
+
+                    <label for="qrText">Enter text or website URL</label>
+                    <textarea
+                        id="qrText"
+                        placeholder="https://example.com"
+                    ></textarea>
+
+                    <label for="qrColor">QR Code Color</label>
+                    <input type="color" id="qrColor" value="#000000">
+
+                    <label for="qrBackground">Background Color</label>
+                    <input type="color" id="qrBackground" value="#ffffff">
+
+                    <button type="button" id="generateQR">
+                        <i class="fas fa-qrcode"></i>
+                        Generate QR Code
+                    </button>
+
+                    <div id="qrResult" class="tool-result">
+                        <div id="qrCanvas"></div>
+
+                        <button type="button" id="downloadQR">
+                            <i class="fas fa-download"></i>
+                            Download QR Code
+                        </button>
                     </div>
 
                 </div>
 
-                <div class="palette-controls">
 
-                    <button class="tools-action-btn" id="generatePalette">
-                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <!-- COLOR PALETTE PANEL -->
+                <div class="tool-panel" id="panel-palette">
+
+                    <h3>Color Palette Generator</h3>
+
+                    <p>Generate beautiful random color combinations.</p>
+
+                    <div id="palettePreview"></div>
+
+                    <button type="button" id="generatePalette">
+                        <i class="fas fa-wand-magic-sparkles"></i>
                         Generate New Palette
                     </button>
 
-                    <button class="tools-secondary-btn" id="copyPalette">
-                        <i class="fa-regular fa-copy"></i>
-                        Copy Color Codes
+                    <button type="button" id="copyPalette">
+                        <i class="fas fa-copy"></i>
+                        Copy Colors
                     </button>
 
                 </div>
 
-                <p class="tool-hint">
-                    <i class="fa-solid fa-circle-info"></i>
-                    Click on a color to copy its HEX code.
-                </p>
 
-            </div>
+                <!-- WORD COUNTER PANEL -->
+                <div class="tool-panel" id="panel-word">
 
-        </div>
-
-
-        <!-- WORD COUNTER -->
-
-        <div class="tool-panel" id="panel-word" hidden>
-
-            <div class="tool-panel-inner">
-
-                <div class="panel-heading">
-                    <i class="fa-solid fa-file-word"></i>
                     <h3>Word Counter</h3>
-                    <p>Analyze your text instantly as you type.</p>
-                </div>
 
-                <label for="wordInput">Enter or paste your text</label>
+                    <label for="wordInput">Enter or paste your text</label>
 
-                <textarea
-                    id="wordInput"
-                    rows="9"
-                    placeholder="Start typing or paste your text here..."
-                ></textarea>
+                    <textarea
+                        id="wordInput"
+                        placeholder="Start typing or paste your text here..."
+                    ></textarea>
 
-                <div class="word-statistics">
+                    <div class="word-statistics">
 
-                    <div class="word-stat-card">
-                        <strong id="wordCount">0</strong>
-                        <span>Words</span>
+                        <div>
+                            <strong id="wordCount">0</strong>
+                            <span>Words</span>
+                        </div>
+
+                        <div>
+                            <strong id="characterCount">0</strong>
+                            <span>Characters</span>
+                        </div>
+
+                        <div>
+                            <strong id="sentenceCount">0</strong>
+                            <span>Sentences</span>
+                        </div>
+
+                        <div>
+                            <strong id="paragraphCount">0</strong>
+                            <span>Paragraphs</span>
+                        </div>
+
                     </div>
 
-                    <div class="word-stat-card">
-                        <strong id="characterCount">0</strong>
-                        <span>Characters</span>
-                    </div>
-
-                    <div class="word-stat-card">
-                        <strong id="sentenceCount">0</strong>
-                        <span>Sentences</span>
-                    </div>
-
-                    <div class="word-stat-card">
-                        <strong id="paragraphCount">0</strong>
-                        <span>Paragraphs</span>
-                    </div>
-
-                </div>
-
-                <div class="word-actions">
-
-                    <button class="tools-secondary-btn" id="copyWordText">
-                        <i class="fa-regular fa-copy"></i>
+                    <button type="button" id="copyWordText">
+                        <i class="fas fa-copy"></i>
                         Copy Text
                     </button>
 
-                    <button class="tools-secondary-btn" id="clearWordText">
-                        <i class="fa-solid fa-trash"></i>
+                    <button type="button" id="clearWordText">
+                        <i class="fas fa-trash"></i>
                         Clear Text
                     </button>
 
                 </div>
 
-            </div>
 
-        </div>
+                <!-- IMAGE RESIZER PANEL -->
+                <div class="tool-panel" id="panel-resizer">
 
-
-        <!-- IMAGE RESIZER -->
-
-        <div class="tool-panel" id="panel-resizer" hidden>
-
-            <div class="tool-panel-inner">
-
-                <div class="panel-heading">
-                    <i class="fa-solid fa-expand"></i>
                     <h3>Image Resizer</h3>
-                    <p>Change image dimensions to your preferred size.</p>
-                </div>
 
-                <label class="upload-area" for="resizeInput">
+                    <label for="resizeInput">Choose an image</label>
+                    <input type="file" id="resizeInput" accept="image/*">
 
-                    <i class="fa-solid fa-image"></i>
+                    <div id="resizeControls">
 
-                    <strong>Choose an image to resize</strong>
+                        <label for="resizeWidth">Width (px)</label>
+                        <input type="number" id="resizeWidth" min="1" placeholder="Enter width">
 
-                    <span>Click here to upload an image</span>
+                        <label for="resizeHeight">Height (px)</label>
+                        <input type="number" id="resizeHeight" min="1" placeholder="Enter height">
 
-                    <small>JPG, PNG, WEBP supported</small>
+                        <label>
+                            <input type="checkbox" id="maintainRatio" checked>
+                            Maintain aspect ratio
+                        </label>
 
-                </label>
-
-                <input type="file" id="resizeInput" accept="image/jpeg,image/png,image/webp" hidden>
-
-                <div class="tool-controls" id="resizeControls" hidden>
-
-                    <div class="resize-dimensions">
-
-                        <div>
-                            <label for="resizeWidth">Width (px)</label>
-                            <input type="number" id="resizeWidth" min="1" max="10000" placeholder="Width">
-                        </div>
-
-                        <div>
-                            <label for="resizeHeight">Height (px)</label>
-                            <input type="number" id="resizeHeight" min="1" max="10000" placeholder="Height">
-                        </div>
+                        <button type="button" id="resizeBtn">
+                            <i class="fas fa-expand"></i>
+                            Resize Image
+                        </button>
 
                     </div>
 
-                    <label class="aspect-lock">
-                        <input type="checkbox" id="maintainRatio" checked>
-                        Maintain aspect ratio
-                    </label>
-
-                    <button class="tools-action-btn" id="resizeBtn">
-                        <i class="fa-solid fa-expand"></i>
-                        Resize Image
-                    </button>
+                    <div id="resizeResult" class="tool-result"></div>
 
                 </div>
 
-                <div class="tool-result" id="resizeResult" hidden></div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- BENEFITS SECTION -->
+    <section class="tools-benefits">
+
+        <div class="tools-container">
+
+            <div class="tools-section-heading">
+                <h2>Why Use Our Tools?</h2>
+                <p>Simple solutions for your everyday digital needs.</p>
+            </div>
+
+            <div class="benefits-grid">
+
+                <div class="benefit-item">
+                    <i class="fas fa-gift"></i>
+                    <h3>100% Free</h3>
+                    <p>Use our digital tools without paying any fees.</p>
+                </div>
+
+                <div class="benefit-item">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Fast & Simple</h3>
+                    <p>Get your work done quickly with easy-to-use tools.</p>
+                </div>
+
+                <div class="benefit-item">
+                    <i class="fas fa-mobile-screen"></i>
+                    <h3>Mobile Friendly</h3>
+                    <p>Access our tools from your phone, tablet or computer.</p>
+                </div>
 
             </div>
 
         </div>
 
-    </div>
-
-</section>
+    </section>
 
 
-<!-- =========================
-     WHY USE OUR TOOLS
-========================= -->
+    <!-- CTA -->
+    <section class="tools-cta">
 
-<section class="tools-benefits">
+        <div class="tools-container">
 
-    <div class="tools-container">
-
-        <div class="tools-section-heading">
-
-            <span class="tools-small-heading">
-                SIMPLE. FAST. FREE.
-            </span>
-
-            <h2>Why Use Our Digital Tools?</h2>
+            <h2>Create More. Do More.</h2>
 
             <p>
-                Designed to make your everyday digital tasks easier.
+                Explore our free tools and make your digital work easier
+                with AM Digital Studio.
             </p>
 
         </div>
 
-        <div class="benefits-grid">
+    </section>
 
-            <div class="benefit-card">
 
-                <i class="fa-solid fa-gift"></i>
-
-                <h3>Completely Free</h3>
-
-                <p>
-                    Use our available tools without paying
-                    for a subscription.
-                </p>
-
-            </div>
-
-            <div class="benefit-card">
-
-                <i class="fa-solid fa-bolt"></i>
-
-                <h3>Fast & Easy</h3>
-
-                <p>
-                    Simple interfaces that help you
-                    complete tasks quickly.
-                </p>
-
-            </div>
-
-            <div class="benefit-card">
-
-                <i class="fa-solid fa-mobile-screen-button"></i>
-
-                <h3>Mobile Friendly</h3>
-
-                <p>
-                    Access our digital tools from
-                    smartphones, tablets and computers.
-                </p>
-
-            </div>
-
-            <div class="benefit-card">
-
-                <i class="fa-solid fa-lock"></i>
-
-                <h3>Privacy Focused</h3>
-
-                <p>
-                    Tools are designed to process supported
-                    files directly in your browser.
-                </p>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     CALL TO ACTION
-========================= -->
-
-<section class="tools-cta">
-
-    <div class="tools-container">
-
-        <div class="tools-cta-content">
-
-            <span>AM DIGITAL STUDIO</span>
-
-            <h2>
-                Create More.
-                <br>
-                Do More.
-                <span>For Free.</span>
-            </h2>
-
-            <p>
-                Explore our collection of free digital tools
-                and make your workflow easier.
-            </p>
-
-            <a href="#tools-library" class="tools-primary-btn">
-                Explore Tools
-                <i class="fa-solid fa-arrow-up"></i>
-            </a>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     FOOTER
-========================= -->
-
-<footer>
-
-    <div class="container footer-grid">
-
-        <div class="footer-box">
-
-            <h3>AM Digital Studio</h3>
-
-            <p>Learn • Create • Grow</p>
-
-            <p>
-                Helping creators master YouTube, AI,
-                Web Development, Video Editing and Digital Skills.
-            </p>
-
-        </div>
-
-
-        <div class="footer-box">
-
-            <h3>Quick Links</h3>
-
-            <a href="index.html">Home</a>
-
-            <a href="index.html#services">Services</a>
-
-            <a href="about.html">About Us</a>
-
-            <a href="index.html#contact">Contact Us</a>
-
-        </div>
-
-
-        <div class="footer-box">
-
-            <h3>Resources</h3>
-
-            <a href="video.html">Videos</a>
-
-            <a href="tools.html">Free Digital Tools</a>
-
-            <a href="policy.html">Privacy Policy</a>
-
-            <a href="terms.html">Terms & Conditions</a>
-
-        </div>
-
-
-        <div class="footer-box">
-
-            <h3>Follow Us</h3>
-
-            <p class="social-text">
-                Follow us on our official social media platforms.
-            </p>
-
-            <div class="social-icons">
-
-                <a href="https://facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-                    <i class="fa-brands fa-facebook-f"></i>
-                </a>
-
-                <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                    <i class="fa-brands fa-instagram"></i>
-                </a>
-
-                <a href="https://youtube.com/" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-                    <i class="fa-brands fa-youtube"></i>
-                </a>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="footer-bottom">
+    <!-- FOOTER -->
+    <footer class="tools-footer">
 
         <p>
             © <span id="toolsYear">2026</span> AM Digital Studio.
             All Rights Reserved.
         </p>
 
-    </div>
+        <p>Designed to make your digital work easier.</p>
 
-</footer>
+    </footer>
 
 
 </body>
