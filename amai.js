@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let isLoading = false;
 
     // AI BACKEND API
-  const API_URL = "https://am-digital-studio-taupe.vercel.app/api/chat";
+const API_URL = "https://am-digital-ai.vercel.app/api/chat";
 
 
     // =================================
