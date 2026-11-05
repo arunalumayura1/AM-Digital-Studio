@@ -1,0 +1,764 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Explore the creative portfolio of AM Digital Studio. Discover premium website designs, video editing, graphic design, and digital creative projects.">
+
+    <meta name="theme-color" content="#ffffff">
+
+    <title>Our Portfolio | AM Digital Studio</title>
+
+    <!-- Portfolio Stylesheet -->
+    <link rel="stylesheet" href="portfolio.css">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="wdf.png">
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+    <header class="site-header" id="site-header">
+
+        <nav class="navbar container" aria-label="Main navigation">
+
+            <a href="index.html" class="brand" aria-label="AM Digital Studio Home">
+
+                <span class="brand-icon">
+                    <i class="fa-solid fa-bolt"></i>
+                </span>
+
+                <span class="brand-name">
+                    AM <span>Digital Studio</span>
+                </span>
+
+            </a>
+
+            <button
+                class="menu-toggle"
+                id="menu-toggle"
+                type="button"
+                aria-label="Open navigation menu"
+                aria-expanded="false"
+                aria-controls="nav-menu">
+
+                <i class="fa-solid fa-bars"></i>
+
+            </button>
+
+            <ul class="nav-menu" id="nav-menu">
+
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+
+                <li>
+                    <a href="index.html#services">Services</a>
+                </li>
+
+                <li>
+                    <a href="about.html">About</a>
+                </li>
+
+                <li>
+                    <a href="portfolio.html" class="active" aria-current="page">Portfolio</a>
+                </li>
+
+                <li>
+                    <a href="index.html#contact">Contact</a>
+                </li>
+
+                <li>
+                    <a href="index.html#services" class="nav-cta">
+                        Let's Work Together
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                </li>
+
+            </ul>
+
+        </nav>
+
+    </header>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+    <main>
+
+        <!-- =========================
+             HERO SECTION
+        ========================== -->
+        <section class="portfolio-hero" id="portfolio-home">
+
+            <div class="hero-glow hero-glow-one"></div>
+            <div class="hero-glow hero-glow-two"></div>
+
+            <div class="container portfolio-hero-content">
+
+                <span class="section-badge">
+                    <i class="fa-solid fa-sparkles"></i>
+                    OUR CREATIVE SHOWCASE
+                </span>
+
+                <h1>
+                    Turning Ideas Into
+                    <span class="gradient-text">Digital Masterpieces.</span>
+                </h1>
+
+                <p class="hero-description">
+                    Explore our creative universe of websites, videos, and
+                    digital designs. Every project is built with passion,
+                    creativity, and attention to detail.
+                </p>
+
+                <div class="hero-buttons">
+
+                    <a href="#portfolio-projects" class="btn btn-primary">
+                        Explore Our Work
+                        <i class="fa-solid fa-arrow-down"></i>
+                    </a>
+
+                    <a href="index.html#contact" class="btn btn-secondary">
+                        Start a Project
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+
+                </div>
+
+                <div class="portfolio-hero-stats">
+
+                    <div class="hero-stat">
+                        <span class="stat-number">Creative</span>
+                        <span class="stat-label">Digital Solutions</span>
+                    </div>
+
+                    <div class="hero-stat">
+                        <span class="stat-number">Modern</span>
+                        <span class="stat-label">Design Approach</span>
+                    </div>
+
+                    <div class="hero-stat">
+                        <span class="stat-number">Premium</span>
+                        <span class="stat-label">Visual Experience</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             PORTFOLIO INTRO
+        ========================== -->
+        <section class="portfolio-intro">
+
+            <div class="container">
+
+                <div class="section-heading">
+
+                    <span class="section-subtitle">
+                        <i class="fa-solid fa-layer-group"></i>
+                        OUR WORK
+                    </span>
+
+                    <h2>
+                        A Collection of
+                        <span class="gradient-text">Creative Excellence</span>
+                    </h2>
+
+                    <p>
+                        From stunning websites to engaging video content,
+                        discover the creativity behind AM Digital Studio.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             PORTFOLIO PROJECTS
+        ========================== -->
+        <section class="portfolio-projects" id="portfolio-projects">
+
+            <div class="container">
+
+                <!-- Category Filters -->
+                <div class="portfolio-filters" id="portfolio-filters">
+
+                    <button class="filter-btn active"
+                            data-filter="all"
+                            type="button">
+                        <i class="fa-solid fa-grid-2"></i>
+                        All Projects
+                    </button>
+
+                    <button class="filter-btn"
+                            data-filter="web"
+                            type="button">
+                        <i class="fa-solid fa-globe"></i>
+                        Web Design
+                    </button>
+
+                    <button class="filter-btn"
+                            data-filter="video"
+                            type="button">
+                        <i class="fa-solid fa-video"></i>
+                        Video Editing
+                    </button>
+
+                    <button class="filter-btn"
+                            data-filter="graphic"
+                            type="button">
+                        <i class="fa-solid fa-palette"></i>
+                        Graphic Design
+                    </button>
+
+                    <button class="filter-btn"
+                            data-filter="branding"
+                            type="button">
+                        <i class="fa-solid fa-pen-nib"></i>
+                        Branding
+                    </button>
+
+                </div>
+
+
+                <!-- Project Grid -->
+                <div class="portfolio-grid" id="portfolio-grid">
+
+
+                    <!-- PROJECT 01 -->
+                    <article class="portfolio-card"
+                             data-category="web"
+                             data-project="project-01">
+
+                        <div class="project-image">
+
+                            <img src="images/portfolio-website.jpg"
+                                 alt="Modern website design project"
+                                 loading="lazy">
+
+                            <div class="project-overlay">
+
+                                <button class="project-view-btn"
+                                        type="button"
+                                        aria-label="View website project details"
+                                        data-view-project="project-01">
+
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+                                </button>
+
+                            </div>
+
+                            <span class="project-category">
+                                WEB DESIGN
+                            </span>
+
+                        </div>
+
+                        <div class="project-info">
+
+                            <div class="project-meta">
+                                <span>01 / WEBSITE</span>
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </div>
+
+                            <h3>Modern Website Experience</h3>
+
+                            <p>
+                                A visually engaging and responsive digital
+                                experience designed for modern audiences.
+                            </p>
+
+                            <div class="project-tags">
+                                <span>UI/UX</span>
+                                <span>Responsive</span>
+                                <span>Web Design</span>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- PROJECT 02 -->
+                    <article class="portfolio-card"
+                             data-category="video"
+                             data-project="project-02">
+
+                        <div class="project-image">
+
+                            <img src="images/portfolio-video.jpg"
+                                 alt="Professional video editing project"
+                                 loading="lazy">
+
+                            <div class="project-overlay">
+
+                                <button class="project-view-btn"
+                                        type="button"
+                                        aria-label="View video editing project details"
+                                        data-view-project="project-02">
+
+                                    <i class="fa-solid fa-play"></i>
+
+                                </button>
+
+                            </div>
+
+                            <span class="project-category">
+                                VIDEO EDITING
+                            </span>
+
+                        </div>
+
+                        <div class="project-info">
+
+                            <div class="project-meta">
+                                <span>02 / VIDEO</span>
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </div>
+
+                            <h3>Cinematic Video Production</h3>
+
+                            <p>
+                                Dynamic video editing with smooth transitions,
+                                storytelling, and professional visual effects.
+                            </p>
+
+                            <div class="project-tags">
+                                <span>CapCut</span>
+                                <span>Color Grading</span>
+                                <span>Motion</span>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- PROJECT 03 -->
+                    <article class="portfolio-card"
+                             data-category="graphic"
+                             data-project="project-03">
+
+                        <div class="project-image">
+
+                            <img src="images/portfolio-graphic.jpg"
+                                 alt="Creative graphic design project"
+                                 loading="lazy">
+
+                            <div class="project-overlay">
+
+                                <button class="project-view-btn"
+                                        type="button"
+                                        aria-label="View graphic design project details"
+                                        data-view-project="project-03">
+
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+                                </button>
+
+                            </div>
+
+                            <span class="project-category">
+                                GRAPHIC DESIGN
+                            </span>
+
+                        </div>
+
+                        <div class="project-info">
+
+                            <div class="project-meta">
+                                <span>03 / GRAPHICS</span>
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </div>
+
+                            <h3>Creative Promotional Design</h3>
+
+                            <p>
+                                Eye-catching graphics designed to communicate
+                                brand messages with clarity and style.
+                            </p>
+
+                            <div class="project-tags">
+                                <span>Social Media</span>
+                                <span>Posters</span>
+                                <span>Creative</span>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- PROJECT 04 -->
+                    <article class="portfolio-card"
+                             data-category="branding"
+                             data-project="project-04">
+
+                        <div class="project-image">
+
+                            <img src="images/portfolio-branding.jpg"
+                                 alt="Professional brand identity project"
+                                 loading="lazy">
+
+                            <div class="project-overlay">
+
+                                <button class="project-view-btn"
+                                        type="button"
+                                        aria-label="View branding project details"
+                                        data-view-project="project-04">
+
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+                                </button>
+
+                            </div>
+
+                            <span class="project-category">
+                                BRANDING
+                            </span>
+
+                        </div>
+
+                        <div class="project-info">
+
+                            <div class="project-meta">
+                                <span>04 / BRANDING</span>
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </div>
+
+                            <h3>Brand Identity Design</h3>
+
+                            <p>
+                                A cohesive visual identity built to create
+                                recognition and a memorable brand presence.
+                            </p>
+
+                            <div class="project-tags">
+                                <span>Logo</span>
+                                <span>Identity</span>
+                                <span>Brand Strategy</span>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- PROJECT 05 -->
+                    <article class="portfolio-card"
+                             data-category="web"
+                             data-project="project-05">
+
+                        <div class="project-image">
+
+                            <img src="images/portfolio-dashboard.jpg"
+                                 alt="Website dashboard UI design"
+                                 loading="lazy">
+
+                            <div class="project-overlay">
+
+                                <button class="project-view-btn"
+                                        type="button"
+                                        aria-label="View dashboard project details"
+                                        data-view-project="project-05">
+
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+                                </button>
+
+                            </div>
+
+                            <span class="project-category">
+                                WEB DESIGN
+                            </span>
+
+                        </div>
+
+                        <div class="project-info">
+
+                            <div class="project-meta">
+                                <span>05 / UI DESIGN</span>
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </div>
+
+                            <h3>Interactive Dashboard UI</h3>
+
+                            <p>
+                                A clean and intuitive interface focused on
+                                usability, structure, and visual hierarchy.
+                            </p>
+
+                            <div class="project-tags">
+                                <span>Dashboard</span>
+                                <span>UI Design</span>
+                                <span>Interface</span>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- PROJECT 06 -->
+                    <article class="portfolio-card"
+                             data-category="video"
+                             data-project="project-06">
+
+                        <div class="project-image">
+
+                            <img src="images/portfolio-shortvideo.jpg"
+                                 alt="Short form social media video project"
+                                 loading="lazy">
+
+                            <div class="project-overlay">
+
+                                <button class="project-view-btn"
+                                        type="button"
+                                        aria-label="View short video project details"
+                                        data-view-project="project-06">
+
+                                    <i class="fa-solid fa-play"></i>
+
+                                </button>
+
+                            </div>
+
+                            <span class="project-category">
+                                VIDEO EDITING
+                            </span>
+
+                        </div>
+
+                        <div class="project-info">
+
+                            <div class="project-meta">
+                                <span>06 / SHORT VIDEO</span>
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </div>
+
+                            <h3>Social Media Reels</h3>
+
+                            <p>
+                                Engaging short-form content optimized for
+                                social media platforms and mobile viewers.
+                            </p>
+
+                            <div class="project-tags">
+                                <span>Reels</span>
+                                <span>Shorts</span>
+                                <span>Social Media</span>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                </div>
+
+                <!-- Empty State -->
+                <div class="portfolio-empty" id="portfolio-empty">
+
+                    <i class="fa-solid fa-folder-open"></i>
+
+                    <h3>No Projects Found</h3>
+
+                    <p>
+                        There are no projects available in this category yet.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             PROJECT MODAL
+        ========================== -->
+        <div class="project-modal"
+             id="project-modal"
+             aria-hidden="true">
+
+            <div class="modal-backdrop" data-close-modal></div>
+
+            <div class="modal-content"
+                 role="dialog"
+                 aria-modal="true"
+                 aria-labelledby="modal-project-title">
+
+                <button class="modal-close"
+                        type="button"
+                        id="modal-close"
+                        aria-label="Close project details">
+
+                    <i class="fa-solid fa-xmark"></i>
+
+                </button>
+
+                <div class="modal-image-wrapper">
+
+                    <img src=""
+                         alt=""
+                         id="modal-project-image">
+
+                </div>
+
+                <div class="modal-body">
+
+                    <span class="modal-category"
+                          id="modal-project-category">
+                        PROJECT CATEGORY
+                    </span>
+
+                    <h2 id="modal-project-title">
+                        Project Title
+                    </h2>
+
+                    <p id="modal-project-description">
+                        Project description will appear here.
+                    </p>
+
+                    <div class="modal-tags"
+                         id="modal-project-tags">
+                    </div>
+
+                    <a href="index.html#contact"
+                       class="btn btn-primary modal-contact-btn">
+
+                        Discuss a Similar Project
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             CTA SECTION
+        ========================== -->
+        <section class="portfolio-cta">
+
+            <div class="container">
+
+                <div class="cta-content">
+
+                    <div class="cta-icon">
+                        <i class="fa-solid fa-lightbulb"></i>
+                    </div>
+
+                    <span class="section-subtitle">
+                        HAVE A PROJECT IN MIND?
+                    </span>
+
+                    <h2>
+                        Let's Create Something
+                        <span class="gradient-text">Extraordinary.</span>
+                    </h2>
+
+                    <p>
+                        Your vision deserves a powerful digital experience.
+                        Let's turn your next idea into reality.
+                    </p>
+
+                    <a href="index.html#contact"
+                       class="btn btn-primary">
+
+                        Start Your Project
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+    <footer class="site-footer">
+
+        <div class="container footer-content">
+
+            <a href="index.html" class="brand footer-brand">
+
+                <span class="brand-icon">
+                    <i class="fa-solid fa-bolt"></i>
+                </span>
+
+                <span class="brand-name">
+                    AM <span>Digital Studio</span>
+                </span>
+
+            </a>
+
+            <p>
+                Creative ideas. Digital possibilities.
+            </p>
+
+            <div class="footer-links">
+
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="index.html#services">Services</a>
+                <a href="portfolio.html">Portfolio</a>
+                <a href="index.html#contact">Contact</a>
+
+            </div>
+
+            <div class="footer-bottom">
+
+                <p>
+                    &copy; <span id="current-year">2026</span>
+                    AM Digital Studio. All rights reserved.
+                </p>
+
+                <a href="#portfolio-home"
+                   class="back-to-top"
+                   aria-label="Back to top">
+
+                    <i class="fa-solid fa-arrow-up"></i>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- Portfolio JavaScript -->
+    <script src="portfolio.js"></script>
+
+</body>
+</html>
