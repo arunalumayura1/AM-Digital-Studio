@@ -20,7 +20,7 @@ const STORE_PRODUCTS = [
         category: "tshirts",
         categoryLabel: "T-Shirts",
         price: 2500,
-        image: "images/store/tshirt.svg",
+        images: ["bshirt.png", "wshirt.png"],
         badge: "AM ESSENTIAL",
         description: "A clean everyday T-shirt featuring the AM Digital Studio identity. Comfortable, simple and creator-ready.",
         details: ["AM Digital Studio inspired design", "Available in multiple sizes", "Colour and stock confirmed when ordering"],
@@ -32,7 +32,7 @@ const STORE_PRODUCTS = [
         category: "hoodies",
         categoryLabel: "Hoodies",
         price: 4500,
-        image: "images/store/hoodie.svg",
+        images: ["bhoodie.png", "whoodie.png"],
         badge: "FEATURED",
         description: "A versatile hoodie mockup for the AM community, designed for a relaxed everyday look.",
         details: ["AM signature chest design", "Size selection available", "Colour and stock confirmed when ordering"],
@@ -44,7 +44,7 @@ const STORE_PRODUCTS = [
         category: "mugs",
         categoryLabel: "Mugs",
         price: 1500,
-        image: "images/store/mug.svg",
+        images: ["bmug.png", "wmug.png"],
         badge: "DAILY PICK",
         description: "A simple branded mug for your desk, study table or creative workspace.",
         details: ["AM Digital Studio branding", "Great for desk and study setups", "Print and availability confirmed when ordering"],
@@ -56,7 +56,7 @@ const STORE_PRODUCTS = [
         category: "caps",
         categoryLabel: "Caps",
         price: 1800,
-        image: "images/store/cap.svg",
+        images: ["bcap.png", "wcap.png"],
         badge: "AM STYLE",
         description: "A minimal cap concept featuring the AM mark. A simple addition to your everyday collection.",
         details: ["Minimal AM front design", "Adjustable style subject to stock", "Colour confirmed when ordering"],
@@ -68,7 +68,7 @@ const STORE_PRODUCTS = [
         category: "wristbands",
         categoryLabel: "Wristbands",
         price: 500,
-        image: "images/store/wristband.svg",
+        images: ["bband.png", "wband.png"],
         badge: "COMMUNITY",
         description: "A lightweight AM community wristband with a clean, minimal design.",
         details: ["AM identity inspired", "Lightweight wristband concept", "Colour and stock confirmed when ordering"],
@@ -80,7 +80,7 @@ const STORE_PRODUCTS = [
         category: "flashcards",
         categoryLabel: "Flash Cards",
         price: 1200,
-        image: "images/store/flashcards.svg",
+        images: ["bcards.png", "wcards.png"],
         badge: "LEARN MORE",
         description: "A compact flash-card set concept to support quick revision, active recall and organised learning.",
         details: ["Study and revision card set", "Topic and card count to be confirmed", "Availability confirmed when ordering"],
@@ -96,6 +96,7 @@ const money = value => new Intl.NumberFormat(AM_STORE_CONFIG.LOCALE, {
 
 let activeCategory = "all";
 let activeProduct = null;
+let activeImageIndex = 0;
 let cart = loadCart();
 
 function loadCart() {
@@ -144,7 +145,7 @@ function renderProducts() {
     grid.innerHTML = products.map(product => `
         <article class="store-product-card">
             <div class="product-image-wrap" data-view-product="${product.id}" tabindex="0" role="button" aria-label="View ${product.name}">
-                <img src="${product.image}" alt="${product.name}" loading="lazy">
+                <img src="${product.images[0]}" alt="${product.name}" loading="lazy">
                 <span class="product-tag">${product.badge}</span>
             </div>
             <div class="product-card-body">
@@ -163,27 +164,142 @@ function renderProducts() {
 function openProductModal(productId) {
     const product = getProduct(productId);
     if (!product) return;
+
     activeProduct = product;
+
     const hasSizes = product.sizes.length > 0;
+
+    // Start with first image
+    activeImageIndex = 0;
+
     $("#productModalContent").innerHTML = `
-        <div class="product-modal-image"><img src="${product.image}" alt="${product.name}"></div>
+        <div class="product-modal-image">
+
+            <div class="product-gallery">
+
+                <img
+                    id="productGalleryImage"
+                    src="${product.images[0]}"
+                    alt="${product.name}"
+                >
+
+                <button
+                    class="gallery-arrow gallery-prev"
+                    id="galleryPrev"
+                    type="button"
+                    aria-label="Previous image"
+                >
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+
+                <button
+                    class="gallery-arrow gallery-next"
+                    id="galleryNext"
+                    type="button"
+                    aria-label="Next image"
+                >
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+
+            </div>
+
+            <div class="gallery-counter" id="galleryCounter">
+                1 / ${product.images.length}
+            </div>
+
+        </div>
+
         <div class="product-modal-info">
-            <span class="store-eyebrow">${product.categoryLabel}</span>
-            <h2 id="modalProductName">${product.name}</h2>
-            <span class="modal-price">${money(product.price)}</span>
+
+            <span class="store-eyebrow">
+                ${product.categoryLabel}
+            </span>
+
+            <h2 id="modalProductName">
+                ${product.name}
+            </h2>
+
+            <span class="modal-price">
+                ${money(product.price)}
+            </span>
+
             <p>${product.description}</p>
-            <ul class="product-detail-list">${product.details.map(detail => `<li><i class="fa-solid fa-check"></i> ${detail}</li>`).join("")}</ul>
-            ${hasSizes ? `<label class="product-option-label" for="productSize">Select size / option</label><select class="product-option-select" id="productSize">${product.sizes.map(size => `<option value="${size}">${size}</option>`).join("")}</select>` : ""}
-            <label class="product-option-label" for="productQuantity">Quantity</label>
-            <select class="product-option-select" id="productQuantity">${Array.from({length:10},(_,i)=>`<option value="${i+1}">${i+1}</option>`).join("")}</select>
-            <button class="primary-btn modal-add-btn" id="modalAddToCart" type="button"><i class="fa-solid fa-cart-plus"></i> Add to Cart</button>
-            <div class="modal-stock-note">Availability and final price will be confirmed by AM Digital Studio.</div>
-        </div>`;
+
+            <ul class="product-detail-list">
+                ${product.details.map(detail => `
+                    <li>
+                        <i class="fa-solid fa-check"></i>
+                        ${detail}
+                    </li>
+                `).join("")}
+            </ul>
+
+            ${hasSizes ? `
+                <label class="product-option-label" for="productSize">
+                    Select size / option
+                </label>
+
+                <select class="product-option-select" id="productSize">
+                    ${product.sizes.map(size => `
+                        <option value="${size}">${size}</option>
+                    `).join("")}
+                </select>
+            ` : ""}
+
+            <label class="product-option-label" for="productQuantity">
+                Quantity
+            </label>
+
+            <select class="product-option-select" id="productQuantity">
+                ${Array.from({length:10},(_,i)=>`
+                    <option value="${i+1}">${i+1}</option>
+                `).join("")}
+            </select>
+
+            <button
+                class="primary-btn modal-add-btn"
+                id="modalAddToCart"
+                type="button"
+            >
+                <i class="fa-solid fa-cart-plus"></i>
+                Add to Cart
+            </button>
+
+            <div class="modal-stock-note">
+                Availability and final price will be confirmed by AM Digital Studio.
+            </div>
+
+        </div>
+    `;
+
     $("#productModal").classList.add("is-open");
+
     $("#productModal").setAttribute("aria-hidden", "false");
+
     document.body.classList.add("store-modal-open");
 }
+function changeProductImage(direction) {
 
+    if (!activeProduct) return;
+
+    const totalImages = activeProduct.images.length;
+
+    activeImageIndex += direction;
+
+    if (activeImageIndex >= totalImages) {
+        activeImageIndex = 0;
+    }
+
+    if (activeImageIndex < 0) {
+        activeImageIndex = totalImages - 1;
+    }
+
+    $("#productGalleryImage").src =
+        activeProduct.images[activeImageIndex];
+
+    $("#galleryCounter").textContent =
+        `${activeImageIndex + 1} / ${totalImages}`;
+}
 function closeProductModal() {
     $("#productModal").classList.remove("is-open");
     $("#productModal").setAttribute("aria-hidden", "true");
@@ -220,7 +336,7 @@ function renderCart() {
         const product = getProduct(item.id);
         return `
             <div class="cart-item">
-                <img src="${product.image}" alt="${product.name}">
+              <img src="${product.images[0]}" alt="${product.name}">
                 <div>
                     <h4>${product.name}</h4>
                     <div class="cart-item-meta">${item.size ? `Option: ${item.size} · ` : ""}${money(product.price)} each</div>
@@ -333,13 +449,31 @@ function initStore() {
         }
     });
 
-    $("#productModal").addEventListener("click", event => {
-        if (event.target.closest("[data-close-modal]")) closeProductModal();
-        if (event.target.closest("#modalAddToCart") && activeProduct) {
-            const size = $("#productSize")?.value || "";
-            const quantity = Number($("#productQuantity")?.value || 1);
-            addToCart(activeProduct.id, size, quantity);
-        }
+$("#productModal").addEventListener("click", event => {
+
+    if (event.target.closest("[data-close-modal]")) {
+        closeProductModal();
+    }
+
+    if (event.target.closest("#galleryPrev")) {
+        changeProductImage(-1);
+    }
+
+    if (event.target.closest("#galleryNext")) {
+        changeProductImage(1);
+    }
+
+    if (event.target.closest("#modalAddToCart") && activeProduct) {
+
+        const size = $("#productSize")?.value || "";
+
+        const quantity = Number(
+            $("#productQuantity")?.value || 1
+        );
+
+        addToCart(activeProduct.id, size, quantity);
+    }
+
     });
 
     $("#openCartBtn").addEventListener("click", openCart);
