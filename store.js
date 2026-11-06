@@ -18,7 +18,8 @@ const STORE_PRODUCTS = [
         categoryLabel: "T-Shirts",
         price: 2500,
         images: ["bshirt.png", "wshirt.png"],
-        badge: "AM ESSENTIAL",
+        badge: "Available",
+       badgeColor: "green",
         description: "A clean everyday T-shirt featuring the AM Digital Studio identity. Comfortable, simple and creator-ready.",
         details: ["AM Digital Studio inspired design", "Available in multiple sizes", "Colour and stock confirmed when ordering"],
         sizes: ["S", "M", "L", "XL", "XXL"]
@@ -30,7 +31,8 @@ const STORE_PRODUCTS = [
         categoryLabel: "Hoodies",
         price: 4500,
         images: ["bhoodie.png", "whoodie.png"],
-        badge: "FEATURED",
+        badge: "Not Available",
+       badgeColor: "red",
         description: "A versatile hoodie mockup for the AM community, designed for a relaxed everyday look.",
         details: ["AM signature chest design", "Size selection available", "Colour and stock confirmed when ordering"],
         sizes: ["S", "M", "L", "XL", "XXL"]
