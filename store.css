@@ -365,3 +365,131 @@ html[data-theme="dark"] .gallery-arrow:hover {
         margin-top: 8px;
     }
 }
+/* IMPORTANT ORDER NOTICE */
+
+.store-important-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    margin: 0 0 54px;
+    padding: 23px 26px;
+    border: 1px solid #cfe1ff;
+    border-left: 4px solid #1677ff;
+    border-radius: 17px;
+    background: linear-gradient(
+        110deg,
+        #f0f6ff 0%,
+        #ffffff 100%
+    );
+    box-shadow: 0 10px 28px rgba(22,119,255,.07);
+}
+
+.store-notice-icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 43px;
+    width: 43px;
+    height: 43px;
+    border-radius: 13px;
+    color: #1677ff;
+    background: #dceaff;
+    font-size: 1.1rem;
+}
+
+.store-notice-content {
+    min-width: 0;
+}
+
+.store-notice-label {
+    display: inline-block;
+    margin-bottom: 5px;
+    color: #1677ff;
+    font-size: .68rem;
+    font-weight: 800;
+    letter-spacing: 1.35px;
+}
+
+.store-notice-content h2 {
+    margin: 0 0 6px;
+    color: #172033;
+    font-size: 1.05rem;
+    font-weight: 800;
+}
+
+.store-notice-content p {
+    margin: 0;
+    color: #64748b;
+    font-size: .81rem;
+    line-height: 1.8;
+}
+
+.store-notice-content p strong {
+    color: #263b59;
+}
+
+/* DARK MODE */
+
+html[data-theme="dark"] .store-important-notice {
+    background: linear-gradient(
+        110deg,
+        #10213b 0%,
+        #111c30 100%
+    );
+    border-color: #294b78;
+    border-left-color: #60a5fa;
+    box-shadow: 0 10px 28px rgba(0,0,0,.12);
+}
+
+html[data-theme="dark"] .store-notice-icon {
+    color: #60a5fa;
+    background: #1c3557;
+}
+
+html[data-theme="dark"] .store-notice-label {
+    color: #60a5fa;
+}
+
+html[data-theme="dark"] .store-notice-content h2 {
+    color: #f8fafc;
+}
+
+html[data-theme="dark"] .store-notice-content p {
+    color: #b8c3d3;
+}
+
+html[data-theme="dark"] .store-notice-content p strong {
+    color: #e2ecfb;
+}
+
+/* MOBILE RESPONSIVE */
+
+@media (max-width: 768px) {
+
+    .store-important-notice {
+        gap: 12px;
+        margin-bottom: 38px;
+        padding: 18px 16px;
+        border-radius: 14px;
+    }
+
+    .store-notice-icon {
+        flex-basis: 37px;
+        width: 37px;
+        height: 37px;
+        border-radius: 11px;
+    }
+
+    .store-notice-label {
+        font-size: .61rem;
+    }
+
+    .store-notice-content h2 {
+        font-size: .98rem;
+    }
+
+    .store-notice-content p {
+        font-size: .74rem;
+        line-height: 1.75;
+    }
+
+}
