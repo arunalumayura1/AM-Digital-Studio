@@ -4,11 +4,8 @@
 ===================================================== */
 
 const AM_STORE_CONFIG = {
-    // Replace with your WhatsApp number in international format, digits only.
-    // Example format for Sri Lanka: 947XXXXXXXX (do not include + or spaces).
-    WHATSAPP_NUMBER: "94XXXXXXXXX",
+    WHATSAPP_NUMBER: "94715445967",
 
-    // These are sample launch prices. Replace with your final selling prices (LKR).
     CURRENCY: "LKR",
     LOCALE: "en-LK"
 };
