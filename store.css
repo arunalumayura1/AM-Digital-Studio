@@ -365,3 +365,34 @@ html[data-theme="dark"] .gallery-arrow:hover {
         margin-top: 8px;
     }
 }
+
+.product-tag {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    padding: 6px 10px;
+    border-radius: 30px;
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    font-size: .65rem;
+    font-weight: 800;
+    letter-spacing: .6px;
+}
+
+
+
+/* RED BADGE */
+.product-tag.badge-red {
+    background: rgba(255, 55, 55, .18);
+    border: 1px solid rgba(255, 55, 55, .35);
+    color: #ff3737;
+}
+
+/* GREEN BADGE */
+.product-tag.badge-green {
+    background: rgba(34, 197, 94, .18);
+    border: 1px solid rgba(34, 197, 94, .35);
+    color: #16a34a;
+}
