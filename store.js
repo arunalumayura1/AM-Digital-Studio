@@ -19,7 +19,7 @@ const STORE_PRODUCTS = [
         price: 2500,
         images: ["bshirt.png", "wshirt.png"],
         badge: "Available",
-       badgeColor: "green",
+        badgeColor: "green",
         description: "A clean everyday T-shirt featuring the AM Digital Studio identity. Comfortable, simple and creator-ready.",
         details: ["AM Digital Studio inspired design", "Available in multiple sizes", "Colour and stock confirmed when ordering"],
         sizes: ["S", "M", "L", "XL", "XXL"]
@@ -155,7 +155,9 @@ function renderProducts() {
         <article class="store-product-card">
             <div class="product-image-wrap" data-view-product="${product.id}" tabindex="0" role="button" aria-label="View ${product.name}">
                 <img src="${product.images[0]}" alt="${product.name}" loading="lazy">
-                <span class="product-tag">${product.badge}</span>
+                <span class="product-tag badge-${product.badgeColor || 'blue'}">
+    ${product.badge}
+</span>
             </div>
             <div class="product-card-body">
                 <span class="product-category-label">${product.categoryLabel}</span>
