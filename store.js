@@ -31,8 +31,8 @@ const STORE_PRODUCTS = [
         categoryLabel: "Hoodies",
         price: 4500,
         images: ["bhoodie.png", "whoodie.png"],
-        badge: "Not Available",
-       badgeColor: "red",
+ badge: "Available",
+        badgeColor: "green",
         description: "A versatile hoodie mockup for the AM community, designed for a relaxed everyday look.",
         details: ["AM signature chest design", "Size selection available", "Colour and stock confirmed when ordering"],
         sizes: ["S", "M", "L", "XL", "XXL"]
@@ -44,7 +44,8 @@ const STORE_PRODUCTS = [
         categoryLabel: "Mugs",
         price: 1500,
         images: ["bmug.png", "wmug.png"],
-        badge: "DAILY PICK",
+         badge: "Available",
+        badgeColor: "green",
         description: "A simple branded mug for your desk, study table or creative workspace.",
         details: ["AM Digital Studio branding", "Great for desk and study setups", "Print and availability confirmed when ordering"],
         sizes: []
@@ -56,7 +57,8 @@ const STORE_PRODUCTS = [
         categoryLabel: "Caps",
         price: 1800,
         images: ["bcap.png", "wcap.png"],
-        badge: "AM STYLE",
+       badge: "Available",
+        badgeColor: "green",
         description: "A minimal cap concept featuring the AM mark. A simple addition to your everyday collection.",
         details: ["Minimal AM front design", "Adjustable style subject to stock", "Colour confirmed when ordering"],
         sizes: ["One Size"]
@@ -68,7 +70,8 @@ const STORE_PRODUCTS = [
         categoryLabel: "Wristbands",
         price: 500,
         images: ["bband.png", "wband.png"],
-        badge: "COMMUNITY",
+        badge: "Available",
+        badgeColor: "green",
         description: "A lightweight AM community wristband with a clean, minimal design.",
         details: ["AM identity inspired", "Lightweight wristband concept", "Colour and stock confirmed when ordering"],
         sizes: ["One Size"]
@@ -80,7 +83,8 @@ const STORE_PRODUCTS = [
         categoryLabel: "Flash Cards",
         price: 1200,
         images: ["bcards.png", "wcards.png"],
-        badge: "LEARN MORE",
+         badge: "Available",
+        badgeColor: "green",
         description: "A compact flash-card set concept to support quick revision, active recall and organised learning.",
         details: ["Study and revision card set", "Topic and card count to be confirmed", "Availability confirmed when ordering"],
         sizes: []
