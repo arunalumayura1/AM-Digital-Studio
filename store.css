@@ -238,3 +238,130 @@ body.store-modal-open { overflow: hidden; }
 .product-detail-list li { display: flex; gap: 8px; margin: 7px 0; color: #64748b; font-size: .75rem; line-height: 1.55; }
 .product-detail-list li i { margin-top: 4px; color: #1677ff; }
 html[data-theme="dark"] .product-detail-list li { color: #aab4c3; }
+/* =========================================
+   AM STORE PRODUCT IMAGE GALLERY
+========================================= */
+
+.product-modal-image {
+    width: 100%;
+    align-self: center;
+    overflow: visible;
+}
+
+.product-gallery {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 17px;
+    background: #f3f7fd;
+}
+
+.product-gallery img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 1;
+}
+
+/* Navigation Buttons */
+
+.gallery-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 43px;
+    height: 43px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: rgba(255,255,255,.95);
+    color: #1677ff;
+
+    font-size: 16px;
+    cursor: pointer;
+
+    box-shadow: 0 4px 15px rgba(0,0,0,.15);
+
+    transition: .25s ease;
+    z-index: 2;
+}
+
+.gallery-arrow:hover {
+    background: #1677ff;
+    color: white;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.gallery-prev {
+    left: 12px;
+}
+
+.gallery-next {
+    right: 12px;
+}
+
+/* Image Counter */
+
+.gallery-counter {
+    margin-top: 12px;
+    text-align: center;
+    color: #718096;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Dark Mode */
+
+html[data-theme="dark"] .product-gallery {
+    background: #0f172a;
+}
+
+html[data-theme="dark"] .gallery-counter {
+    color: #aab4c3;
+}
+
+html[data-theme="dark"] .gallery-arrow {
+    background: #1e293b;
+    color: #60a5fa;
+}
+
+html[data-theme="dark"] .gallery-arrow:hover {
+    background: #1677ff;
+    color: white;
+}
+
+/* Mobile Responsive */
+
+@media (max-width: 650px) {
+
+    .product-gallery {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+    }
+
+    .gallery-arrow {
+        width: 38px;
+        height: 38px;
+        font-size: 14px;
+    }
+
+    .gallery-prev {
+        left: 8px;
+    }
+
+    .gallery-next {
+        right: 8px;
+    }
+
+    .gallery-counter {
+        margin-top: 8px;
+    }
+}
