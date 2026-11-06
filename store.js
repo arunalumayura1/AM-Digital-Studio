@@ -100,9 +100,19 @@ function loadCart() {
     try {
         const saved = JSON.parse(localStorage.getItem("amds-store-cart") || "[]");
         if (!Array.isArray(saved)) return [];
-        return saved.filter(item => STORE_PRODUCTS.some(product => product.id === item.id)
-            && Number.isInteger(item.quantity) && item.quantity > 0)
-            .map(item => ({ id: item.id, size: item.size || "", quantity: Math.min(item.quantity, 99) }));
+
+        return saved
+            .filter(item =>
+                STORE_PRODUCTS.some(product => product.id === item.id) &&
+                Number.isInteger(item.quantity) &&
+                item.quantity > 0
+            )
+            .map(item => ({
+                id: item.id,
+                size: item.size || "",
+                color: item.color || "Black",
+                quantity: Math.min(item.quantity, 99)
+            }));
     } catch {
         return [];
     }
@@ -231,6 +241,15 @@ function openProductModal(productId) {
                 `).join("")}
             </ul>
 
+<label class="product-option-label" for="productColor">
+    Select Colour
+</label>
+
+<select class="product-option-select" id="productColor">
+    <option value="Black">Black</option>
+    <option value="White">White</option>
+</select>
+
             ${hasSizes ? `
                 <label class="product-option-label" for="productSize">
                     Select size / option
@@ -304,17 +323,30 @@ function closeProductModal() {
         document.body.classList.remove("store-modal-open");
     }
 }
+function addToCart(productId, size = "", color = "Black", quantity = 1) {
 
-function addToCart(productId, size = "", quantity = 1) {
-    const existing = cart.find(item => item.id === productId && item.size === size);
-    if (existing) existing.quantity = Math.min(99, existing.quantity + quantity);
-    else cart.push({ id: productId, size, quantity });
+    const existing = cart.find(item =>
+        item.id === productId &&
+        item.size === size &&
+        item.color === color
+    );
+
+    if (existing) {
+        existing.quantity = Math.min(99, existing.quantity + quantity);
+    } else {
+        cart.push({
+            id: productId,
+            size,
+            color,
+            quantity
+        });
+    }
+
     saveCart();
     renderCart();
     closeProductModal();
     openCart();
 }
-
 function renderCart() {
     const count = cartQuantity();
     const subtotal = cartSubtotal();
@@ -333,10 +365,17 @@ function renderCart() {
         const product = getProduct(item.id);
         return `
             <div class="cart-item">
-              <img src="${product.images[0]}" alt="${product.name}">
+              <img
+    src="${item.color === "White" ? product.images[1] : product.images[0]}"
+    alt="${product.name} - ${item.color}"
+>
                 <div>
                     <h4>${product.name}</h4>
-                    <div class="cart-item-meta">${item.size ? `Option: ${item.size} · ` : ""}${money(product.price)} each</div>
+                   <div class="cart-item-meta">
+    Colour: ${item.color || "Black"}
+    ${item.size ? ` · Size: ${item.size}` : ""}
+    · ${money(product.price)} each
+</div>
                     <div class="cart-item-actions">
                         <button class="quantity-btn" type="button" data-cart-action="decrease" data-index="${index}" aria-label="Decrease quantity"><i class="fa-solid fa-minus"></i></button>
                         <span class="quantity-value">${item.quantity}</span>
@@ -386,7 +425,7 @@ function buildWhatsAppMessage(order) {
         "*ORDER ITEMS*",
         ...cart.map((item, index) => {
             const product = getProduct(item.id);
-            return `${index + 1}. ${product.name}${item.size ? ` (${item.size})` : ""} x ${item.quantity} — ${money(product.price * item.quantity)}`;
+         return `${index + 1}. ${product.name} | Colour: ${item.color || "Black"}${item.size ? ` | Size: ${item.size}` : ""} | Qty: ${item.quantity} — ${money(product.price * item.quantity)}`;
         }),
         "",
         `*Estimated subtotal: ${money(cartSubtotal())}*`,
@@ -462,13 +501,15 @@ $("#productModal").addEventListener("click", event => {
 
     if (event.target.closest("#modalAddToCart") && activeProduct) {
 
-        const size = $("#productSize")?.value || "";
+      const color = $("#productColor")?.value || "Black";
 
-        const quantity = Number(
-            $("#productQuantity")?.value || 1
-        );
+const size = $("#productSize")?.value || "";
 
-        addToCart(activeProduct.id, size, quantity);
+const quantity = Number(
+    $("#productQuantity")?.value || 1
+);
+
+addToCart(activeProduct.id, size, color, quantity);
     }
 
     });
