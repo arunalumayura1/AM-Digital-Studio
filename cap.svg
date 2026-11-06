@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 450" role="img" aria-label="CAP product mockup">
-<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f8fbff"/><stop offset="1" stop-color="#e8f1ff"/></linearGradient><filter id="shadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#64748b" flood-opacity=".18"/></filter></defs>
-<rect width="450" height="450" rx="32" fill="url(#bg)"/><circle cx="355" cy="85" r="58" fill="#dbeafe" opacity=".75"/><circle cx="75" cy="365" r="75" fill="#dbeafe" opacity=".55"/>
-<g filter="url(#shadow)"><path d="M90 250 Q110 130 225 120 Q330 120 355 245 L90 250 Z" fill="#202633" stroke="#0f1219" stroke-width="5"/><path d="M90 250 Q220 220 355 245 Q325 300 170 295 Q110 290 90 250 Z" fill="#111827" stroke="#0f1219" stroke-width="5"/><path d="M225 122 Q235 185 225 230" stroke="#4b5563" stroke-width="5" fill="none"/><text x="225" y="220" text-anchor="middle" font-family="Arial" font-size="28" font-weight="700" fill="#ffffff">AM</text></g>
-<text x="225" y="425" text-anchor="middle" font-family="Arial" font-size="12" font-weight="700" letter-spacing="4" fill="#64748b">AM DIGITAL STUDIO</text>
-</svg>
