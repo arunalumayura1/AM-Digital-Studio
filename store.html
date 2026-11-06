@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Shop official AM Digital Studio merchandise including T-shirts, hoodies, mugs, caps, wristbands and flash cards.">
+    <meta name="theme-color" content="#1677ff">
+    <title>AM Store | AM Digital Studio</title>
+    <link rel="icon" type="image/png" href="wdf.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="store.css">
+    <script src="theme.js" defer></script>
+    <script src="loader.js" defer></script>
+    <script src="store.js" defer></script>
+</head>
+<body class="store-page">
+<header class="store-header">
+    <nav class="navbar store-navbar">
+        <div class="logo"><a href="index.html">AM Digital Studio</a></div>
+        <button class="store-menu-toggle" id="storeMenuToggle" type="button" aria-label="Open navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+        <nav class="nav-links store-nav-links" id="storeNavLinks" aria-label="Main navigation">
+            <a href="index.html">Home</a>
+            <a href="index.html#services">Services</a>
+            <a href="store.html" class="current" aria-current="page">Store</a>
+            <a href="about.html">About Us</a>
+            <a href="index.html#contact">Contact Us</a>
+        </nav>
+    </nav>
+    <div class="theme-toggle-wrap">
+        <button id="themeToggle" class="theme-toggle" type="button" aria-label="Switch to dark mode">
+            <span class="theme-icon">☾</span><span class="theme-text">Dark Mode</span>
+        </button>
+    </div>
+</header>
+
+<main>
+    <section class="store-hero">
+        <div class="store-container store-hero-inner">
+            <div class="store-hero-copy">
+                <span class="store-eyebrow"><i class="fa-solid fa-bag-shopping"></i> OFFICIAL MERCHANDISE</span>
+                <h1>Welcome to <span>AM Store.</span></h1>
+                <p>Explore official AM Digital Studio merchandise, everyday essentials and learning cards — made for creators, learners and the AM community.</p>
+                <a href="#shop" class="primary-btn store-hero-btn">Explore Collection <i class="fa-solid fa-arrow-right"></i></a>
+                <div class="store-trust-points">
+                    <span><i class="fa-solid fa-box"></i> Carefully selected items</span>
+                    <span><i class="fa-solid fa-headset"></i> Order support via WhatsApp</span>
+                </div>
+            </div>
+            <div class="store-hero-art" aria-label="AM Store merchandise preview">
+                <div class="hero-art-glow"></div>
+                <div class="hero-product hero-product-shirt"><img src="images/store/tshirt.svg" alt="AM branded T-shirt"></div>
+                <div class="hero-product hero-product-mug"><img src="images/store/mug.svg" alt="AM branded mug"></div>
+                <div class="hero-product hero-product-cap"><img src="images/store/cap.svg" alt="AM branded cap"></div>
+                <div class="hero-art-label"><strong>AM STORE</strong><span>LEARN · CREATE · GROW</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="store-shop-section" id="shop">
+        <div class="store-container">
+            <div class="store-section-heading">
+                <div>
+                    <span class="store-eyebrow">THE AM COLLECTION</span>
+                    <h2>Shop our <span>products.</span></h2>
+                    <p>Find something that fits your style and supports your learning journey.</p>
+                </div>
+                <button class="cart-open-btn" id="openCartBtn" type="button" aria-label="Open shopping cart">
+                    <i class="fa-solid fa-cart-shopping"></i><span>My Cart</span><b id="cartCount">0</b>
+                </button>
+            </div>
+
+            <div class="store-toolbar">
+                <div class="category-filters" id="categoryFilters" aria-label="Filter products">
+                    <button class="category-filter active" data-category="all" type="button">All Products</button>
+                    <button class="category-filter" data-category="tshirts" type="button">T-Shirts</button>
+                    <button class="category-filter" data-category="hoodies" type="button">Hoodies</button>
+                    <button class="category-filter" data-category="mugs" type="button">Mugs</button>
+                    <button class="category-filter" data-category="caps" type="button">Caps</button>
+                    <button class="category-filter" data-category="wristbands" type="button">Wristbands</button>
+                    <button class="category-filter" data-category="flashcards" type="button">Flash Cards</button>
+                </div>
+                <label class="store-sort">
+                    <span class="sr-only">Sort products</span>
+                    <i class="fa-solid fa-arrow-down-wide-short"></i>
+                    <select id="sortProducts">
+                        <option value="featured">Featured</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="name">Name: A to Z</option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="store-results-line"><span id="productCountLabel">6 products</span><span>Official AM Digital Studio collection</span></div>
+            <div class="product-grid" id="productGrid" aria-live="polite"></div>
+            <div class="store-price-note"><i class="fa-solid fa-circle-info"></i> Displayed prices are sample prices for the initial store setup. Update them in <code>store.js</code> before publishing the shop.</div>
+        </div>
+    </section>
+
+    <section class="store-promise-section">
+        <div class="store-container store-promise-grid">
+            <div class="store-promise-card"><span><i class="fa-solid fa-heart"></i></span><div><h3>Made for the AM Community</h3><p>Merchandise inspired by creativity, learning and digital growth.</p></div></div>
+            <div class="store-promise-card"><span><i class="fa-brands fa-whatsapp"></i></span><div><h3>Simple Ordering</h3><p>Send your selected items and order details directly through WhatsApp.</p></div></div>
+            <div class="store-promise-card"><span><i class="fa-solid fa-mobile-screen-button"></i></span><div><h3>Shop Anywhere</h3><p>A responsive shopping experience on mobile, tablet and desktop.</p></div></div>
+        </div>
+    </section>
+</main>
+
+<!-- Product details modal -->
+<div class="store-modal" id="productModal" aria-hidden="true">
+    <div class="store-modal-backdrop" data-close-modal></div>
+    <div class="store-modal-panel product-modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalProductName">
+        <button class="modal-close-btn" type="button" data-close-modal aria-label="Close product details"><i class="fa-solid fa-xmark"></i></button>
+        <div class="product-modal-content" id="productModalContent"></div>
+    </div>
+</div>
+
+<!-- Cart drawer -->
+<div class="cart-overlay" id="cartOverlay" aria-hidden="true">
+    <button class="cart-backdrop" type="button" data-close-cart aria-label="Close cart"></button>
+    <aside class="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
+        <div class="cart-drawer-header">
+            <div><span class="store-eyebrow">YOUR SELECTION</span><h2 id="cartTitle">Shopping Cart <span id="drawerCartCount">(0)</span></h2></div>
+            <button class="modal-close-btn" type="button" data-close-cart aria-label="Close cart"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="cart-items" id="cartItems"></div>
+        <div class="cart-empty" id="cartEmpty"><div><i class="fa-solid fa-bag-shopping"></i></div><h3>Your cart is empty</h3><p>Explore the collection and add your favourite items.</p><button type="button" class="primary-btn" data-close-cart>Continue Shopping</button></div>
+        <div class="cart-summary" id="cartSummary">
+            <div class="summary-row"><span>Subtotal</span><strong id="cartSubtotal">Rs. 0</strong></div>
+            <div class="summary-row"><span>Delivery</span><span class="delivery-note">Confirmed with AM Store</span></div>
+            <div class="summary-row summary-total"><span>Estimated Total</span><strong id="cartTotal">Rs. 0</strong></div>
+            <p class="cart-summary-note">Delivery charges, availability and final total will be confirmed before payment.</p>
+            <button class="checkout-btn" id="checkoutBtn" type="button">Continue to Order <i class="fa-solid fa-arrow-right"></i></button>
+            <button class="continue-shopping-btn" type="button" data-close-cart>Continue Shopping</button>
+        </div>
+    </aside>
+</div>
+
+<!-- Order details modal -->
+<div class="store-modal" id="checkoutModal" aria-hidden="true">
+    <div class="store-modal-backdrop" data-close-checkout></div>
+    <div class="store-modal-panel checkout-panel" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle">
+        <button class="modal-close-btn" type="button" data-close-checkout aria-label="Close checkout"><i class="fa-solid fa-xmark"></i></button>
+        <span class="store-eyebrow">ALMOST THERE</span>
+        <h2 id="checkoutTitle">Your order details</h2>
+        <p class="checkout-intro">Enter your contact and delivery details. Your order will open in WhatsApp for confirmation.</p>
+        <form id="checkoutForm">
+            <label>Full Name<input type="text" id="customerName" autocomplete="name" required maxlength="80" placeholder="Your full name"></label>
+            <label>WhatsApp / Contact Number<input type="tel" id="customerPhone" autocomplete="tel" required maxlength="20" placeholder="Your contact number"></label>
+            <label>Delivery Address<textarea id="customerAddress" autocomplete="street-address" rows="3" required maxlength="350" placeholder="House number, street, city"></textarea></label>
+            <label>Additional Note <span class="optional-label">(optional)</span><textarea id="customerNote" rows="2" maxlength="250" placeholder="Colour preference or any other note"></textarea></label>
+            <div class="checkout-total-box"><span>Estimated order total</span><strong id="checkoutTotal">Rs. 0</strong></div>
+            <button class="checkout-btn" type="submit"><i class="fa-brands fa-whatsapp"></i> Send Order via WhatsApp</button>
+            <p class="secure-note"><i class="fa-solid fa-shield-halved"></i> Do not send payment card details through WhatsApp.</p>
+        </form>
+    </div>
+</div>
+
+<footer>
+    <div class="container footer-grid">
+        <div class="footer-box">
+            <h3>AM Digital Studio</h3>
+            <p>Learn • Create • Grow</p>
+            <p>Helping creators master YouTube, AI, Web Development, Video Editing and Digital Skills.</p>
+        </div>
+        <div class="footer-box">
+            <h3>Quick Links</h3>
+            <a href="index.html">Home</a>
+            <a href="index.html#services">Services</a>
+            <a href="store.html">Store</a>
+            <a href="about.html">About Us</a>
+            <a href="index.html#contact">Contact Us</a>
+        </div>
+        <div class="footer-box">
+            <h3>Resources</h3>
+            <a href="video.html">Videos</a>
+            <a href="policy.html">Privacy Policy</a>
+            <a href="terms.html">Terms &amp; Conditions</a>
+        </div>
+        <div class="footer-box">
+            <h3>Follow Us</h3>
+            <p class="social-text">Follow us on our official social media platforms.</p>
+            <div class="social-icons">
+                <a href="https://youtube.com/@amdigitalstudiooffical?si=hBFk4ABtEdhVcTLS" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.facebook.com/share/1DPgTCT6yb/" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/amdigitalstudio1?igsh=MWoyazZ4Mm9zYmgwag==" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/in/arunalu-mayura-702777421/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://github.com/arunalumayura1" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="copyright">© 2026 AM Digital Studio. All Rights Reserved.<br><br>Made with ❤️ in Sri Lanka</div>
+</footer>
+
+<button class="back-to-top store-back-to-top" id="storeBackToTop" type="button" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
+</body>
+</html>
