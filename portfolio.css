@@ -2407,5 +2407,51 @@ body.light-theme .hero-visual-footer {
 
 
 /* =========================================================
+   PORTFOLIO REVEAL ANIMATION
+========================================================= */
+
+.portfolio-card,
+.featured-project-card,
+.process-card {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.portfolio-card.is-visible,
+.featured-project-card.is-visible,
+.process-card.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+
+    .portfolio-card:not(.is-visible),
+    .featured-project-card:not(.is-visible),
+    .process-card:not(.is-visible) {
+
+        opacity: 0;
+
+        transform: translateY(25px);
+
+        transition:
+            opacity 0.7s ease,
+            transform 0.7s ease;
+
+    }
+
+    .portfolio-card.is-visible,
+    .featured-project-card.is-visible,
+    .process-card.is-visible {
+
+        opacity: 1;
+
+        transform: translateY(0);
+
+    }
+
+}
+
+/* =========================================================
    END OF PORTFOLIO CSS
 ========================================================= */
