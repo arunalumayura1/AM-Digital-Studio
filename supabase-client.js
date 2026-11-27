@@ -10,22 +10,15 @@ export const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
 
 export async function requireUser() {
   const { data: { user }, error } = await supabase.auth.getUser();
-  const { data: { session } } = await supabase.auth.getSession();
 
-const { data: sessionData } = await supabase.auth.getSession();
-
-console.log('SERVICE ORDER AUTH CHECK', {
-    user_id_sent_to_database: user?.id,
-    session_user_id: sessionData?.session?.user?.id,
-    access_token_exists: !!sessionData?.session?.access_token,
-    user_email: user?.email
-});
   if (error || !user) {
     const next = encodeURIComponent(location.pathname + location.search);
     location.href = `login.html?next=${next}`;
     return null;
   }
+
   return user;
+
 }
 
 export async function getProfile(userId) {
