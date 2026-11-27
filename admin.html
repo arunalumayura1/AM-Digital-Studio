@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +9,6 @@
     <title>Admin Dashboard | AM Digital Studio</title>
 
     <link rel="stylesheet" href="account.css">
-
     <script type="module" src="admin.js"></script>
     <script src="account-theme.js" defer></script>
 </head>
@@ -37,26 +37,16 @@
 
 <main class="am-main">
 
-   <div>
-    <span class="eyebrow">PRIVACY & RECORDS</span>
-    <h2>Deleted Customers / Archived Orders</h2>
-    <p class="muted">
-        Previously archived customer information.
-        Admin access only.
-    </p>
-</div>
+    <!-- ADMIN HEADER -->
+    <div class="top-row">
+        <div>
+            <span class="eyebrow">OWNER CONTROL CENTER</span>
+            <h1 class="page-title">Order Management</h1>
+            <p class="muted" id="adminWelcome">
+                Checking administrator access…
+            </p>
+        </div>
 
-<div class="stats">
-    <div class="stat">
-        <strong id="deletedCustomersCount">—</strong>
-        <span>Deleted Customers</span>
-    </div>
-
-    <div class="stat">
-        <strong id="archivedOrdersCount">—</strong>
-        <span>Archived Orders</span>
-    </div>
-</div>
         <button id="refreshOrders" class="btn secondary" type="button">
             Refresh Orders
         </button>
@@ -84,12 +74,10 @@
 
     <!-- ALL ORDERS -->
     <section class="panel">
-
         <h2>All customer orders</h2>
 
         <div class="table-wrap">
             <table class="data-table">
-
                 <thead>
                     <tr>
                         <th>Order / Tracking</th>
@@ -107,33 +95,42 @@
                         <td colspan="7">Loading…</td>
                     </tr>
                 </tbody>
-
             </table>
         </div>
-
     </section>
-
 
     <!-- ARCHIVED CUSTOMERS -->
     <section class="panel" id="archivedCustomersSection">
 
-        <div class="top-row">
-            <div>
-                <span class="eyebrow">PRIVACY & RECORDS</span>
-                <h2>Deleted Customers / Archived Orders</h2>
-                <p class="muted">
-                    Previously archived customer information.
-                    Admin access only.
-                </p>
+        <div>
+            <span class="eyebrow">PRIVACY & RECORDS</span>
+            <h2>Deleted Customers / Archived Orders</h2>
+            <p class="muted">
+                Previously archived customer information.
+                Admin access only.
+            </p>
+        </div>
+
+        <!-- ARCHIVE STATISTICS -->
+        <div class="stats">
+            <div class="stat">
+                <strong id="deletedCustomersCount">—</strong>
+                <span>Deleted Customers</span>
+            </div>
+
+            <div class="stat">
+                <strong id="archivedOrdersCount">—</strong>
+                <span>Archived Orders</span>
             </div>
 
             <div class="stat">
                 <strong id="archivedTotal">—</strong>
-                <span>Archived records</span>
+                <span>Archived Records</span>
             </div>
         </div>
 
-        <div style="margin: 18px 0;">
+        <!-- SEARCH -->
+        <div style="margin:18px 0;">
             <input
                 type="search"
                 id="archiveSearch"
@@ -144,17 +141,20 @@
             >
         </div>
 
-        <select id="archiveCountryFilter"
-        class="control"
-        style="width:100%;max-width:300px;margin-top:12px;">
-    <option value="">All Countries</option>
-</select>
+        <!-- COUNTRY FILTER -->
+        <select
+            id="archiveCountryFilter"
+            class="control"
+            style="width:100%;max-width:300px;margin:0 0 18px;"
+        >
+            <option value="">All Countries</option>
+        </select>
+
         <div id="archiveNotice" class="notice" hidden></div>
 
+        <!-- ARCHIVED TABLE -->
         <div class="table-wrap">
-
             <table class="data-table">
-
                 <thead>
                     <tr>
                         <th>Tracking Number</th>
@@ -172,9 +172,7 @@
                         <td colspan="7">Loading archived records…</td>
                     </tr>
                 </tbody>
-
             </table>
-
         </div>
 
         <p class="footer-note">
