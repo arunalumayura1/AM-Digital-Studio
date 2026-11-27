@@ -10,18 +10,29 @@ function showNotice(message, type = 'info') {
 }
 
 const user = await requireUser();
+let currentProfile = null;
 
 if (user) {
     try {
-        const profile = await getProfile(user.id);
+        currentProfile = await getProfile(user.id);
 
         document.getElementById('welcomeText').textContent =
-            `Signed in as ${profile.full_name || user.email}`;
+            `Signed in as ${currentProfile.full_name || user.email}`;
+
+        // Only customer accounts may request deletion.
+        const deleteButton = document.getElementById('deleteAccountButton');
+
+        if (currentProfile.role === 'customer') {
+            deleteButton.disabled = false;
+        } else {
+            deleteButton.disabled = true;
+        }
 
     } catch (error) {
         showNotice(error.message, 'error');
     }
 }
+
 
 // ========================================
 // CHANGE PASSWORD
@@ -63,7 +74,6 @@ document.getElementById('changePasswordForm')
         button.textContent = 'Updating...';
 
         try {
-            // Verify the current password first.
             const { error: signInError } =
                 await supabase.auth.signInWithPassword({
                     email: user.email,
@@ -105,7 +115,6 @@ document.getElementById('sendResetEmail')
         }
 
         const button = event.currentTarget;
-
         button.disabled = true;
         button.textContent = 'Sending...';
 
@@ -136,6 +145,97 @@ document.getElementById('sendResetEmail')
 
 
 // ========================================
+// ACCOUNT DELETION
+// ========================================
+
+document.getElementById('deleteAccountButton')
+    .addEventListener('click', async (event) => {
+
+        if (!user || currentProfile?.role !== 'customer') {
+            showNotice('Only customer accounts can be deleted.', 'error');
+            return;
+        }
+
+        const passwordInput =
+            document.getElementById('deleteAccountPassword');
+
+        const password = passwordInput.value;
+
+        if (!password) {
+            showNotice('Please enter your current password.', 'error');
+            passwordInput.focus();
+            return;
+        }
+
+        const confirmed = window.confirm(
+            'Are you sure you want to permanently delete your AM Digital Studio account? Your order history will be retained securely.'
+        );
+
+        if (!confirmed) return;
+
+        const button = event.currentTarget;
+        button.disabled = true;
+        button.textContent = 'Deleting Account...';
+
+        try {
+            const { data: sessionData, error: sessionError } =
+                await supabase.auth.getSession();
+
+            if (sessionError) throw sessionError;
+
+            if (!sessionData.session) {
+                throw new Error('Your login session has expired. Please sign in again.');
+            }
+
+            const { data, error } =
+                await supabase.functions.invoke(
+                    'delete-customer-account',
+                    {
+                        body: { password }
+                    }
+                );
+
+            if (error) {
+                let message = error.message;
+
+                if (error.context) {
+                    try {
+                        const result = await error.context.json();
+                        if (result.error) message = result.error;
+                    } catch (_) {}
+                }
+
+                throw new Error(message);
+            }
+
+            if (!data?.success) {
+                throw new Error(data?.error || 'Account deletion failed.');
+            }
+
+            passwordInput.value = '';
+
+            showNotice(
+                'Your account has been deleted successfully. Redirecting...',
+                'success'
+            );
+
+            // Clear the deleted account's local session.
+            await supabase.auth.signOut();
+
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 2500);
+
+        } catch (error) {
+            showNotice(error.message, 'error');
+
+            button.disabled = false;
+            button.textContent = 'Delete My Account';
+        }
+    });
+
+
+// ========================================
 // LOGOUT
 // ========================================
 
@@ -152,10 +252,3 @@ document.getElementById('logoutButton')
         window.location.href = 'login.html';
     });
 
-
-// ========================================
-// ACCOUNT DELETION
-// ========================================
-
-// Kept disabled until secure server-side deletion
-// and order-data retention are configured.
