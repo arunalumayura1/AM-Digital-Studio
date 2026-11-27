@@ -35,7 +35,25 @@ console.log('SERVICE ORDER AUTH CHECK', {
     access_token_exists: !!sessionData?.session?.access_token,
     user_email: user?.email
 });
+const token = sessionData?.session?.access_token;
 
+let jwtInfo = {};
+
+if (token) {
+    try {
+        jwtInfo = JSON.parse(
+            atob(token.split('.')[1])
+        );
+    } catch (error) {
+        console.error('JWT decode failed:', error);
+    }
+}
+
+console.log('SUPABASE JWT CHECK', {
+    role: jwtInfo.role,
+    token_user_id: jwtInfo.sub,
+    session_user_id: sessionData?.session?.user?.id
+});
   if (authError || !user) {
     show('Please sign in to save and track your service order. Redirecting to login…', 'error');
 
