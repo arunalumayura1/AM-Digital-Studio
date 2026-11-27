@@ -11,6 +11,253 @@ function showNotice(message, type = 'info') {
 
 const user = await requireUser();
 let currentProfile = null;
+// ========================================
+// PROFILE PHOTO UPLOAD SYSTEM
+// ========================================
+
+const profilePhotoInput =
+    document.getElementById('profilePhotoInput');
+
+const uploadProfilePhoto =
+    document.getElementById('uploadProfilePhoto');
+
+const removeProfilePhoto =
+    document.getElementById('removeProfilePhoto');
+
+const profilePreview =
+    document.getElementById('profilePreview');
+
+const profilePhotoName =
+    document.getElementById('profilePhotoName');
+
+const profileInitial =
+    document.getElementById('profileInitial');
+
+const MAX_PHOTO_SIZE = 2 * 1024 * 1024;
+
+let selectedPhoto = null;
+
+function getAvatarStoragePath(url) {
+    if (!url) return null;
+
+    try {
+        const parsed = new URL(url);
+        const marker = '/storage/v1/object/public/profile-photos/';
+        const index = parsed.pathname.indexOf(marker);
+
+        if (index === -1) return null;
+
+        return decodeURIComponent(
+            parsed.pathname.substring(index + marker.length)
+        );
+    } catch {
+        return null;
+    }
+}
+
+function showProfilePhoto(url) {
+    profilePreview.innerHTML = '';
+
+    if (url) {
+        const image = document.createElement('img');
+        image.src = url;
+        image.alt = 'Profile picture';
+        profilePreview.appendChild(image);
+
+        profilePhotoName.textContent = 'Profile photo uploaded';
+        removeProfilePhoto.hidden = false;
+    } else {
+        profileInitial.textContent =
+            (currentProfile?.full_name || user?.email || 'A')
+                .trim()
+                .charAt(0)
+                .toUpperCase() || 'A';
+
+        profilePreview.appendChild(profileInitial);
+
+        profilePhotoName.textContent = 'No profile photo uploaded';
+        removeProfilePhoto.hidden = true;
+    }
+}
+
+// Load existing profile photo
+if (user && currentProfile) {
+    showProfilePhoto(currentProfile.avatar_url);
+}
+
+// Open file picker
+uploadProfilePhoto.addEventListener('click', () => {
+    if (!user) return;
+    profilePhotoInput.click();
+});
+
+// Preview selected image
+profilePhotoInput.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+
+    if (!file) return;
+
+    const allowedTypes = [
+        'image/jpeg',
+        'image/png',
+        'image/webp'
+    ];
+
+    if (!allowedTypes.includes(file.type)) {
+        showNotice('Please select a JPG, PNG or WEBP image.', 'error');
+        profilePhotoInput.value = '';
+        return;
+    }
+
+    if (file.size > MAX_PHOTO_SIZE) {
+        showNotice('Image size must be less than 2 MB.', 'error');
+        profilePhotoInput.value = '';
+        return;
+    }
+
+    selectedPhoto = file;
+
+    const previewUrl = URL.createObjectURL(file);
+
+    profilePreview.innerHTML = '';
+
+    const image = document.createElement('img');
+    image.src = previewUrl;
+    image.alt = 'Selected profile photo';
+
+    profilePreview.appendChild(image);
+    profilePhotoName.textContent = file.name;
+
+    uploadProfilePhoto.textContent = 'Save Profile Photo';
+});
+
+// Upload or save selected photo
+uploadProfilePhoto.addEventListener('click', async () => {
+    if (!user || !selectedPhoto) return;
+
+    const button = uploadProfilePhoto;
+    button.disabled = true;
+    button.textContent = 'Uploading...';
+
+    try {
+        const extension = selectedPhoto.type === 'image/png'
+            ? 'png'
+            : selectedPhoto.type === 'image/webp'
+                ? 'webp'
+                : 'jpg';
+
+        const filePath =
+            `${user.id}/avatar-${Date.now()}.${extension}`;
+
+        const oldPath = getAvatarStoragePath(
+            currentProfile?.avatar_url
+        );
+
+        const { error: uploadError } = await supabase.storage
+            .from('profile-photos')
+            .upload(filePath, selectedPhoto, {
+                cacheControl: '3600',
+                contentType: selectedPhoto.type,
+                upsert: false
+            });
+
+        if (uploadError) throw uploadError;
+
+        const { data: publicData } = supabase.storage
+            .from('profile-photos')
+            .getPublicUrl(filePath);
+
+        const avatarUrl = publicData.publicUrl;
+
+        const { error: updateError } = await supabase
+            .from('profiles')
+            .update({ avatar_url: avatarUrl })
+            .eq('id', user.id);
+
+        if (updateError) {
+            await supabase.storage
+                .from('profile-photos')
+                .remove([filePath]);
+
+            throw updateError;
+        }
+
+        // Remove previous photo after the new one is saved.
+        if (oldPath && oldPath !== filePath) {
+            const { error: removeOldError } = await supabase.storage
+                .from('profile-photos')
+                .remove([oldPath]);
+
+            if (removeOldError) {
+                console.warn('Old profile photo cleanup failed:', removeOldError);
+            }
+        }
+
+        currentProfile.avatar_url = avatarUrl;
+
+        showProfilePhoto(avatarUrl);
+
+        selectedPhoto = null;
+        profilePhotoInput.value = '';
+        button.textContent = 'Upload Photo';
+
+        showNotice('Profile photo updated successfully!', 'success');
+
+    } catch (error) {
+        showNotice(error.message, 'error');
+        button.textContent = selectedPhoto
+            ? 'Save Profile Photo'
+            : 'Upload Photo';
+
+    } finally {
+        button.disabled = false;
+    }
+});
+
+// Remove profile photo
+removeProfilePhoto.addEventListener('click', async () => {
+    if (!user || !currentProfile?.avatar_url) return;
+
+    const button = removeProfilePhoto;
+    button.disabled = true;
+    button.textContent = 'Removing...';
+
+    try {
+        const oldPath = getAvatarStoragePath(
+            currentProfile.avatar_url
+        );
+
+        const { error: updateError } = await supabase
+            .from('profiles')
+            .update({ avatar_url: null })
+            .eq('id', user.id);
+
+        if (updateError) throw updateError;
+
+        currentProfile.avatar_url = null;
+
+        showProfilePhoto(null);
+
+        if (oldPath) {
+            const { error: removeError } = await supabase.storage
+                .from('profile-photos')
+                .remove([oldPath]);
+
+            if (removeError) {
+                console.warn('Profile photo cleanup failed:', removeError);
+            }
+        }
+
+        showNotice('Profile photo removed successfully.', 'success');
+
+    } catch (error) {
+        showNotice(error.message, 'error');
+
+    } finally {
+        button.disabled = false;
+        button.textContent = 'Remove Photo';
+    }
+});
 
 if (user) {
     try {
