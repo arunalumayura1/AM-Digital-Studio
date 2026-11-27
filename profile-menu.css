@@ -1,12 +1,15 @@
 
-/* AM Digital Studio Profile Menu */
+/* =========================================
+   AM DIGITAL STUDIO - PROFILE MENU
+========================================= */
 
 .profile-wrapper {
     position: relative;
     display: flex;
     align-items: center;
-    margin-left: auto;
-    z-index: 9999;
+    margin-left: 15px;
+    z-index: 10001;
+    flex-shrink: 0;
 }
 
 .profile-avatar {
@@ -15,7 +18,7 @@
     min-width: 43px;
     border-radius: 50%;
     border: 2px solid #1677ff;
-    background: linear-gradient(135deg, #1677ff, #7047ff);
+    background: linear-gradient(135deg, #1677ff, #00bfff, #7047ff);
     color: #fff;
     display: flex;
     align-items: center;
@@ -24,10 +27,12 @@
     font-size: 18px;
     font-weight: 700;
     overflow: hidden;
+    transition: transform .25s ease, box-shadow .25s ease;
 }
 
 .profile-avatar:hover {
     transform: scale(1.06);
+    box-shadow: 0 5px 18px rgba(22,119,255,.3);
 }
 
 .profile-dropdown {
@@ -41,7 +46,7 @@
     border: 1px solid rgba(128,128,128,.25);
     border-radius: 15px;
     box-shadow: 0 12px 35px rgba(0,0,0,.18);
-    z-index: 10000;
+    z-index: 10002;
 }
 
 .profile-dropdown[hidden] {
@@ -57,6 +62,8 @@
 .profile-avatar-large {
     width: 46px;
     height: 46px;
+    min-width: 46px;
+    pointer-events: none;
 }
 
 .profile-user-info {
@@ -110,8 +117,16 @@
     display: none;
 }
 
-/* Mobile */
-@media (max-width: 768px) {
+/* =========================================
+   MOBILE NAVIGATION
+========================================= */
+
+@media (max-width: 900px) {
+
+    .navbar {
+        position: relative;
+    }
+
     .profile-wrapper {
         margin-left: auto;
         margin-right: 8px;
@@ -119,7 +134,7 @@
 
     .profile-dropdown {
         position: fixed;
-        top: 75px;
+        top: 85px;
         right: 12px;
         width: min(270px, calc(100vw - 24px));
     }
@@ -137,7 +152,7 @@
     .profile-mobile-logout button {
         display: block;
         width: 100%;
-        padding: 11px 14px;
+        padding: 12px 14px;
         color: inherit;
         text-decoration: none;
         text-align: left;
@@ -157,5 +172,19 @@
         display: block;
         width: 100%;
         border-top: 1px solid rgba(128,128,128,.2);
+    }
+}
+
+/* Small screens */
+@media (max-width: 600px) {
+
+    .profile-avatar {
+        width: 39px;
+        height: 39px;
+        min-width: 39px;
+    }
+
+    .profile-dropdown {
+        top: 75px;
     }
 }
