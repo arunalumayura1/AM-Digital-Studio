@@ -13,10 +13,12 @@ const navbar = document.querySelector('.navbar');
 if (!navbar) return;
 
 const navContainer = navbar.querySelector('.nav-container');
-if (!navContainer) return;
+
+// Service pages use nav-container.
+// Index page uses navbar directly.
+const profileHost = navContainer || navbar;
 
 const menu = navbar.querySelector('.nav-links, #navLinks');
-
     /* =================================
        CREATE PROFILE MENU
     ================================= */
@@ -50,7 +52,7 @@ const menu = navbar.querySelector('.nav-links, #navLinks');
         </div>
     `;
 
-navContainer.appendChild(wrapper);
+profileHost.appendChild(wrapper);
 
     const avatar = wrapper.querySelector('button.profile-avatar');
     const dropdown = wrapper.querySelector('.profile-dropdown');
