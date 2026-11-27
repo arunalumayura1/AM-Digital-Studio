@@ -25,6 +25,17 @@ async function saveServiceOrder() {
 
   const { data: { user }, error: authError } = await supabase.auth.getUser();
 
+
+
+  const { data: sessionData } = await supabase.auth.getSession();
+
+console.log('SERVICE ORDER AUTH CHECK', {
+    user_id_sent_to_database: user?.id,
+    session_user_id: sessionData?.session?.user?.id,
+    access_token_exists: !!sessionData?.session?.access_token,
+    user_email: user?.email
+});
+
   if (authError || !user) {
     show('Please sign in to save and track your service order. Redirecting to login…', 'error');
 
