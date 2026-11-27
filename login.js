@@ -7,6 +7,5 @@ form.addEventListener('submit', async (event) => {
   event.preventDefault(); button.disabled = true; button.textContent = 'Signing in…';
   const { data, error } = await supabase.auth.signInWithPassword({ email: document.getElementById('email').value.trim(), password: document.getElementById('password').value });
   if (error) { showMessage(notice, error.message, 'error'); button.disabled = false; button.textContent = 'Sign In'; return; }
-  const destination = next && next.startsWith('/') && !next.startsWith('//') ? next : 'my-orders.html';
-  location.href = destination;
+ location.href = 'index.html';
 });
