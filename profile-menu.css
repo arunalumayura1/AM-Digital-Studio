@@ -1,0 +1,161 @@
+
+/* AM Digital Studio Profile Menu */
+
+.profile-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    z-index: 9999;
+}
+
+.profile-avatar {
+    width: 43px;
+    height: 43px;
+    min-width: 43px;
+    border-radius: 50%;
+    border: 2px solid #1677ff;
+    background: linear-gradient(135deg, #1677ff, #7047ff);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 700;
+    overflow: hidden;
+}
+
+.profile-avatar:hover {
+    transform: scale(1.06);
+}
+
+.profile-dropdown {
+    position: absolute;
+    top: calc(100% + 13px);
+    right: 0;
+    width: 270px;
+    padding: 15px;
+    background: var(--card-bg, #fff);
+    color: var(--text-color, #111827);
+    border: 1px solid rgba(128,128,128,.25);
+    border-radius: 15px;
+    box-shadow: 0 12px 35px rgba(0,0,0,.18);
+    z-index: 10000;
+}
+
+.profile-dropdown[hidden] {
+    display: none !important;
+}
+
+.profile-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.profile-avatar-large {
+    width: 46px;
+    height: 46px;
+}
+
+.profile-user-info {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.profile-name {
+    font-size: 14px;
+    overflow-wrap: anywhere;
+}
+
+.profile-email {
+    font-size: 11px;
+    opacity: .7;
+    overflow-wrap: anywhere;
+}
+
+.profile-divider {
+    height: 1px;
+    background: rgba(128,128,128,.2);
+    margin: 13px 0;
+}
+
+.profile-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.profile-action {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px;
+    border-radius: 9px;
+    color: inherit;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.profile-action:hover {
+    background: rgba(22,119,255,.1);
+    color: #1677ff;
+}
+
+.profile-mobile-links,
+.profile-mobile-logout {
+    display: none;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .profile-wrapper {
+        margin-left: auto;
+        margin-right: 8px;
+    }
+
+    .profile-dropdown {
+        position: fixed;
+        top: 75px;
+        right: 12px;
+        width: min(270px, calc(100vw - 24px));
+    }
+
+    .profile-mobile-links {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 5px;
+        padding: 12px 0;
+        border-top: 1px solid rgba(128,128,128,.2);
+    }
+
+    .profile-mobile-links a,
+    .profile-mobile-logout button {
+        display: block;
+        width: 100%;
+        padding: 11px 14px;
+        color: inherit;
+        text-decoration: none;
+        text-align: left;
+        font: inherit;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+    }
+
+    .profile-mobile-links a:hover,
+    .profile-mobile-logout button:hover {
+        background: rgba(22,119,255,.1);
+        border-radius: 8px;
+    }
+
+    .profile-mobile-logout {
+        display: block;
+        width: 100%;
+        border-top: 1px solid rgba(128,128,128,.2);
+    }
+}
