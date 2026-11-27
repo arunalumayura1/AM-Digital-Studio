@@ -1,35 +1,444 @@
-import { supabase, requireUser, getProfile, money, statusLabel, showMessage } from './supabase-client.js';
+import {
+    supabase,
+    requireUser,
+    getProfile,
+    money,
+    statusLabel,
+    showMessage
+} from './supabase-client.js';
+
 const body = document.getElementById('adminOrders');
 const notice = document.getElementById('adminNotice');
+
+const archiveBody = document.getElementById('archivedCustomers');
+const archiveNotice = document.getElementById('archiveNotice');
+const archiveSearch = document.getElementById('archiveSearch');
+
 let isAdmin = false;
+let archivedRecords = [];
+
+
+// ========================================
+// ADMIN AUTHENTICATION
+// ========================================
+
 const user = await requireUser();
+
 if (user) {
-  try {
-    const profile = await getProfile(user.id);
-    if (profile.role !== 'admin') { document.getElementById('adminWelcome').textContent = 'This account does not have administrator access.'; showMessage(notice, 'Access denied. Please sign in with the AM Digital Studio administrator account.', 'error'); body.innerHTML = '<tr><td colspan="7">Administrator access required.</td></tr>'; }
-    else { isAdmin = true; document.getElementById('adminWelcome').textContent = `Signed in as ${profile.full_name || user.email}`; await loadOrders(); }
-  } catch (error) { showMessage(notice, error.message, 'error'); }
+    try {
+        const profile = await getProfile(user.id);
+
+        if (profile.role !== 'admin') {
+
+            document.getElementById('adminWelcome').textContent =
+                'This account does not have administrator access.';
+
+            showMessage(
+                notice,
+                'Access denied. Please sign in with the AM Digital Studio administrator account.',
+                'error'
+            );
+
+            body.innerHTML =
+                '<tr><td colspan="7">Administrator access required.</td></tr>';
+
+            archiveBody.innerHTML =
+                '<tr><td colspan="7">Administrator access required.</td></tr>';
+
+        } else {
+
+            isAdmin = true;
+
+            document.getElementById('adminWelcome').textContent =
+                `Signed in as ${profile.full_name || user.email}`;
+
+            await Promise.all([
+                loadOrders(),
+                loadArchivedCustomers()
+            ]);
+        }
+
+    } catch (error) {
+        showMessage(notice, error.message, 'error');
+    }
 }
+
+
+// ========================================
+// LOAD ORDERS
+// ========================================
+
 async function loadOrders() {
-  if (!isAdmin) return;
-  body.innerHTML = '<tr><td colspan="7">Loading orders…</td></tr>';
-  const { data, error } = await supabase.from('orders').select('id,tracking_number,user_id,customer_name,customer_email,customer_phone,order_type,service_name,package_name,project_title,total_amount,currency,status,payment_status,created_at').order('created_at', { ascending: false });
-  if (error) { showMessage(notice, error.message, 'error'); body.innerHTML = '<tr><td colspan="7">Could not load orders.</td></tr>'; return; }
-  const orders = data || [];
-  document.getElementById('adminTotal').textContent = orders.length;
-  document.getElementById('adminPending').textContent = orders.filter(o => o.status === 'pending').length;
-  document.getElementById('adminCompleted').textContent = orders.filter(o => o.status === 'completed').length;
-  if (!orders.length) { body.innerHTML = '<tr><td colspan="7">No orders have been submitted yet.</td></tr>'; return; }
-  body.innerHTML = orders.map(o => `<tr data-id="${o.id}"><td><strong>${escapeHtml(o.tracking_number)}</strong><br><small>${new Date(o.created_at).toLocaleDateString()}</small></td><td>${escapeHtml(o.customer_name)}<br><small>${escapeHtml(o.customer_email || '')}</small></td><td>${escapeHtml(statusLabel(o.order_type))}</td><td>${money(o.total_amount,o.currency)}</td><td><select class="control order-status">${['pending','confirmed','in_progress','ready','completed','cancelled'].map(s => `<option value="${s}" ${o.status===s?'selected':''}>${statusLabel(s)}</option>`).join('')}</select></td><td><select class="control payment-status">${['unpaid','pending_verification','paid','refunded','failed'].map(s => `<option value="${s}" ${o.payment_status===s?'selected':''}>${statusLabel(s)}</option>`).join('')}</select></td><td><button class="btn small save-order" type="button">Save</button></td></tr>`).join('');
-  body.querySelectorAll('.save-order').forEach(button => button.addEventListener('click', async () => {
-    const row = button.closest('tr'); const id = row.dataset.id; button.disabled = true; button.textContent = 'Saving…';
-    const status = row.querySelector('.order-status').value; const payment_status = row.querySelector('.payment-status').value;
-    const { error: updateError } = await supabase.from('orders').update({ status, payment_status }).eq('id', id);
-    button.disabled = false; button.textContent = 'Save';
-    if (updateError) showMessage(notice, updateError.message, 'error');
-    else { showMessage(notice, 'Order updated successfully.', 'success'); await loadOrders(); }
-  }));
+
+    if (!isAdmin) return;
+
+    body.innerHTML =
+        '<tr><td colspan="7">Loading orders…</td></tr>';
+
+    const { data, error } = await supabase
+        .from('orders')
+        .select(`
+            id,
+            tracking_number,
+            user_id,
+            customer_name,
+            customer_email,
+            customer_phone,
+            order_type,
+            service_name,
+            package_name,
+            project_title,
+            total_amount,
+            currency,
+            status,
+            payment_status,
+            created_at
+        `)
+        .order('created_at', { ascending: false });
+
+    if (error) {
+
+        showMessage(notice, error.message, 'error');
+
+        body.innerHTML =
+            '<tr><td colspan="7">Could not load orders.</td></tr>';
+
+        return;
+    }
+
+    const orders = data || [];
+
+    document.getElementById('adminTotal').textContent =
+        orders.length;
+
+    document.getElementById('adminPending').textContent =
+        orders.filter(o => o.status === 'pending').length;
+
+    document.getElementById('adminCompleted').textContent =
+        orders.filter(o => o.status === 'completed').length;
+
+    if (!orders.length) {
+
+        body.innerHTML =
+            '<tr><td colspan="7">No orders have been submitted yet.</td></tr>';
+
+        return;
+    }
+
+    body.innerHTML = orders.map(o => `
+        <tr data-id="${escapeHtml(o.id)}">
+
+            <td>
+                <strong>${escapeHtml(o.tracking_number)}</strong>
+                <br>
+                <small>${formatDate(o.created_at)}</small>
+            </td>
+
+            <td>
+                ${escapeHtml(o.customer_name)}
+                <br>
+                <small>${escapeHtml(o.customer_email || '')}</small>
+            </td>
+
+            <td>${escapeHtml(statusLabel(o.order_type))}</td>
+
+            <td>${money(o.total_amount, o.currency)}</td>
+
+            <td>
+                <select class="control order-status">
+                    ${[
+                        'pending',
+                        'confirmed',
+                        'in_progress',
+                        'ready',
+                        'completed',
+                        'cancelled'
+                    ].map(s => `
+                        <option value="${s}"
+                            ${o.status === s ? 'selected' : ''}>
+                            ${escapeHtml(statusLabel(s))}
+                        </option>
+                    `).join('')}
+                </select>
+            </td>
+
+            <td>
+                <select class="control payment-status">
+                    ${[
+                        'unpaid',
+                        'pending_verification',
+                        'paid',
+                        'refunded',
+                        'failed'
+                    ].map(s => `
+                        <option value="${s}"
+                            ${o.payment_status === s ? 'selected' : ''}>
+                            ${escapeHtml(statusLabel(s))}
+                        </option>
+                    `).join('')}
+                </select>
+            </td>
+
+            <td>
+                <button class="btn small save-order" type="button">
+                    Save
+                </button>
+            </td>
+
+        </tr>
+    `).join('');
+
+    body.querySelectorAll('.save-order').forEach(button => {
+
+        button.addEventListener('click', async () => {
+
+            const row = button.closest('tr');
+            const id = row.dataset.id;
+
+            button.disabled = true;
+            button.textContent = 'Saving…';
+
+            const status =
+                row.querySelector('.order-status').value;
+
+            const payment_status =
+                row.querySelector('.payment-status').value;
+
+            const { error: updateError } = await supabase
+                .from('orders')
+                .update({ status, payment_status })
+                .eq('id', id);
+
+            button.disabled = false;
+            button.textContent = 'Save';
+
+            if (updateError) {
+
+                showMessage(notice, updateError.message, 'error');
+
+            } else {
+
+                showMessage(
+                    notice,
+                    'Order updated successfully.',
+                    'success'
+                );
+
+                await loadOrders();
+            }
+        });
+    });
 }
-function escapeHtml(value='') { return String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-document.getElementById('refreshOrders').addEventListener('click', loadOrders);
-document.getElementById('logoutButton').addEventListener('click', async () => { await supabase.auth.signOut(); location.href = 'login.html'; });
+
+
+// ========================================
+// LOAD ARCHIVED CUSTOMERS
+// ========================================
+
+async function loadArchivedCustomers() {
+
+    if (!isAdmin) return;
+
+    archiveBody.innerHTML =
+        '<tr><td colspan="7">Loading archived records…</td></tr>';
+
+    const { data, error } = await supabase
+        .from('deleted_customer_data')
+        .select(`
+            id,
+            tracking_number,
+            customer_name,
+            customer_email,
+            customer_phone,
+            customer_country,
+            delivery_address,
+            customer_note,
+            archived_at
+        `)
+        .order('archived_at', { ascending: false });
+
+    if (error) {
+
+        showMessage(
+            archiveNotice,
+            'Could not load archived records: ' + error.message,
+            'error'
+        );
+
+        archiveBody.innerHTML =
+            '<tr><td colspan="7">Unable to load archived records.</td></tr>';
+
+        document.getElementById('archivedTotal').textContent = '—';
+
+        return;
+    }
+
+    archivedRecords = data || [];
+
+    document.getElementById('archivedTotal').textContent =
+        archivedRecords.length;
+
+    renderArchivedCustomers(archivedRecords);
+
+    if (archivedRecords.length === 0) {
+
+        showMessage(
+            archiveNotice,
+            'No deleted customer records have been archived yet.',
+            'info'
+        );
+
+    } else {
+
+        archiveNotice.hidden = true;
+    }
+}
+
+
+// ========================================
+// DISPLAY ARCHIVED CUSTOMERS
+// ========================================
+
+function renderArchivedCustomers(records) {
+
+    if (!records.length) {
+
+        archiveBody.innerHTML = `
+            <tr>
+                <td colspan="7">
+                    No matching archived customer records found.
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+    archiveBody.innerHTML = records.map(record => `
+
+        <tr>
+
+            <td>
+                <strong>
+                    ${escapeHtml(record.tracking_number || 'N/A')}
+                </strong>
+            </td>
+
+            <td>
+                ${escapeHtml(record.customer_name || 'N/A')}
+                <br>
+                <small>
+                    ${escapeHtml(record.customer_email || 'No email')}
+                </small>
+            </td>
+
+            <td>
+                ${escapeHtml(record.customer_phone || 'N/A')}
+            </td>
+
+            <td>
+                ${escapeHtml(record.customer_country || 'N/A')}
+            </td>
+
+            <td>
+                ${escapeHtml(record.delivery_address || 'N/A')}
+            </td>
+
+            <td>
+                ${escapeHtml(record.customer_note || 'No note')}
+            </td>
+
+            <td>
+                ${formatDate(record.archived_at)}
+            </td>
+
+        </tr>
+
+    `).join('');
+}
+
+
+// ========================================
+// SEARCH ARCHIVED CUSTOMERS
+// ========================================
+
+archiveSearch.addEventListener('input', () => {
+
+    const query = archiveSearch.value
+        .trim()
+        .toLowerCase();
+
+    const filtered = archivedRecords.filter(record => {
+
+        return [
+            record.tracking_number,
+            record.customer_name,
+            record.customer_email,
+            record.customer_phone,
+            record.customer_country
+        ].some(value =>
+            String(value || '')
+                .toLowerCase()
+                .includes(query)
+        );
+    });
+
+    renderArchivedCustomers(filtered);
+});
+
+
+// ========================================
+// HELPERS
+// ========================================
+
+function escapeHtml(value = '') {
+
+    return String(value).replace(/[&<>"']/g, c => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+    }[c]));
+}
+
+
+function formatDate(value) {
+
+    if (!value) return 'N/A';
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) return 'N/A';
+
+    return date.toLocaleString();
+}
+
+
+// ========================================
+// REFRESH
+// ========================================
+
+document.getElementById('refreshOrders')
+    .addEventListener('click', async () => {
+
+        if (!isAdmin) return;
+
+        await Promise.all([
+            loadOrders(),
+            loadArchivedCustomers()
+        ]);
+    });
+
+
+// ========================================
+// LOGOUT
+// ========================================
+
+document.getElementById('logoutButton')
+    .addEventListener('click', async () => {
+
+        await supabase.auth.signOut();
+
+        location.href = 'login.html';
+    });
