@@ -4,23 +4,36 @@ import { supabase } from './supabase-client.js';
 document.addEventListener('DOMContentLoaded', initProfileMenu);
 
 async function initProfileMenu() {
-    const navbar = document.querySelector(
-        '.navbar, .store-navbar, .site-header nav'
-    );
 
+    const navbar = document.querySelector('.navbar');
     if (!navbar) return;
 
-    const menu = navbar.querySelector(
-        '.nav-links, .nav-menu, .am-nav, .tools-nav-links'
-    );
+    const menu = navbar.querySelector('.nav-links');
+    const menuToggle = navbar.querySelector('#menuToggle');
 
-    // Create profile button
+    // Mobile hamburger
+    if (menu && menuToggle) {
+        menuToggle.addEventListener('click', () => {
+            const isOpen = menu.classList.toggle('active');
+
+            menuToggle.setAttribute(
+                'aria-expanded',
+                String(isOpen)
+            );
+
+            menuToggle.innerHTML = isOpen
+                ? '<i class="fas fa-times"></i>'
+                : '<i class="fas fa-bars"></i>';
+        });
+    }
+
+    // Create profile menu
     const wrapper = document.createElement('div');
     wrapper.className = 'profile-wrapper';
 
     wrapper.innerHTML = `
         <button class="profile-avatar" type="button"
-                aria-label="Open account menu"
+                aria-label="Account menu"
                 aria-expanded="false">
             <span class="profile-initial">?</span>
         </button>
@@ -30,6 +43,7 @@ async function initProfileMenu() {
                 <div class="profile-avatar profile-avatar-large">
                     <span class="profile-initial">?</span>
                 </div>
+
                 <div class="profile-user-info">
                     <strong class="profile-name">Welcome</strong>
                     <small class="profile-email"></small>
@@ -37,7 +51,6 @@ async function initProfileMenu() {
             </div>
 
             <div class="profile-divider"></div>
-
             <div class="profile-actions"></div>
         </div>
     `;
@@ -61,11 +74,10 @@ async function initProfileMenu() {
         );
     });
 
-    document.addEventListener('click', (event) => {
+    document.addEventListener('click', event => {
         if (!wrapper.contains(event.target)) closeMenu();
     });
 
-    // Account menu links
     function addAction(label, href, icon) {
         const link = document.createElement('a');
         link.className = 'profile-action';
@@ -75,13 +87,41 @@ async function initProfileMenu() {
         return link;
     }
 
+    function addMobileActions(links) {
+        if (!menu) return;
+
+        const section = document.createElement('div');
+        section.className = 'profile-mobile-links';
+
+        links.forEach(([label, href]) => {
+            const link = document.createElement('a');
+            link.href = href;
+            link.textContent = label;
+            section.appendChild(link);
+        });
+
+        menu.appendChild(section);
+    }
+
+    async function logout() {
+        const { error } = await supabase.auth.signOut();
+
+        if (error) {
+            alert(error.message);
+            return;
+        }
+
+        window.location.href = 'index.html';
+    }
+
     const { data: { user }, error } =
         await supabase.auth.getUser();
 
     if (error) console.error(error);
 
+    // Guest user
     if (!user) {
-        wrapper.querySelector('.profile-initial').textContent = '?';
+
         wrapper.querySelector('.profile-name').textContent =
             'Welcome Guest';
 
@@ -91,7 +131,7 @@ async function initProfileMenu() {
         addAction('Sign Up', 'signup.html', '✚');
         addAction('Login', 'login.html', '↪');
 
-        addMobileActions(menu, [
+        addMobileActions([
             ['Sign Up', 'signup.html'],
             ['Login', 'login.html']
         ]);
@@ -99,7 +139,7 @@ async function initProfileMenu() {
         return;
     }
 
-    // Get customer's profile
+    // Logged-in user
     const { data: profile } = await supabase
         .from('profiles')
         .select('full_name, email')
@@ -111,75 +151,42 @@ async function initProfileMenu() {
         user.user_metadata?.full_name ||
         'My Account';
 
-    const email = user.email || '';
-
     const initial = name.trim().charAt(0).toUpperCase();
 
     wrapper.querySelectorAll('.profile-initial')
-        .forEach(el => el.textContent = initial || 'A');
+        .forEach(el => {
+            el.textContent = initial || 'A';
+        });
 
     wrapper.querySelector('.profile-name').textContent = name;
-    wrapper.querySelector('.profile-email').textContent = email;
+    wrapper.querySelector('.profile-email').textContent =
+        user.email || '';
 
     addAction('My Orders', 'my-orders.html', '▣');
     addAction('Track Order', 'tracking.html', '⌕');
 
-    const logout = addAction('Logout', '#', '↪');
+    const logoutLink = addAction('Logout', '#', '↪');
 
-    logout.addEventListener('click', async (event) => {
+    logoutLink.addEventListener('click', event => {
         event.preventDefault();
-
-        const { error } = await supabase.auth.signOut();
-
-        if (error) {
-            alert(error.message);
-            return;
-        }
-
-        window.location.href = 'index.html';
+        logout();
     });
 
-    addMobileActions(menu, [
+    addMobileActions([
         ['My Orders', 'my-orders.html'],
         ['Track Order', 'tracking.html']
     ]);
 
     if (menu) {
-        const logoutItem = document.createElement('li');
+        const logoutItem = document.createElement('div');
         logoutItem.className = 'profile-mobile-logout';
 
-        const logoutButton = document.createElement('button');
-        logoutButton.type = 'button';
-        logoutButton.textContent = 'Logout';
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.textContent = 'Logout';
+        button.addEventListener('click', logout);
 
-        logoutButton.addEventListener('click', async () => {
-            const { error } = await supabase.auth.signOut();
-
-            if (error) {
-                alert(error.message);
-                return;
-            }
-
-            window.location.href = 'index.html';
-        });
-
-        logoutItem.appendChild(logoutButton);
+        logoutItem.appendChild(button);
         menu.appendChild(logoutItem);
     }
-}
-
-function addMobileActions(menu, links) {
-    if (!menu) return;
-
-    const section = document.createElement('div');
-    section.className = 'profile-mobile-links';
-
-    links.forEach(([label, href]) => {
-        const link = document.createElement('a');
-        link.href = href;
-        link.textContent = label;
-        section.appendChild(link);
-    });
-
-    menu.appendChild(section);
 }
