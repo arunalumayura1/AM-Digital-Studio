@@ -10,6 +10,14 @@ export const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
 
 export async function requireUser() {
   const { data: { user }, error } = await supabase.auth.getUser();
+  const { data: { session } } = await supabase.auth.getSession();
+
+console.log('AUTH DIAGNOSTIC:', {
+    userId: user?.id,
+    sessionUserId: session?.user?.id,
+    hasAccessToken: !!session?.access_token,
+    authError
+});
   if (error || !user) {
     const next = encodeURIComponent(location.pathname + location.search);
     location.href = `login.html?next=${next}`;
