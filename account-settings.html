@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#1677ff">
+
+    <title>Account Settings | AM Digital Studio</title>
+
+    <link rel="stylesheet" href="account.css">
+
+    <script src="account-theme.js" defer></script>
+    <script type="module" src="account-settings.js"></script>
+</head>
+
+<body>
+
+<header class="am-header">
+    <a class="brand" href="index.html">
+        AM <span>Digital Studio</span>
+    </a>
+
+    <nav class="am-nav">
+        <a href="index.html">Home</a>
+        <a href="my-orders.html">My Orders</a>
+        <a href="tracking.html">Track Order</a>
+
+        <a class="active" href="account-settings.html">
+            Account Settings
+        </a>
+
+        <button id="accountThemeToggle"
+                class="theme-toggle"
+                type="button">
+            ☾ Dark Mode
+        </button>
+
+        <button id="logoutButton"
+                class="btn small secondary"
+                type="button">
+            Sign Out
+        </button>
+    </nav>
+</header>
+
+<main class="am-main">
+
+    <div class="top-row">
+        <div>
+            <span class="eyebrow">ACCOUNT MANAGEMENT</span>
+            <h1 class="page-title">Account Settings</h1>
+            <p class="muted" id="welcomeText">
+                Loading your account...
+            </p>
+        </div>
+    </div>
+
+    <div id="accountNotice" class="notice" hidden></div>
+
+    <section class="panel">
+        <h2>🔐 Change Password</h2>
+
+        <p class="muted">
+            Update your account password securely.
+        </p>
+
+        <form id="changePasswordForm">
+
+            <div class="field">
+                <label for="currentPassword">
+                    Current Password
+                </label>
+                <input type="password"
+                       id="currentPassword"
+                       autocomplete="current-password"
+                       required>
+            </div>
+
+            <div class="field">
+                <label for="newPassword">
+                    New Password
+                </label>
+                <input type="password"
+                       id="newPassword"
+                       minlength="8"
+                       autocomplete="new-password"
+                       required>
+            </div>
+
+            <div class="field">
+                <label for="confirmPassword">
+                    Confirm New Password
+                </label>
+                <input type="password"
+                       id="confirmPassword"
+                       minlength="8"
+                       autocomplete="new-password"
+                       required>
+            </div>
+
+            <button class="btn" type="submit">
+                Update Password
+            </button>
+
+        </form>
+    </section>
+
+    <section class="panel">
+        <h2>📧 Password Reset Email</h2>
+
+        <p class="muted">
+            Send a password reset link to your registered email address.
+        </p>
+
+        <button class="btn secondary"
+                id="sendResetEmail"
+                type="button">
+            Send Reset Email
+        </button>
+    </section>
+
+    <section class="panel">
+        <h2>🗑️ Delete Account</h2>
+
+        <p class="muted">
+            Permanently request deletion of your account.
+            This action requires additional verification.
+        </p>
+
+        <button class="btn danger"
+                id="deleteAccountButton"
+                type="button"
+                disabled>
+            Delete My Account
+        </button>
+
+        <p class="muted" style="font-size:.76rem">
+            Secure account deletion will be enabled after
+            the database relationship checks.
+        </p>
+    </section>
+
+    <p class="footer-note">
+        AM Digital Studio Account Security
+    </p>
+
+</main>
+
+</body>
+</html>
