@@ -224,14 +224,24 @@ async function initProfileMenu() {
             menu.appendChild(logoutItem);
         }
 
+
     } catch (error) {
 
         console.error('Account menu error:', error);
 
+        // Show Guest Menu if account information cannot be loaded
         wrapper.querySelector('.profile-name').textContent =
-            'Account unavailable';
+            'Welcome Guest';
 
         wrapper.querySelector('.profile-email').textContent =
-            'Please refresh the page';
+            'Sign in to your account';
+
+        addAction('Sign Up', 'signup.html', '✚');
+        addAction('Login', 'login.html', '↪');
+
+        addMobileActions([
+            ['Sign Up', 'signup.html'],
+            ['Login', 'login.html']
+        ]);
     }
 }
