@@ -14,52 +14,6 @@ async function initProfileMenu() {
     if (!navbar) return;
 
     const menu = navbar.querySelector('#navLinks');
-    const menuToggle = navbar.querySelector('#menuToggle');
-
-    /* =================================
-       MOBILE HAMBURGER MENU
-    ================================= */
-
-    if (menu && menuToggle) {
-
-        function closeMobileMenu() {
-            menu.classList.remove('active');
-            menuToggle.setAttribute('aria-expanded', 'false');
-            menuToggle.setAttribute('aria-label', 'Open menu');
-            menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-        }
-
-        menuToggle.addEventListener('click', function (event) {
-            event.preventDefault();
-            event.stopPropagation();
-
-            const isOpen = menu.classList.toggle('active');
-
-            menuToggle.setAttribute('aria-expanded', String(isOpen));
-            menuToggle.setAttribute(
-                'aria-label',
-                isOpen ? 'Close menu' : 'Open menu'
-            );
-
-            menuToggle.innerHTML = isOpen
-                ? '<i class="fas fa-times"></i>'
-                : '<i class="fas fa-bars"></i>';
-        });
-
-        // Close after selecting a navigation link
-        menu.addEventListener('click', function (event) {
-            if (event.target.closest('a')) {
-                closeMobileMenu();
-            }
-        });
-
-        // Close with Escape key
-        document.addEventListener('keydown', function (event) {
-            if (event.key === 'Escape') {
-                closeMobileMenu();
-            }
-        });
-    }
 
     /* =================================
        CREATE PROFILE MENU
@@ -100,6 +54,10 @@ async function initProfileMenu() {
     const dropdown = wrapper.querySelector('.profile-dropdown');
     const actions = wrapper.querySelector('.profile-actions');
 
+    /* =================================
+       PROFILE DROPDOWN
+    ================================= */
+
     function closeProfileMenu() {
         dropdown.hidden = true;
         avatar.setAttribute('aria-expanded', 'false');
@@ -111,7 +69,11 @@ async function initProfileMenu() {
         const isOpen = dropdown.hidden;
 
         dropdown.hidden = !isOpen;
-        avatar.setAttribute('aria-expanded', String(isOpen));
+
+        avatar.setAttribute(
+            'aria-expanded',
+            String(isOpen)
+        );
     });
 
     dropdown.addEventListener('click', function (event) {
@@ -157,6 +119,10 @@ async function initProfileMenu() {
 
         menu.appendChild(section);
     }
+
+    /* =================================
+       LOGOUT
+    ================================= */
 
     async function logout() {
         const { error } = await supabase.auth.signOut();
@@ -224,6 +190,7 @@ async function initProfileMenu() {
         });
 
         wrapper.querySelector('.profile-name').textContent = name;
+
         wrapper.querySelector('.profile-email').textContent =
             user.email || '';
 
@@ -258,6 +225,7 @@ async function initProfileMenu() {
         }
 
     } catch (error) {
+
         console.error('Account menu error:', error);
 
         wrapper.querySelector('.profile-name').textContent =
