@@ -145,6 +145,90 @@ document.getElementById('sendResetEmail')
 
 
 // ========================================
+// PREMIUM BLUE GLASS CONFIRMATION MODAL
+// ========================================
+
+function confirmDeleteAccount() {
+    return new Promise((resolve) => {
+        const modal = document.createElement('div');
+
+        modal.className = 'am-delete-overlay';
+
+        modal.innerHTML = `
+            <div class="am-delete-modal" role="dialog"
+                 aria-modal="true"
+                 aria-labelledby="amDeleteTitle">
+
+                <div class="am-delete-icon">!</div>
+
+                <span class="am-delete-eyebrow">
+                    AM DIGITAL STUDIO
+                </span>
+
+                <h2 id="amDeleteTitle">Delete Account?</h2>
+
+                <p>
+                    Are you sure you want to permanently delete
+                    your AM Digital Studio account?
+                </p>
+
+                <div class="am-delete-info">
+                    <span>ⓘ</span>
+                    Your order history will be retained securely
+                    for administrative reference.
+                </div>
+
+                <div class="am-delete-actions">
+                    <button type="button"
+                            class="am-delete-cancel">
+                        Cancel
+                    </button>
+
+                    <button type="button"
+                            class="am-delete-confirm">
+                        Yes, Delete
+                    </button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(modal);
+
+        const finish = (confirmed) => {
+            modal.classList.remove('show');
+
+            setTimeout(() => modal.remove(), 180);
+
+            document.removeEventListener('keydown', handleKeydown);
+            resolve(confirmed);
+        };
+
+        const handleKeydown = (event) => {
+            if (event.key === 'Escape') {
+                finish(false);
+            }
+        };
+
+        modal.querySelector('.am-delete-cancel')
+            .addEventListener('click', () => finish(false));
+
+        modal.querySelector('.am-delete-confirm')
+            .addEventListener('click', () => finish(true));
+
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) finish(false);
+        });
+
+        document.addEventListener('keydown', handleKeydown);
+
+        requestAnimationFrame(() => {
+            modal.classList.add('show');
+            modal.querySelector('.am-delete-cancel').focus();
+        });
+    });
+}
+
+// ========================================
 // ACCOUNT DELETION
 // ========================================
 
@@ -166,12 +250,9 @@ document.getElementById('deleteAccountButton')
             passwordInput.focus();
             return;
         }
+const confirmed = await confirmDeleteAccount();
 
-        const confirmed = window.confirm(
-            'Are you sure you want to permanently delete your AM Digital Studio account? Your order history will be retained securely.'
-        );
-
-        if (!confirmed) return;
+if (!confirmed) return;
 
         const button = event.currentTarget;
         button.disabled = true;
