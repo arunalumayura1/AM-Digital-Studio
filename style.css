@@ -5379,3 +5379,107 @@ html[data-theme="dark"] .search-result-description {
 }
 
 
+/* =========================================
+   INDEX PAGE - MOBILE HAMBURGER FINAL FIX
+========================================= */
+
+@media (max-width: 768px) {
+
+    /* Keep logo, hamburger and profile in one row */
+    .navbar {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .navbar > .logo {
+        order: 1;
+        flex-shrink: 1;
+    }
+
+    .navbar > #menuToggle {
+        order: 2;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+
+        width: 32px;
+        height: 42px;
+        min-width: 32px;
+
+        margin-left: auto;
+        margin-right: 5px;
+        padding: 0;
+
+        border: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+        background: transparent !important;
+
+        color: #111111;
+        font-size: 22px;
+        cursor: pointer;
+        flex-shrink: 0;
+    }
+
+    .navbar > #menuToggle:focus,
+    .navbar > #menuToggle:active {
+        border: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+        background: transparent !important;
+    }
+
+    .navbar > #menuToggle i {
+        display: block;
+        font-size: 22px;
+        line-height: 1;
+    }
+
+    .navbar > .profile-wrapper {
+        order: 3;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        flex-shrink: 0;
+    }
+
+    /* Mobile navigation dropdown */
+    .navbar > #navLinks {
+        position: fixed !important;
+        top: 75px !important;
+        left: 0 !important;
+        right: 0 !important;
+
+        width: 100% !important;
+        height: calc(100dvh - 75px) !important;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+
+        padding: 35px 20px;
+        gap: 28px;
+
+        background: #ffffff;
+        box-shadow: 0 12px 25px rgba(0,0,0,.10);
+
+        transform: translateY(-10px);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+
+        transition: opacity .25s ease, transform .25s ease,
+                    visibility .25s ease;
+
+        z-index: 9998;
+    }
+
+    .navbar > #navLinks.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+    }
+}
+
