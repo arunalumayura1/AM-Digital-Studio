@@ -12,11 +12,13 @@ export async function requireUser() {
   const { data: { user }, error } = await supabase.auth.getUser();
   const { data: { session } } = await supabase.auth.getSession();
 
-console.log('AUTH DIAGNOSTIC:', {
-    userId: user?.id,
-    sessionUserId: session?.user?.id,
-    hasAccessToken: !!session?.access_token,
-    authError
+const { data: sessionData } = await supabase.auth.getSession();
+
+console.log('SERVICE ORDER AUTH CHECK', {
+    user_id_sent_to_database: user?.id,
+    session_user_id: sessionData?.session?.user?.id,
+    access_token_exists: !!sessionData?.session?.access_token,
+    user_email: user?.email
 });
   if (error || !user) {
     const next = encodeURIComponent(location.pathname + location.search);
