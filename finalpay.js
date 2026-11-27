@@ -439,7 +439,9 @@ ORDER SUMMARY
 
 Estimated Price: ${price}
 Total Amount: ${price}
-
+Tracking Number: ${
+    localStorage.getItem("amds-service-tracking-number") || "Pending"
+}
 
 PROJECT INFORMATION
 
