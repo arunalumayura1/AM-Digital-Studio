@@ -158,3 +158,64 @@ html[data-theme="dark"]{--am-bg:#0b1120;--am-card:#111827;--am-text:#f8fafc;--am
         flex-direction: column-reverse;
     }
 }
+
+
+
+
+/* ========================================
+   PROFILE PHOTO UPLOAD
+======================================== */
+
+.profile-upload-area {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    flex-wrap: wrap;
+    margin-top: 22px;
+}
+
+.profile-preview {
+    width: 105px;
+    height: 105px;
+    min-width: 105px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    color: white;
+    font-size: 38px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #1677ff, #00b8ff, #7047ff);
+    border: 3px solid #1677ff;
+    box-shadow: 0 8px 25px rgba(22,119,255,.2);
+}
+
+.profile-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-upload-info {
+    flex: 1;
+    min-width: 220px;
+}
+
+.profile-upload-info p {
+    font-size: .78rem;
+}
+
+.profile-upload-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+@media(max-width: 500px) {
+    .profile-upload-area {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
