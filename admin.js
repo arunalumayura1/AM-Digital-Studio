@@ -135,11 +135,30 @@ async function loadOrders() {
                 <small>${formatDate(o.created_at)}</small>
             </td>
 
-            <td>
-                ${escapeHtml(o.customer_name)}
-                <br>
-                <small>${escapeHtml(o.customer_email || '')}</small>
-            </td>
+            
+<td>
+    ${escapeHtml(o.customer_name)}
+
+    ${o.customer_name === 'Deleted Customer' ? `
+        <br>
+        <span style="
+            display: inline-block;
+            margin-top: 6px;
+            padding: 3px 9px;
+            border-radius: 20px;
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffe69c;
+            font-size: 11px;
+            font-weight: 700;
+        ">
+            DELETED ACCOUNT
+        </span>
+    ` : ''}
+
+    <br>
+    <small>${escapeHtml(o.customer_email || '')}</small>
+</td>
 
             <td>${escapeHtml(statusLabel(o.order_type))}</td>
 
