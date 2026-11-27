@@ -188,3 +188,60 @@
         top: 75px;
     }
 }
+
+
+
+
+
+
+
+
+/* =========================================
+   INDEX MOBILE MENU - CENTER ALIGNMENT
+========================================= */
+
+@media (max-width: 768px) {
+
+    /* Center all navigation items */
+    .navbar .nav-links {
+        align-items: center !important;
+        text-align: center !important;
+    }
+
+    .navbar .nav-links > a {
+        width: 100%;
+        text-align: center !important;
+    }
+
+    /* Center My Orders and Track Order */
+    .navbar .profile-mobile-links {
+        display: flex;
+        flex-direction: column;
+        align-items: center !important;
+        justify-content: center;
+        width: 100%;
+        text-align: center !important;
+    }
+
+    .navbar .profile-mobile-links a {
+        width: 100%;
+        text-align: center !important;
+        padding: 14px 10px !important;
+    }
+
+    /* Center Logout */
+    .navbar .profile-mobile-logout {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        text-align: center !important;
+    }
+
+    .navbar .profile-mobile-logout button {
+        width: 100%;
+        text-align: center !important;
+        padding: 14px 10px !important;
+    }
+}
+
