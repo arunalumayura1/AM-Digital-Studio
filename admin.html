@@ -1,3 +1,178 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#1677ff"><title>Admin Dashboard | AM Digital Studio</title><link rel="stylesheet" href="account.css"><script type="module" src="admin.js"></script><script src="account-theme.js" defer></script></head><body>
-<header class="am-header"><a class="brand" href="index.html">AM <span>Digital Studio</span></a><nav class="am-nav"><a href="my-orders.html">My Orders</a><a class="active" href="admin.html">Admin Dashboard</a><a href="tracking.html">Track Order</a><button id="accountThemeToggle" class="theme-toggle" type="button">☾ Dark Mode</button><button id="logoutButton" class="btn small secondary" type="button">Sign Out</button></nav></header>
-<main class="am-main"><div class="top-row"><div><span class="eyebrow">OWNER CONTROL CENTER</span><h1 class="page-title">Order Management</h1><p class="muted" id="adminWelcome">Checking administrator access…</p></div><button id="refreshOrders" class="btn secondary" type="button">Refresh Orders</button></div><div id="adminNotice" class="notice" hidden></div><div class="stats"><div class="stat"><strong id="adminTotal">—</strong><span>All orders</span></div><div class="stat"><strong id="adminPending">—</strong><span>Pending</span></div><div class="stat"><strong id="adminCompleted">—</strong><span>Completed</span></div></div><section class="panel"><h2>All customer orders</h2><div class="table-wrap"><table class="data-table"><thead><tr><th>Order / Tracking</th><th>Customer</th><th>Type</th><th>Total</th><th>Order status</th><th>Payment</th><th>Save</th></tr></thead><tbody id="adminOrders"><tr><td colspan="7">Loading…</td></tr></tbody></table></div></section><p class="footer-note">Admin access is checked against the protected profiles.role value in Supabase.</p></main></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#1677ff">
+
+    <title>Admin Dashboard | AM Digital Studio</title>
+
+    <link rel="stylesheet" href="account.css">
+
+    <script type="module" src="admin.js"></script>
+    <script src="account-theme.js" defer></script>
+</head>
+
+<body>
+
+<header class="am-header">
+    <a class="brand" href="index.html">
+        AM <span>Digital Studio</span>
+    </a>
+
+    <nav class="am-nav">
+        <a href="my-orders.html">My Orders</a>
+        <a class="active" href="admin.html">Admin Dashboard</a>
+        <a href="tracking.html">Track Order</a>
+
+        <button id="accountThemeToggle" class="theme-toggle" type="button">
+            ☾ Dark Mode
+        </button>
+
+        <button id="logoutButton" class="btn small secondary" type="button">
+            Sign Out
+        </button>
+    </nav>
+</header>
+
+<main class="am-main">
+
+    <div class="top-row">
+        <div>
+            <span class="eyebrow">OWNER CONTROL CENTER</span>
+            <h1 class="page-title">Order Management</h1>
+            <p class="muted" id="adminWelcome">
+                Checking administrator access…
+            </p>
+        </div>
+
+        <button id="refreshOrders" class="btn secondary" type="button">
+            Refresh Orders
+        </button>
+    </div>
+
+    <div id="adminNotice" class="notice" hidden></div>
+
+    <!-- ORDER STATISTICS -->
+    <div class="stats">
+        <div class="stat">
+            <strong id="adminTotal">—</strong>
+            <span>All orders</span>
+        </div>
+
+        <div class="stat">
+            <strong id="adminPending">—</strong>
+            <span>Pending</span>
+        </div>
+
+        <div class="stat">
+            <strong id="adminCompleted">—</strong>
+            <span>Completed</span>
+        </div>
+    </div>
+
+    <!-- ALL ORDERS -->
+    <section class="panel">
+
+        <h2>All customer orders</h2>
+
+        <div class="table-wrap">
+            <table class="data-table">
+
+                <thead>
+                    <tr>
+                        <th>Order / Tracking</th>
+                        <th>Customer</th>
+                        <th>Type</th>
+                        <th>Total</th>
+                        <th>Order status</th>
+                        <th>Payment</th>
+                        <th>Save</th>
+                    </tr>
+                </thead>
+
+                <tbody id="adminOrders">
+                    <tr>
+                        <td colspan="7">Loading…</td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+
+    </section>
+
+
+    <!-- ARCHIVED CUSTOMERS -->
+    <section class="panel" id="archivedCustomersSection">
+
+        <div class="top-row">
+            <div>
+                <span class="eyebrow">PRIVACY & RECORDS</span>
+                <h2>Deleted Customers / Archived Orders</h2>
+                <p class="muted">
+                    Previously archived customer information.
+                    Admin access only.
+                </p>
+            </div>
+
+            <div class="stat">
+                <strong id="archivedTotal">—</strong>
+                <span>Archived records</span>
+            </div>
+        </div>
+
+        <div style="margin: 18px 0;">
+            <input
+                type="search"
+                id="archiveSearch"
+                class="control"
+                placeholder="Search tracking number, customer name or email..."
+                style="width:100%;max-width:500px;"
+                autocomplete="off"
+            >
+        </div>
+
+        <div id="archiveNotice" class="notice" hidden></div>
+
+        <div class="table-wrap">
+
+            <table class="data-table">
+
+                <thead>
+                    <tr>
+                        <th>Tracking Number</th>
+                        <th>Customer</th>
+                        <th>Contact</th>
+                        <th>Country</th>
+                        <th>Delivery Address</th>
+                        <th>Customer Note</th>
+                        <th>Archived Date</th>
+                    </tr>
+                </thead>
+
+                <tbody id="archivedCustomers">
+                    <tr>
+                        <td colspan="7">Loading archived records…</td>
+                    </tr>
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <p class="footer-note">
+            Archived customer records are retained for administrative
+            reference. These records cannot be edited or deleted here.
+        </p>
+
+    </section>
+
+    <p class="footer-note">
+        Admin access is checked against the protected profiles.role value in Supabase.
+    </p>
+
+</main>
+
+</body>
+</html>
