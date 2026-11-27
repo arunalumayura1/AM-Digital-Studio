@@ -1,3 +1,4 @@
+
 import {
     supabase,
     requireUser,
@@ -13,6 +14,7 @@ const notice = document.getElementById('adminNotice');
 const archiveBody = document.getElementById('archivedCustomers');
 const archiveNotice = document.getElementById('archiveNotice');
 const archiveSearch = document.getElementById('archiveSearch');
+const archiveCountryFilter = document.getElementById('archiveCountryFilter');
 
 let isAdmin = false;
 let archivedRecords = [];
@@ -127,7 +129,6 @@ async function loadOrders() {
 
     body.innerHTML = orders.map(o => `
         <tr data-id="${escapeHtml(o.id)}">
-
             <td>
                 <strong>${escapeHtml(o.tracking_number)}</strong>
                 <br>
@@ -184,7 +185,6 @@ async function loadOrders() {
                     Save
                 </button>
             </td>
-
         </tr>
     `).join('');
 
@@ -246,6 +246,7 @@ async function loadArchivedCustomers() {
         .from('deleted_customer_data')
         .select(`
             id,
+            original_user_id,
             tracking_number,
             customer_name,
             customer_email,
@@ -269,16 +270,34 @@ async function loadArchivedCustomers() {
             '<tr><td colspan="7">Unable to load archived records.</td></tr>';
 
         document.getElementById('archivedTotal').textContent = '—';
+        document.getElementById('deletedCustomersCount').textContent = '—';
+        document.getElementById('archivedOrdersCount').textContent = '—';
 
         return;
     }
 
     archivedRecords = data || [];
 
+    // Count unique deleted customer accounts.
+    const deletedCustomerIds = new Set(
+        archivedRecords
+            .map(record => record.original_user_id)
+            .filter(Boolean)
+    );
+
+    document.getElementById('deletedCustomersCount').textContent =
+        deletedCustomerIds.size;
+
+    // Each archived row represents one archived order.
+    document.getElementById('archivedOrdersCount').textContent =
+        archivedRecords.length;
+
     document.getElementById('archivedTotal').textContent =
         archivedRecords.length;
 
-    renderArchivedCustomers(archivedRecords);
+    populateCountryFilter();
+
+    renderArchivedCustomers();
 
     if (archivedRecords.length === 0) {
 
@@ -296,12 +315,74 @@ async function loadArchivedCustomers() {
 
 
 // ========================================
-// DISPLAY ARCHIVED CUSTOMERS
+// COUNTRY FILTER OPTIONS
 // ========================================
 
-function renderArchivedCustomers(records) {
+function populateCountryFilter() {
 
-    if (!records.length) {
+    const selectedCountry = archiveCountryFilter.value;
+
+    const countries = [
+        ...new Set(
+            archivedRecords
+                .map(record => String(record.customer_country || '').trim())
+                .filter(Boolean)
+        )
+    ].sort((a, b) => a.localeCompare(b));
+
+    archiveCountryFilter.innerHTML =
+        '<option value="">All Countries</option>';
+
+    countries.forEach(country => {
+
+        const option = document.createElement('option');
+
+        option.value = country;
+        option.textContent = country;
+
+        archiveCountryFilter.appendChild(option);
+    });
+
+    if (countries.includes(selectedCountry)) {
+        archiveCountryFilter.value = selectedCountry;
+    }
+}
+
+
+// ========================================
+// SEARCH + COUNTRY FILTER
+// ========================================
+
+function renderArchivedCustomers() {
+
+    if (!isAdmin) return;
+
+    const query = archiveSearch.value
+        .trim()
+        .toLowerCase();
+
+    const selectedCountry = archiveCountryFilter.value;
+
+    const filtered = archivedRecords.filter(record => {
+
+        const matchesSearch = [
+            record.tracking_number,
+            record.customer_name,
+            record.customer_email,
+            record.customer_phone,
+            record.customer_country
+        ].some(value =>
+            String(value || '').toLowerCase().includes(query)
+        );
+
+        const matchesCountry =
+            !selectedCountry ||
+            String(record.customer_country || '').trim() === selectedCountry;
+
+        return matchesSearch && matchesCountry;
+    });
+
+    if (!filtered.length) {
 
         archiveBody.innerHTML = `
             <tr>
@@ -314,10 +395,8 @@ function renderArchivedCustomers(records) {
         return;
     }
 
-    archiveBody.innerHTML = records.map(record => `
-
+    archiveBody.innerHTML = filtered.map(record => `
         <tr>
-
             <td>
                 <strong>
                     ${escapeHtml(record.tracking_number || 'N/A')}
@@ -332,59 +411,27 @@ function renderArchivedCustomers(records) {
                 </small>
             </td>
 
-            <td>
-                ${escapeHtml(record.customer_phone || 'N/A')}
-            </td>
+            <td>${escapeHtml(record.customer_phone || 'N/A')}</td>
 
-            <td>
-                ${escapeHtml(record.customer_country || 'N/A')}
-            </td>
+            <td>${escapeHtml(record.customer_country || 'N/A')}</td>
 
-            <td>
-                ${escapeHtml(record.delivery_address || 'N/A')}
-            </td>
+            <td>${escapeHtml(record.delivery_address || 'N/A')}</td>
 
-            <td>
-                ${escapeHtml(record.customer_note || 'No note')}
-            </td>
+            <td>${escapeHtml(record.customer_note || 'No note')}</td>
 
-            <td>
-                ${formatDate(record.archived_at)}
-            </td>
-
+            <td>${formatDate(record.archived_at)}</td>
         </tr>
-
     `).join('');
 }
 
 
 // ========================================
-// SEARCH ARCHIVED CUSTOMERS
+// EVENT LISTENERS
 // ========================================
 
-archiveSearch.addEventListener('input', () => {
+archiveSearch.addEventListener('input', renderArchivedCustomers);
 
-    const query = archiveSearch.value
-        .trim()
-        .toLowerCase();
-
-    const filtered = archivedRecords.filter(record => {
-
-        return [
-            record.tracking_number,
-            record.customer_name,
-            record.customer_email,
-            record.customer_phone,
-            record.customer_country
-        ].some(value =>
-            String(value || '')
-                .toLowerCase()
-                .includes(query)
-        );
-    });
-
-    renderArchivedCustomers(filtered);
-});
+archiveCountryFilter.addEventListener('change', renderArchivedCustomers);
 
 
 // ========================================
