@@ -120,26 +120,43 @@
         </button>
     </section>
 
-    <section class="panel">
-        <h2>🗑️ Delete Account</h2>
+ 
+<section class="panel">
+    <h2>🗑️ Delete Account</h2>
 
-        <p class="muted">
-            Permanently request deletion of your account.
-            This action requires additional verification.
-        </p>
+    <p class="muted">
+        Permanently delete your customer account.
+        Your previous orders will be retained securely
+        for business records.
+    </p>
 
-        <button class="btn danger"
-                id="deleteAccountButton"
-                type="button"
-                disabled>
-            Delete My Account
-        </button>
+    <div class="field">
+        <label for="deleteAccountPassword">
+            Confirm Your Current Password
+        </label>
 
-        <p class="muted" style="font-size:.76rem">
-            Secure account deletion will be enabled after
-            the database relationship checks.
-        </p>
-    </section>
+        <input
+            type="password"
+            id="deleteAccountPassword"
+            autocomplete="current-password"
+            placeholder="Enter your current password"
+            required
+        >
+    </div>
+
+    <button
+        class="btn danger"
+        id="deleteAccountButton"
+        type="button"
+        disabled
+    >
+        Delete My Account
+    </button>
+
+    <p class="muted" style="font-size:.76rem">
+        This action is permanent and cannot be undone.
+    </p>
+</section>
 
     <p class="footer-note">
         AM Digital Studio Account Security
