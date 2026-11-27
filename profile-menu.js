@@ -9,11 +9,13 @@ if (document.readyState === 'loading') {
 }
 
 async function initProfileMenu() {
+const navbar = document.querySelector('.navbar');
+if (!navbar) return;
 
-    const navbar = document.querySelector('.navbar');
-    if (!navbar) return;
+const navContainer = navbar.querySelector('.nav-container');
+if (!navContainer) return;
 
-    const menu = navbar.querySelector('#navLinks');
+const menu = navbar.querySelector('.nav-links, #navLinks');
 
     /* =================================
        CREATE PROFILE MENU
@@ -48,7 +50,7 @@ async function initProfileMenu() {
         </div>
     `;
 
-    navbar.appendChild(wrapper);
+navContainer.appendChild(wrapper);
 
     const avatar = wrapper.querySelector('button.profile-avatar');
     const dropdown = wrapper.querySelector('.profile-dropdown');
