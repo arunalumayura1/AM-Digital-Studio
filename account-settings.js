@@ -262,6 +262,8 @@ removeProfilePhoto.addEventListener('click', async () => {
 if (user) {
     try {
         currentProfile = await getProfile(user.id);
+        document.getElementById('profileFullName').value =
+    currentProfile.full_name || '';
 
         document.getElementById('welcomeText').textContent =
             `Signed in as ${currentProfile.full_name || user.email}`;
@@ -559,6 +561,62 @@ if (!confirmed) return;
 
             button.disabled = false;
             button.textContent = 'Delete My Account';
+        }
+    });
+
+// ========================================
+// UPDATE PROFILE NAME
+// ========================================
+
+document.getElementById('updateProfileForm')
+    .addEventListener('submit', async (event) => {
+
+        event.preventDefault();
+
+        if (!user || !currentProfile) return;
+
+        const nameInput = document.getElementById('profileFullName');
+        const button = document.getElementById('updateProfileButton');
+
+        const fullName = nameInput.value.trim();
+
+        if (fullName.length < 2) {
+            showNotice('Name must contain at least 2 characters.', 'error');
+            return;
+        }
+
+        if (fullName.length > 80) {
+            showNotice('Name must not exceed 80 characters.', 'error');
+            return;
+        }
+
+        button.disabled = true;
+        button.textContent = 'Saving...';
+
+        try {
+            const { error } = await supabase
+                .from('profiles')
+                .update({ full_name: fullName })
+                .eq('id', user.id);
+
+            if (error) throw error;
+
+            currentProfile.full_name = fullName;
+
+            document.getElementById('welcomeText').textContent =
+                `Signed in as ${fullName}`;
+
+            showNotice(
+                'Your profile name has been updated successfully!',
+                'success'
+            );
+
+        } catch (error) {
+            showNotice(error.message, 'error');
+
+        } finally {
+            button.disabled = false;
+            button.textContent = 'Save Name';
         }
     });
 
