@@ -198,21 +198,22 @@ profileHost.appendChild(wrapper);
         wrapper.querySelector('.profile-email').textContent =
             user.email || '';
 
-        addAction('My Orders', 'my-orders.html', '▣');
-        addAction('Track Order', 'tracking.html', '⌕');
+       addAction('My Orders', 'my-orders.html', '▣');
+addAction('Track Order', 'tracking.html', '⌕');
+addAction('Account Settings', 'account-settings.html', '⚙');
 
-        const logoutLink = addAction('Logout', '#', '↪');
+const logoutLink = addAction('Logout', '#', '↪');
 
         logoutLink.addEventListener('click', function (event) {
             event.preventDefault();
             logout();
         });
 
-        addMobileActions([
-            ['My Orders', 'my-orders.html'],
-            ['Track Order', 'tracking.html']
-        ]);
-
+addMobileActions([
+    ['My Orders', 'my-orders.html'],
+    ['Track Order', 'tracking.html'],
+    ['Account Settings', 'account-settings.html']
+]);
         if (menu) {
 
             const logoutItem = document.createElement('div');
