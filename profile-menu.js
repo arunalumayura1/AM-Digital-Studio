@@ -202,10 +202,10 @@ wrapper.querySelectorAll('.profile-avatar').forEach(el => {
         img.style.width = '100%';
         img.style.height = '100%';
         img.style.objectFit = 'cover';
-        img.style.borderRadius = '50%';
+       img.style.borderRadius = '50%';
+img.style.opacity = '1';
 
-        el.appendChild(img);
-
+el.appendChild(img);
     } else {
         const span = document.createElement('span');
 
