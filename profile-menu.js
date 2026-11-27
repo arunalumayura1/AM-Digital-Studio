@@ -172,11 +172,11 @@ profileHost.appendChild(wrapper);
         }
 
         // Logged-in account
-        const { data: profile, error: profileError } = await supabase
-            .from('profiles')
-            .select('full_name, email')
-            .eq('id', user.id)
-            .maybeSingle();
+      const { data: profile, error: profileError } = await supabase
+    .from('profiles')
+    .select('full_name, email, avatar_url')
+    .eq('id', user.id)
+    .maybeSingle();
 
         if (profileError) {
             console.error('Profile loading error:', profileError);
@@ -189,9 +189,32 @@ profileHost.appendChild(wrapper);
 
         const initial = name.trim().charAt(0).toUpperCase();
 
-        wrapper.querySelectorAll('.profile-initial').forEach(el => {
-            el.textContent = initial || 'A';
-        });
+      // Display profile photo or default initial
+wrapper.querySelectorAll('.profile-avatar').forEach(el => {
+    el.innerHTML = '';
+
+    if (profile?.avatar_url) {
+        const img = document.createElement('img');
+
+        img.src = profile.avatar_url;
+        img.alt = 'Profile Picture';
+
+        img.style.width = '100%';
+        img.style.height = '100%';
+        img.style.objectFit = 'cover';
+        img.style.borderRadius = '50%';
+
+        el.appendChild(img);
+
+    } else {
+        const span = document.createElement('span');
+
+        span.className = 'profile-initial';
+        span.textContent = initial || 'A';
+
+        el.appendChild(span);
+    }
+});
 
         wrapper.querySelector('.profile-name').textContent = name;
 
