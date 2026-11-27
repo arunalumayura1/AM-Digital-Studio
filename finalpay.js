@@ -587,71 +587,84 @@ async function copyOrderDetails() {
    PART 6 — FACEBOOK MESSENGER
 ========================================= */
 
+/* =========================================
+   PART 6 — FACEBOOK MESSENGER
+========================================= */
+
 const FACEBOOK_PAGE_CHAT_URL =
     "https://m.me/amdigitalstudio01";
 
+document.addEventListener("DOMContentLoaded", () => {
 
-document.addEventListener(
-    "DOMContentLoaded",
-    () => {
+    const goToChatBtn =
+        document.getElementById("goToChatBtn");
 
-        const goToChatBtn =
-            document.getElementById("goToChatBtn");
+    if (!goToChatBtn) {
+        console.error("Go To Chat button not found.");
+        return;
+    }
 
+    goToChatBtn.addEventListener("click", async () => {
 
-        if (!goToChatBtn) {
+        if (goToChatBtn.disabled) return;
 
-            console.error(
-                "Go To Chat button not found."
+        goToChatBtn.disabled = true;
+        goToChatBtn.textContent = "Saving Order...";
+
+        try {
+
+            if (typeof window.amdsSaveServiceOrder !== "function") {
+                throw new Error(
+                    "Order system is not ready. Please refresh and try again."
+                );
+            }
+
+            // Save the order only after the button is clicked.
+            const trackingNumber =
+                await window.amdsSaveServiceOrder();
+
+            // Stop if login is required or saving did not complete.
+            if (!trackingNumber) {
+                goToChatBtn.disabled = false;
+                goToChatBtn.textContent = "Go to Chat";
+                return;
+            }
+
+            // Copy order details after successful saving.
+            const copied = await copyOrderDetails();
+
+            if (!copied) {
+                alert(
+                    "Your order was saved successfully.\n" +
+                    "Tracking Number: " + trackingNumber +
+                    "\n\nPlease copy your order details manually."
+                );
+                goToChatBtn.disabled = false;
+                goToChatBtn.textContent = "Go to Chat";
+                return;
+            }
+
+            showCopyNotification();
+
+            // Open Messenger only after successful order saving.
+            window.location.href = FACEBOOK_PAGE_CHAT_URL;
+
+        } catch (error) {
+
+            console.error("Order submission failed:", error);
+
+            alert(
+                "Could not complete your order.\n\n" +
+                (error.message || "Please try again.")
             );
 
-            return;
+            goToChatBtn.disabled = false;
+            goToChatBtn.textContent = "Go to Chat";
         }
 
+    });
 
-        goToChatBtn.addEventListener(
-            "click",
-            async () => {
-
-                /*
-                 * IMPORTANT:
-                 * Copy BEFORE opening Messenger.
-                 * This keeps the user's click gesture
-                 * available for clipboard access.
-                 */
-
-                const copied =
-                    await copyOrderDetails();
-
-
-                if (!copied) {
-
-                    showCopyFailedNotification();
-
-                    return;
-                }
-
-
-                /*
-                 * Show the green notification.
-                 */
-
-                showCopyNotification();
-
-
-                /*
-                 * Open Facebook Messenger
-                 * after copying is completed.
-                 */
-
-                window.location.href =
-                    FACEBOOK_PAGE_CHAT_URL;
-
-            }
-        );
-
-    }
-);
+});
 
 /* =========================================
    PART 7 — COPY SUCCESS NOTIFICATION
