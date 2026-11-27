@@ -58,6 +58,57 @@
 
     <div id="accountNotice" class="notice" hidden></div>
 
+<!-- ========================================
+     PROFILE PICTURE
+======================================== -->
+
+<section class="panel">
+    <h2>👤 Profile Picture</h2>
+
+    <p class="muted">
+        Upload a profile photo to personalize your AM Digital Studio account.
+    </p>
+
+    <div class="profile-upload-area">
+
+        <div class="profile-preview" id="profilePreview">
+            <span id="profileInitial">A</span>
+        </div>
+
+        <div class="profile-upload-info">
+            <strong id="profilePhotoName">No profile photo uploaded</strong>
+
+            <p class="muted">
+                JPG, PNG or WEBP. Maximum size: 2 MB.
+            </p>
+
+            <div class="profile-upload-actions">
+                <input
+                    type="file"
+                    id="profilePhotoInput"
+                    accept="image/jpeg,image/png,image/webp"
+                    hidden
+                >
+
+                <button
+                    class="btn"
+                    id="uploadProfilePhoto"
+                    type="button">
+                    Upload Photo
+                </button>
+
+                <button
+                    class="btn secondary"
+                    id="removeProfilePhoto"
+                    type="button"
+                    hidden>
+                    Remove Photo
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
     <section class="panel">
         <h2>🔐 Change Password</h2>
 
