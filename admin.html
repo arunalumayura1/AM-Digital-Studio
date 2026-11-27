@@ -37,15 +37,26 @@
 
 <main class="am-main">
 
-    <div class="top-row">
-        <div>
-            <span class="eyebrow">OWNER CONTROL CENTER</span>
-            <h1 class="page-title">Order Management</h1>
-            <p class="muted" id="adminWelcome">
-                Checking administrator access…
-            </p>
-        </div>
+   <div>
+    <span class="eyebrow">PRIVACY & RECORDS</span>
+    <h2>Deleted Customers / Archived Orders</h2>
+    <p class="muted">
+        Previously archived customer information.
+        Admin access only.
+    </p>
+</div>
 
+<div class="stats">
+    <div class="stat">
+        <strong id="deletedCustomersCount">—</strong>
+        <span>Deleted Customers</span>
+    </div>
+
+    <div class="stat">
+        <strong id="archivedOrdersCount">—</strong>
+        <span>Archived Orders</span>
+    </div>
+</div>
         <button id="refreshOrders" class="btn secondary" type="button">
             Refresh Orders
         </button>
@@ -133,6 +144,11 @@
             >
         </div>
 
+        <select id="archiveCountryFilter"
+        class="control"
+        style="width:100%;max-width:300px;margin-top:12px;">
+    <option value="">All Countries</option>
+</select>
         <div id="archiveNotice" class="notice" hidden></div>
 
         <div class="table-wrap">
