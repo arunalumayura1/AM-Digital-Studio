@@ -424,6 +424,243 @@ function closeCheckout() {
     document.body.classList.remove("store-modal-open");
 }
 
+/* =========================================
+   PREMIUM GLASS BLUE ORDER SUCCESS POPUP
+========================================= */
+
+function showStoreOrderSuccess(trackingNumber, whatsappUrl) {
+
+    const oldPopup = document.getElementById(
+        "amStoreSuccessPopup"
+    );
+
+    if (oldPopup) oldPopup.remove();
+
+    if (!document.getElementById("amStoreSuccessStyles")) {
+
+        const style = document.createElement("style");
+
+        style.id = "amStoreSuccessStyles";
+
+        style.textContent = `
+            .am-success-overlay {
+                position: fixed;
+                inset: 0;
+                z-index: 999999;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+                background: rgba(3, 12, 30, .68);
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+                opacity: 0;
+                transition: opacity .3s ease;
+            }
+
+            .am-success-overlay.show {
+                opacity: 1;
+            }
+
+            .am-success-card {
+                position: relative;
+                width: 100%;
+                max-width: 430px;
+                padding: 34px 28px;
+                text-align: center;
+                color: #fff;
+                border: 1px solid rgba(125, 190, 255, .4);
+                border-radius: 25px;
+                background:
+                    linear-gradient(
+                        145deg,
+                        rgba(30, 105, 210, .88),
+                        rgba(5, 24, 58, .96)
+                    );
+                box-shadow:
+                    0 25px 80px rgba(0, 80, 220, .3),
+                    inset 0 1px 1px rgba(255,255,255,.2);
+                transform: translateY(20px) scale(.96);
+                transition: transform .35s ease;
+            }
+
+            .am-success-overlay.show .am-success-card {
+                transform: translateY(0) scale(1);
+            }
+
+            .am-success-icon {
+                width: 68px;
+                height: 68px;
+                margin: 0 auto 20px;
+                display: grid;
+                place-items: center;
+                border-radius: 50%;
+                color: #fff;
+                font-size: 32px;
+                font-weight: 700;
+                background: linear-gradient(135deg,#39A7FF,#1677FF);
+                box-shadow: 0 8px 30px rgba(22,119,255,.5);
+                border: 1px solid rgba(255,255,255,.45);
+            }
+
+            .am-success-card h2 {
+                margin: 0 0 10px;
+                font-size: 23px;
+                font-weight: 700;
+                color: #fff;
+            }
+
+            .am-success-card p {
+                margin: 0 0 23px;
+                color: #D8E9FF;
+                font-size: 14px;
+                line-height: 1.7;
+            }
+
+            .am-success-tracking {
+                padding: 17px;
+                margin-bottom: 22px;
+                border-radius: 15px;
+                border: 1px solid rgba(120,185,255,.35);
+                background: rgba(255,255,255,.09);
+                backdrop-filter: blur(15px);
+            }
+
+            .am-success-tracking small {
+                display: block;
+                margin-bottom: 9px;
+                color: #B9D8FF;
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 1.5px;
+            }
+
+            .am-success-tracking strong {
+                display: block;
+                color: #fff;
+                font-size: 18px;
+                overflow-wrap: anywhere;
+            }
+
+            .am-success-actions {
+                display: flex;
+                flex-direction: column;
+                gap: 11px;
+            }
+
+            .am-success-actions button {
+                width: 100%;
+                padding: 14px 18px;
+                border: 0;
+                border-radius: 12px;
+                font-family: inherit;
+                font-size: 14px;
+                font-weight: 700;
+                cursor: pointer;
+                transition: .2s ease;
+            }
+
+            .am-success-continue {
+                color: #fff;
+                background: linear-gradient(135deg,#2995FF,#0865E8);
+                box-shadow: 0 8px 22px rgba(0,105,255,.35);
+            }
+
+            .am-success-continue:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 12px 28px rgba(0,105,255,.5);
+            }
+
+            .am-success-close {
+                color: #D8E9FF;
+                background: rgba(255,255,255,.09);
+                border: 1px solid rgba(255,255,255,.18) !important;
+            }
+
+            @media(max-width:480px) {
+                .am-success-card {
+                    padding: 28px 20px;
+                }
+
+                .am-success-card h2 {
+                    font-size: 20px;
+                }
+            }
+        `;
+
+        document.head.appendChild(style);
+    }
+
+    const overlay = document.createElement("div");
+
+    overlay.id = "amStoreSuccessPopup";
+    overlay.className = "am-success-overlay";
+
+    overlay.innerHTML = `
+        <div class="am-success-card" role="dialog"
+             aria-modal="true"
+             aria-labelledby="amSuccessTitle">
+
+            <div class="am-success-icon">✓</div>
+
+            <h2 id="amSuccessTitle">
+                Order Saved Successfully!
+            </h2>
+
+            <p>
+                Your store order has been saved.
+                Keep your tracking number safe.
+            </p>
+
+            <div class="am-success-tracking">
+                <small>YOUR TRACKING NUMBER</small>
+                <strong id="amSuccessTracking"></strong>
+            </div>
+
+            <div class="am-success-actions">
+
+                <button type="button"
+                        class="am-success-continue"
+                        id="amSuccessContinue">
+                    Continue to WhatsApp →
+                </button>
+
+                <button type="button"
+                        class="am-success-close"
+                        id="amSuccessClose">
+                    Close
+                </button>
+
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(overlay);
+
+    overlay.querySelector("#amSuccessTracking").textContent =
+        trackingNumber;
+
+    requestAnimationFrame(() => {
+        overlay.classList.add("show");
+    });
+
+    overlay.querySelector("#amSuccessContinue").addEventListener(
+        "click",
+        () => {
+            window.location.href = whatsappUrl;
+        }
+    );
+
+    overlay.querySelector("#amSuccessClose").addEventListener(
+        "click",
+        () => {
+            overlay.classList.remove("show");
+
+            setTimeout(() => overlay.remove(), 300);
+        }
+    );
+}
+
 function buildWhatsAppMessage(order) {
     const lines = [
         "*AM DIGITAL STUDIO — NEW STORE ORDER*",
@@ -519,8 +756,10 @@ async function submitWhatsAppOrder(event) {
         cart = [];
         saveCart();
         renderCart();
-        alert(`Your order was saved successfully. Tracking number: ${savedOrder.tracking_number}`);
-        location.href = url;
+       showStoreOrderSuccess(
+    savedOrder.tracking_number,
+    url
+);
     } catch (error) {
         console.error('Store order save failed:', error);
         alert(`Your order could not be saved, so WhatsApp was not opened. Please try again.\n\n${error.message || 'Unknown error'}`);
