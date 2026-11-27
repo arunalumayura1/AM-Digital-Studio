@@ -63,55 +63,43 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             HEADER
     =========================== -->
 
-    <header>
+   
+<header>
+    <nav class="navbar">
 
-      <nav class="navbar">
+        <div class="logo">
+            <a href="index.html">AM Digital Studio</a>
+        </div>
 
-    <!-- Logo -->
-    <div class="logo">
-        <a href="index.html">AM Digital Studio</a>
+        <!-- Mobile Hamburger -->
+        <button class="menu-toggle"
+                id="menuToggle"
+                type="button"
+                aria-label="Open menu"
+                aria-expanded="false">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Navigation -->
+        <nav class="nav-links" id="navLinks">
+            <a href="index.html">Home</a>
+            <a href="index.html#services" class="active">Services</a>
+            <a href="about.html">About Us</a>
+            <a href="index.html#contact">Contact Us</a>
+        </nav>
+
+        <!-- Profile menu is created by profile-menu.js -->
+
+    </nav>
+
+    <div class="theme-toggle-wrap">
+        <button id="themeToggle" class="theme-toggle" type="button">
+            <span class="theme-icon">☾</span>
+            <span class="theme-text">Dark Mode</span>
+        </button>
     </div>
+</header>
 
-    <!-- Navigation -->
-  
-
-       <nav class="nav-links">
-
-                <a href="index.html">
-                    Home
-                </a>
-
-                <a href="index.html#services"
-                   class="active">
-                    Services
-                </a>
-
-                <a href="about.html">
-                    About Us
-                </a>
-
-                <a href="index.html#contact">
-                    Contact Us
-                </a>
-
-            </nav>
-
-</nav>
-
-        <div class="theme-toggle-wrap">
-
-    <button id="themeToggle" class="theme-toggle" type="button">
-
-        <span class="theme-icon">☾</span>
-
-        <span class="theme-text">
-            Dark Mode
-        </span>
-
-    </button>
-
-</div>
-    </header>
 <!-- =========================================
      PREMIUM SITE SEARCH
 ========================================= -->
