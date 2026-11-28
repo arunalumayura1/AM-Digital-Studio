@@ -56,7 +56,7 @@ forgotLink.addEventListener('click', async (event) => {
     const { error } = await supabase.auth.resetPasswordForEmail(
         email,
         {
-            redirectTo: `${window.location.origin}/reset-password.html`
+            redirectTo: 'https://www.amdigitalstudio.site/reset-password.html'
         }
     );
 
