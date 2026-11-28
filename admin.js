@@ -202,11 +202,21 @@ async function loadOrders() {
                 </select>
             </td>
 
-            <td>
-                <button class="btn small save-order" type="button">
-                    Save
-                </button>
-            </td>
+           <td>
+    <div style="display:flex;gap:8px;align-items:center;">
+        <button class="btn small save-order" type="button">
+            Save
+        </button>
+
+        <button
+            class="btn small delete-order"
+            type="button"
+            style="background:#dc3545;color:white;border:none;"
+        >
+            Delete
+        </button>
+    </div>
+</td>
         </tr>
     `).join('');
 
@@ -249,6 +259,46 @@ async function loadOrders() {
                 await loadOrders();
             }
         });
+
+
+        // DELETE ORDER
+body.querySelectorAll('.delete-order').forEach(button => {
+
+    button.addEventListener('click', async () => {
+
+        const row = button.closest('tr');
+        const id = row.dataset.id;
+
+        const trackingNumber =
+            row.querySelector('td strong')?.textContent || 'this order';
+
+        const confirmed = confirm(
+            `Are you sure you want to permanently delete ${trackingNumber}?\n\nThis action cannot be undone.`
+        );
+
+        if (!confirmed) return;
+
+        button.disabled = true;
+        button.textContent = 'Deleting…';
+
+        const { error } = await supabase
+            .from('orders')
+            .delete()
+            .eq('id', id);
+
+        if (error) {
+            button.disabled = false;
+            button.textContent = 'Delete';
+
+            showMessage(notice, 'Could not delete order: ' + error.message, 'error');
+            return;
+        }
+
+        showMessage(notice, 'Order permanently deleted.', 'success');
+
+        await loadOrders();
+    });
+});
     });
 }
 
