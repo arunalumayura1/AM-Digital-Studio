@@ -218,7 +218,7 @@ document.addEventListener("keydown", (e)=>{
 
     if(e.key.toLowerCase()==="h"){
 
-        window.location.href="index.html";
+        window.location.href="home.html";
 
     }
 
