@@ -18,7 +18,8 @@ const archiveCountryFilter = document.getElementById('archiveCountryFilter');
 
 let isAdmin = false;
 let archivedRecords = [];
-
+let registeredCustomers = [];
+let deletedAccounts = [];
 
 // ========================================
 // ADMIN AUTHENTICATION
@@ -54,10 +55,12 @@ if (user) {
             document.getElementById('adminWelcome').textContent =
                 `Signed in as ${profile.full_name || user.email}`;
 
-            await Promise.all([
-                loadOrders(),
-                loadArchivedCustomers()
-            ]);
+          await Promise.all([
+    loadOrders(),
+    loadArchivedCustomers(),
+    loadRegisteredCustomers(),
+    loadDeletedAccounts()
+]);
         }
 
     } catch (error) {
@@ -249,7 +252,139 @@ async function loadOrders() {
     });
 }
 
+// ========================================
+// LOAD REGISTERED CUSTOMERS
+// ========================================
 
+async function loadRegisteredCustomers() {
+    if (!isAdmin) return;
+
+    const customerBody = document.getElementById('registeredCustomers');
+
+    customerBody.innerHTML =
+        '<tr><td colspan="3">Loading customers…</td></tr>';
+
+    const { data, error } = await supabase
+        .from('profiles')
+        .select('id, full_name, email, created_at')
+        .eq('role', 'customer')
+        .order('created_at', { ascending: false });
+
+    if (error) {
+        customerBody.innerHTML =
+            '<tr><td colspan="3">Could not load customers.</td></tr>';
+
+        document.getElementById('registeredCustomersCount').textContent = '—';
+
+        showMessage(notice, 'Could not load registered customers: ' + error.message, 'error');
+        return;
+    }
+
+    registeredCustomers = data || [];
+
+    document.getElementById('registeredCustomersCount').textContent =
+        registeredCustomers.length;
+
+    renderRegisteredCustomers();
+}
+
+
+function renderRegisteredCustomers() {
+    const customerBody = document.getElementById('registeredCustomers');
+
+    const query = document.getElementById('registeredCustomerSearch')
+        .value.trim().toLowerCase();
+
+    const filtered = registeredCustomers.filter(customer =>
+        [
+            customer.full_name,
+            customer.email
+        ].some(value =>
+            String(value || '').toLowerCase().includes(query)
+        )
+    );
+
+    if (!filtered.length) {
+        customerBody.innerHTML =
+            '<tr><td colspan="3">No registered customers found.</td></tr>';
+        return;
+    }
+
+    customerBody.innerHTML = filtered.map(customer => `
+        <tr>
+            <td>${escapeHtml(customer.full_name || 'N/A')}</td>
+            <td>${escapeHtml(customer.email || 'N/A')}</td>
+            <td>${formatDate(customer.created_at)}</td>
+        </tr>
+    `).join('');
+}
+
+
+// ========================================
+// LOAD DELETED CUSTOMER ACCOUNTS
+// ========================================
+
+async function loadDeletedAccounts() {
+    if (!isAdmin) return;
+
+    const deletedBody = document.getElementById('deletedAccounts');
+
+    deletedBody.innerHTML =
+        '<tr><td colspan="4">Loading deleted accounts…</td></tr>';
+
+    const { data, error } = await supabase.rpc(
+        'get_deleted_customer_accounts'
+    );
+
+    if (error) {
+        deletedBody.innerHTML =
+            '<tr><td colspan="4">Could not load deleted accounts.</td></tr>';
+
+        document.getElementById('deletedAccountsCount').textContent = '—';
+
+        showMessage(notice, 'Could not load deleted accounts: ' + error.message, 'error');
+        return;
+    }
+
+    deletedAccounts = data || [];
+
+    document.getElementById('deletedAccountsCount').textContent =
+        deletedAccounts.length;
+
+    renderDeletedAccounts();
+}
+
+
+function renderDeletedAccounts() {
+    const deletedBody = document.getElementById('deletedAccounts');
+
+    const query = document.getElementById('deletedAccountSearch')
+        .value.trim().toLowerCase();
+
+    const filtered = deletedAccounts.filter(customer =>
+        [
+            customer.full_name,
+            customer.email
+        ].some(value =>
+            String(value || '').toLowerCase().includes(query)
+        )
+    );
+
+    if (!filtered.length) {
+        deletedBody.innerHTML =
+            '<tr><td colspan="4">No deleted customer accounts found.</td></tr>';
+        return;
+    }
+
+    deletedBody.innerHTML = filtered.map(customer => `
+        <tr>
+            <td>${escapeHtml(customer.full_name || 'N/A')}</td>
+            <td>${escapeHtml(customer.email || 'N/A')}</td>
+            <td>${formatDate(customer.registered_at)}</td>
+            <td>${formatDate(customer.deleted_at)}</td>
+        </tr>
+    `).join('');
+}
 // ========================================
 // LOAD ARCHIVED CUSTOMERS
 // ========================================
@@ -452,7 +587,11 @@ archiveSearch.addEventListener('input', renderArchivedCustomers);
 
 archiveCountryFilter.addEventListener('change', renderArchivedCustomers);
 
+document.getElementById('registeredCustomerSearch')
+    .addEventListener('input', renderRegisteredCustomers);
 
+document.getElementById('deletedAccountSearch')
+    .addEventListener('input', renderDeletedAccounts);
 // ========================================
 // HELPERS
 // ========================================
@@ -490,10 +629,12 @@ document.getElementById('refreshOrders')
 
         if (!isAdmin) return;
 
-        await Promise.all([
-            loadOrders(),
-            loadArchivedCustomers()
-        ]);
+      await Promise.all([
+    loadOrders(),
+    loadArchivedCustomers(),
+    loadRegisteredCustomers(),
+    loadDeletedAccounts()
+]);
     });
 
 
