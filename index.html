@@ -1,887 +1,93 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>AM Digital Studio</title>
+    <title>Welcome | AM Digital Studio</title>
+    <meta name="description" content="Welcome to AM Digital Studio. Start your digital journey with us.">
+    <meta name="theme-color" content="#080c16">
 
-    <meta name="description" content="AM Digital Studio - Learn YouTube, AI, Web Development, Video Editing and Digital Skills.">
-
-    <meta name="keywords" content="YouTube, Fiverr, AI, Video Editing, Web Development">
-
-    <meta name="author" content="AM Digital Studio">
-
-
-<!-- Official Business Information -->
-<meta property="og:site_name" content="AM Digital Studio">
-<meta property="og:title" content="AM Digital Studio">
-<meta property="og:description" content="Official website of AM Digital Studio - Web Development, Video Editing and Graphic Design.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://amdigitalstudio.site/">
-<meta property="og:image" content="https://amdigitalstudio.site/wdf.png">
-
-<!-- Google Organization Schema -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "AM Digital Studio",
-  "url": "https://amdigitalstudio.site/",
-  "logo": "https://amdigitalstudio.site/wdf.png"
-}
-</script>
-
-    
-    <!-- Favicon -->
     <link rel="icon" type="image/png" href="wdf.png">
 
-    <!-- Google Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="style.css">
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link rel="stylesheet" href="theme.css">
-<script src="theme.js"></script>
-    <script src="loader.js"></script>
-    <script id="chatway" async="true" src="https://cdn.chatway.app/widget.js?id=ejn2jxZhFT4z"></script>
-  <link rel="stylesheet" href="profile-menu.css">
+    <link rel="stylesheet" href="welcome.css">
 </head>
 
 <body>
 
-    
-<!-- ==========================
-            HEADER
-=========================== -->
+    <header class="welcome-header">
+        <a href="index.html" class="brand">
+            <img src="wdf.png" alt="AM Digital Studio Logo">
+            <span>AM Digital Studio</span>
+        </a>
 
-<header>
-    <nav class="navbar">
+        <a href="login.html" class="header-login">
+            Log In <span>→</span>
+        </a>
+    </header>
 
-        <div class="logo">
-            <a href="index.html">AM Digital Studio</a>
-        </div>
+    <main class="welcome-main">
 
-        <!-- Navigation -->
-        <nav class="nav-links" id="navLinks">
-            <a href="index.html">Home</a>
-            <a href="index.html#services" class="active">Services</a>
-            <a href="about.html">About Us</a>
-            <a href="index.html#contact">Contact Us</a>
-        </nav>
+        <div class="background-glow glow-one"></div>
+        <div class="background-glow glow-two"></div>
 
-        <!-- Mobile Hamburger -->
-        <button class="menu-toggle"
-                id="menuToggle"
-                type="button"
-                aria-label="Open menu"
-                aria-expanded="false">
-            <i class="fas fa-bars"></i>
-        </button>
+        <section class="welcome-content">
 
-        <!-- Profile menu is created by profile-menu.js -->
-
-    </nav>
-
-    <div class="theme-toggle-wrap">
-        <button id="themeToggle" class="theme-toggle" type="button">
-            <span class="theme-icon">☾</span>
-            <span class="theme-text">Dark Mode</span>
-        </button>
-    </div>
-</header>
-
-<!-- =========================================
-     PREMIUM SITE SEARCH
-========================================= -->
-
-<!-- ==========================
-     PREMIUM SITE SEARCH
-=========================== -->
-
-<div class="site-search">
-    <div class="search-box">
-
-        <i class="fas fa-search"></i>
-
-        <input
-            type="text"
-            id="siteSearch"
-            placeholder="Search AM Digital Studio..."
-            autocomplete="off"
-        >
-
-    </div>
-
-    <div id="searchResults" class="search-results"></div>
-</div>
-
-    <!-- ==========================
-            HOME
-    =========================== -->
-
-    <section id="home">
-
-        <div class="hero-container">
-
-            <div class="hero-content">
-
-                <h1 class="welcome-text">
-
-                    WELCOME
-
-                </h1>
-
-                <h2 class="studio-name">
-
-                    AM Digital Studio
-
-                </h2>
-
-                <p class="hero-description">
-
-                  Welcome to AM Digital Studio, your destination for high-quality content on YouTube tutorials, AI tools, web development, video editing, graphic design, Fiverr tips, and modern digital skills.
-
-                </p>
-
-                <div class="hero-features">
-
-                    <div class="feature">🎬 Video Editing</div>
-
-                    <div class="feature">💻 Web Development</div>
-
-                    <div class="feature">🤖 AI Tools</div>
-
-                    <div class="feature">🎨 Graphic Design</div>
-
-                    <div class="feature">📈 YouTube Growth</div>
-
-                    <div class="feature">💼 Fiverr Tutorials</div>
-
-                </div>
-
-                <div class="hero-buttons">
-
-                    <a href="#services" class="primary-btn">
-
-                        Explore Services
-
-                    </a>
-
-                    <a href="#contact" class="secondary-btn">
-
-                        Contact Us
-
-                    </a>
-
-                </div>
-
+            <div class="welcome-badge">
+                <span class="status-dot"></span>
+                WELCOME TO OUR DIGITAL WORLD
             </div>
 
-        </div>
+            <p class="welcome-small">YOUR DIGITAL JOURNEY STARTS HERE</p>
 
-    </section>
-       <!-- ==========================
-     SERVICES
-=========================== -->
+            <h1>
+                Welcome to
+                <span>AM Digital Studio</span>
+            </h1>
 
-<section id="services">
-
-    <div class="container">
-
-        <div class="section-title">
-
-            <h2>Buy Our Services</h2>
-
-            <p>
-                Click on your preferred service to purchase it.
+            <p class="welcome-description">
+                Discover creative possibilities, professional digital
+                services and modern solutions designed to help you
+                learn, create and grow.
             </p>
 
-        </div>
+            <div class="welcome-features">
+                <span>✦ Creative Design</span>
+                <span>✦ Digital Solutions</span>
+                <span>✦ Modern Technology</span>
+            </div>
 
-        <div class="services-grid">
+            <div class="welcome-actions">
 
-            <!-- VIDEO EDITING -->
-            <div class="service-card"
-                 onclick="window.location.href='editing.html'">
-
-                <h3>Video Editing</h3>
-
-                <p>
-                    Professional video editing services for
-                    YouTube, Shorts, Reels and TikTok.
-                </p>
-
-                <a href="editing.html"
-                   class="service-buy-btn"
-                   onclick="event.stopPropagation();">
-                    Buy Now
+                <a href="signup.html" class="get-started-btn">
+                    Let's Get Started
                     <span>→</span>
                 </a>
 
-            </div>
-
-
-            <!-- WEB DEVELOPMENT -->
-            <div class="service-card"
-                 onclick="window.location.href='web.html'">
-
-                <h3>Web Development</h3>
-
-                <p>
-                    Developing modern business, portfolio
-                    and professional websites.
-                </p>
-
-                <a href="web.html"
-                   class="service-buy-btn"
-                   onclick="event.stopPropagation();">
-                    Buy Now
-                    <span>→</span>
-                </a>
-
-            </div>
-
-
-            <!-- LOGO DESIGN -->
-            <div class="service-card"
-                 onclick="window.location.href='logo.html'">
-
-                <h3>Logo Design</h3>
-
-                <p>
-                    Generate professional and creative logos
-                    for your brand or business.
-                </p>
-
-                <a href="logo.html"
-                   class="service-buy-btn"
-                   onclick="event.stopPropagation();">
-                    Buy Now
-                    <span>→</span>
-                </a>
-
-            </div>
-
-
-            <!-- POSTER DESIGN -->
-            <div class="service-card"
-                 onclick="window.location.href='poster.html'">
-
-                <h3>Poster Design</h3>
-
-                <p>
-                    Design modern and eye-catching posters
-                    for your business, events and promotions.
-                </p>
-
-                <a href="poster.html"
-                   class="service-buy-btn"
-                   onclick="event.stopPropagation();">
-                    Buy Now
-                    <span>→</span>
-                </a>
-
-            </div>
-
-
-            <!-- YOUTUBE THUMBNAILS -->
-            <div class="service-card"
-                 onclick="window.location.href='thumbnail.html'">
-
-                <h3>YouTube Thumbnails Design</h3>
-
-                <p>
-                    Design high-CTR thumbnails that attract
-                    viewers to your YouTube videos.
-                </p>
-
-                <a href="thumbnail.html"
-                   class="service-buy-btn"
-                   onclick="event.stopPropagation();">
-                    Buy Now
-                    <span>→</span>
-                </a>
-
-            </div>
-
-
-            <!-- FIVERR GIG SEO -->
-            <div class="service-card"
-                 onclick="window.location.href='seo.html'">
-
-                <h3>Fiverr Gig SEO</h3>
-
-                <p>
-                    Optimize your Fiverr gig to improve
-                    visibility and build a successful career.
-                </p>
-
-                <a href="seo.html"
-                   class="service-buy-btn"
-                   onclick="event.stopPropagation();">
-                    Buy Now
-                    <span>→</span>
-                </a>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-    
-<!-- ==========================
-     FREE DIGITAL TOOLS SECTION
-=========================== -->
-
-<section class="free-tools-cta">
-
-    <div class="free-tools-container">
-
-        <div class="free-tools-content">
-
-            <span class="free-tools-badge">
-                <i class="fas fa-wand-magic-sparkles"></i>
-                FREE DIGITAL TOOLS
-            </span>
-
-            <h2>
-                Powerful Digital Tools.
-                <span>Completely Free.</span>
-            </h2>
-
-            <p>
-                Make your daily tasks easier with our collection
-                of free online tools. Compress images, generate QR
-                codes, create beautiful colour palettes, resize
-                images and much more — all in one place.
-            </p>
-
-            <div class="free-tools-features">
-                <span><i class="fas fa-image"></i> Image Compressor</span>
-                <span><i class="fas fa-qrcode"></i> QR Generator</span>
-                <span><i class="fas fa-palette"></i> Colour Palette</span>
-                <span><i class="fas fa-file-word"></i> Word Counter</span>
-            </div>
-
-            <a href="tools.html" class="free-tools-btn">
-                Explore Free Tools
-                <i class="fas fa-arrow-right"></i>
-            </a>
-
-            <div class="free-tools-note">
-                <i class="fas fa-check-circle"></i>
-                100% Free · No Sign Up Required
-            </div>
-
-        </div>
-
-        <div class="free-tools-visual">
-
-            <div class="tools-visual-card tools-card-one">
-                <i class="fas fa-image"></i>
-                <span>Image Tools</span>
-            </div>
-
-            <div class="tools-visual-card tools-card-two">
-                <i class="fas fa-qrcode"></i>
-                <span>QR Generator</span>
-            </div>
-
-            <div class="tools-visual-card tools-card-three">
-                <i class="fas fa-palette"></i>
-                <span>Design Tools</span>
-            </div>
-
-            <div class="tools-visual-card tools-card-four">
-                <i class="fas fa-font"></i>
-                <span>Text Tools</span>
-            </div>
-
-            <div class="tools-visual-center">
-                <i class="fas fa-toolbox"></i>
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-
-    
-<!-- ==========================
-     PROFESSIONAL CV CTA
-=========================== -->
-
-<section class="cv-cta-section">
-
-    <div class="cv-cta-container">
-
-        <div class="cv-cta-content">
-
-            <span class="cv-cta-badge">
-                Professional CV Design
-            </span>
-
-            <h2>
-                Build a Professional CV That Gets Noticed
-            </h2>
-
-            <p>
-                Create a modern, professional CV designed to
-                showcase your skills, experience, and strengths.
-                Make a strong first impression and stand out
-                when applying for jobs.
-            </p>
-
-            <a href="cv.html" class="cv-get-started-btn">
-                Get Started
-                <span>→</span>
-            </a>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-
-
-    
-    <!-- ==========================
-            ABOUT
-    =========================== -->
-
-    <section id="about">
-
-        <div class="container">
-
-            <div class="section-title">
-
-                <h2>About Us</h2>
-
-            </div>
-
-            <p class="about-text">
-
-                AM Digital Studio is a learning platform focused on YouTube, AI, web development, video editing and digital skills.
-                Our mission is to help students, creators and freelancers improve their knowledge through practical tutorials.
-
-            </p>
-
-        </div>
-
-    </section>
-
-
- <section id="watch">
-
-        <div class="container">
-
-            <div class="section-title">
-
-                <h2>YouTube Videos</h2>
-
-                <p>
-
-                     All Videos Are Categorized To Playlists.
-                
-
+                <p class="login-text">
+                    Already have an account?
+                    <a href="login.html">Log In</a>
                 </p>
 
             </div>
 
-            
-            <div class="watch-buttons">
+        </section>
 
-               
-                <a href="video.html" class="watch-btn">
-                    Watch Now
-                </a>
-
-            </div>
-
+        <div class="welcome-footer">
+            <span>AM DIGITAL STUDIO</span>
+            <span>LEARN · CREATE · GROW</span>
+            <span>© 2026 All Rights Reserved</span>
         </div>
 
-    </section>
+    </main>
 
-<!-- ==========================
-     TRUSTPILOT REVIEWS
-=========================== -->
+    <script src="welcome.js"></script>
 
-<section id="reviews" class="reviews-section">
-
-    <div class="container">
-
-        <div class="section-title reviews-title">
-
-            <div class="trustpilot-heading">
-                <span class="trustpilot-mark">★</span>
-                <span>Trustpilot Reviews</span>
-            </div>
-
-            <h2>What Our Customers Say</h2>
-
-            <p>
-                Real reviews from our customers on Trustpilot.
-            </p>
-
-        </div>
-
-        <div id="trustpilotReviews" class="reviews-grid">
-
-    <!-- Review 1 - Current Review -->
-    <div class="review-image-card">
-        <img src="sfgh.png" alt="Trustpilot Review 1">
-    </div>
-
-    <!-- Empty Review 2 -->
-    <div class="review-image-card empty-review"></div>
-
-    <!-- Empty Review 3 -->
-    <div class="review-image-card empty-review"></div>
-
-    <!-- Empty Review 4 -->
-    <div class="review-image-card empty-review"></div>
-
-    <!-- Empty Review 5 -->
-    <div class="review-image-card empty-review"></div>
-
-    <!-- Empty Review 6 -->
-    <div class="review-image-card empty-review"></div>
-
-</div>
-        <!-- Review Button -->
-        <div class="reviews-action">
-
-            <a
-                id="trustpilotReviewButton"
-                class="trustpilot-review-btn"
-                href="https://www.trustpilot.com/review/amdigitalstudio.site"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                <i class="fas fa-star"></i>
-                Review Us on Trustpilot
-            </a>
-
-            <p class="reviews-update-note">
-                Reviews update automatically.
-            </p>
-
-        </div>
-
-    </div>
-
-</section>
-    <!-- ==========================
-            CONTACT
-    =========================== -->
-
-    <section id="contact">
-
-        <div class="container">
-
-            <div class="section-title">
-
-                <h2>Contact Us</h2>
-
-                <p>
-
-                    Have a question or business inquiry?
-                    Feel free to contact us anytime.
-
-                </p>
-
-            </div>
-
-            
-        <div class="contact-buttons">
-
-    <button type="button" id="openEmailPopup">
-        ✉ Email Us
-    </button>
-
-</div>
-
-        </div>
-
-    </section>
-
-
-
-
-
-    <!-- ==========================
-            FOOTER
-    =========================== -->
-
-<footer>
-
-    <div class="container footer-grid">
-
-        <!-- About -->
-
-        <div class="footer-box">
-
-            <h3>AM Digital Studio</h3>
-
-            <p>
-
-                Learn • Create • Grow
-
-            </p>
-
-            <p>
-
-                Helping creators master YouTube, AI, Web Development,
-                Video Editing and Digital Skills.
-
-            </p>
-
-        </div>
-
-
-
-        <!-- Quick Links -->
-
-        <div class="footer-box">
-
-            <h3>Quick Links</h3>
-
-            <a href="index.html">Home</a>
-
-            <a href="index.html#services">Services</a>
-
-            <a href="about.html">About Us</a>
-
-            <a href="index.html#contact">Contact Us</a>
-
-        </div>
-
-
-
-        <!-- Resources -->
-
-        <div class="footer-box">
-
-            <h3>Resources</h3>
-
-            <a href="video.html">Videos</a>
-
-            <a href="policy.html">Privacy Policy</a>
-
-            <a href="terms.html">Terms & Conditions</a>
-
-        </div>
-
-
-
-        <!-- Social -->
-
-        <div class="footer-box">
-
-            <h3>Follow Us</h3>
-
-            <p class="social-text">
-
-                Follow us on our official social media platforms.
-
-            </p>
-
-           <div class="social-icons">
-
-  
-                <a href="https://youtube.com/@amdigitalstudiooffical?si=hBFk4ABtEdhVcTLS">
-
-                    <i class="fab fa-youtube"></i>
-
-                </a>
-
-                <a href="https://www.facebook.com/share/1DPgTCT6yb/" target="_blank">
-
-                    <i class="fab fa-facebook-f"></i>
-
-                </a>
-
-                <a href="https://www.instagram.com/amdigitalstudio1?igsh=MWoyazZ4Mm9zYmgwag==" target="_blank">
-
-                    <i class="fab fa-instagram"></i>
-
-                </a>
-
-                <a href="https://www.linkedin.com/in/arunalu-mayura-702777421/" target="_blank">
-
-                    <i class="fab fa-linkedin-in"></i>
-
-                </a>
-
-                <a href="https://github.com/arunalumayura1"
-                   target="_blank">
-
-                    <i class="fab fa-github"></i>
-
-                </a>
-
-</div>
-        </div>
-
-    </div>
-
-    <hr>
-
-    <div class="copyright">
-
-        © 2026 AM Digital Studio. All Rights Reserved.
-
-        <br><br>
-
-        Made with ❤️ in Sri Lanka
-
-    </div>
-<!-- ==========================
-     EMAIL POPUP
-=========================== -->
-
-<div class="email-popup" id="emailPopup">
-
-    <div class="email-popup-box">
-
-        <button
-            type="button"
-            class="email-popup-close"
-            id="closeEmailPopup"
-            aria-label="Close"
-        >
-            &times;
-        </button>
-
-        <div class="email-popup-header">
-
-            <div class="email-icon">✉</div>
-
-            <h2>Email Us</h2>
-
-            <p>
-                Have a question or business inquiry?
-                Send us a message and we'll get back to you.
-            </p>
-
-        </div>
-
-        <form id="emailForm">
-
-            <div class="email-field">
-
-                <label for="senderName">
-                    Full Name
-                </label>
-
-                <input
-                    type="text"
-                    id="senderName"
-                    name="from_name"
-                    placeholder="Enter your name"
-                    required
-                >
-
-            </div>
-
-            <div class="email-field">
-
-                <label for="senderEmail">
-                    Email Address
-                </label>
-
-                <input
-                    type="email"
-                    id="senderEmail"
-                    name="reply_to"
-                    placeholder="Enter your email"
-                    required
-                >
-
-            </div>
-
-            <div class="email-field">
-
-                <label for="emailSubject">
-                    Subject
-                </label>
-
-                <input
-                    type="text"
-                    id="emailSubject"
-                    name="subject"
-                    placeholder="What is this about?"
-                    required
-                >
-
-            </div>
-
-            <div class="email-field">
-
-                <label for="emailMessage">
-                    Message
-                </label>
-
-                <textarea
-                    id="emailMessage"
-                    name="message"
-                    rows="5"
-                    placeholder="Write your message..."
-                    required
-                ></textarea>
-
-            </div>
-
-            <button
-                type="submit"
-                class="send-email-btn"
-                id="sendEmailBtn"
-            >
-                <span>Send Message</span>
-            </button>
-
-            <div
-                class="email-status"
-                id="emailStatus"
-            ></div>
-
-        </form>
-
-    </div>
-
-</div>
-</footer>
-
-
-    <!-- JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-
-<script>
-    emailjs.init({
-        publicKey: "pAhhhInStnjWx2EiL"
-    });
-</script>
-
-<script src="script.js"></script>
-<script type="module" src="profile-menu.js"></script>
 </body>
-
 </html>
