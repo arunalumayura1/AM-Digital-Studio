@@ -73,6 +73,98 @@
         </div>
     </div>
 
+    <!-- REGISTERED CUSTOMERS -->
+<section class="panel" id="registeredCustomersSection">
+    <div>
+        <span class="eyebrow">CUSTOMER MANAGEMENT</span>
+        <h2>Registered Customers</h2>
+        <p class="muted">
+            All currently registered customer accounts.
+        </p>
+    </div>
+
+    <div class="stats">
+        <div class="stat">
+            <strong id="registeredCustomersCount">—</strong>
+            <span>Registered Customers</span>
+        </div>
+    </div>
+
+    <input
+        type="search"
+        id="registeredCustomerSearch"
+        class="control"
+        placeholder="Search customer name or email..."
+        style="width:100%;max-width:500px;margin:18px 0;"
+        autocomplete="off"
+    >
+
+    <div class="table-wrap">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Customer Name</th>
+                    <th>Email Address</th>
+                    <th>Registered Date</th>
+                </tr>
+            </thead>
+
+            <tbody id="registeredCustomers">
+                <tr>
+                    <td colspan="3">Loading customers…</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- DELETED ACCOUNTS -->
+<section class="panel" id="deletedAccountsSection">
+    <div>
+        <span class="eyebrow">ACCOUNT RECORDS</span>
+        <h2>Deleted Customer Accounts</h2>
+        <p class="muted">
+            All deleted customer accounts, including customers
+            who never placed an order.
+        </p>
+    </div>
+
+    <div class="stats">
+        <div class="stat">
+            <strong id="deletedAccountsCount">—</strong>
+            <span>Total Deleted Accounts</span>
+        </div>
+    </div>
+
+    <input
+        type="search"
+        id="deletedAccountSearch"
+        class="control"
+        placeholder="Search deleted customer name or email..."
+        style="width:100%;max-width:500px;margin:18px 0;"
+        autocomplete="off"
+    >
+
+    <div class="table-wrap">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Customer Name</th>
+                    <th>Email Address</th>
+                    <th>Registered Date</th>
+                    <th>Deleted Date</th>
+                </tr>
+            </thead>
+
+            <tbody id="deletedAccounts">
+                <tr>
+                    <td colspan="4">Loading deleted accounts…</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
     <!-- ALL ORDERS -->
     <section class="panel">
         <h2>All customer orders</h2>
