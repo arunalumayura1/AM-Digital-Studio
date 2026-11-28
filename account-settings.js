@@ -477,12 +477,16 @@ function confirmDeleteAccount() {
     });
 }
 
+
 // ========================================
 // ACCOUNT DELETION
 // ========================================
 
 document.getElementById('deleteAccountButton')
     .addEventListener('click', async (event) => {
+
+        // Capture the button BEFORE any await.
+        const button = event.currentTarget;
 
         if (!user || currentProfile?.role !== 'customer') {
             showNotice('Only customer accounts can be deleted.', 'error');
@@ -499,11 +503,11 @@ document.getElementById('deleteAccountButton')
             passwordInput.focus();
             return;
         }
-const confirmed = await confirmDeleteAccount();
 
-if (!confirmed) return;
+        const confirmed = await confirmDeleteAccount();
 
-        const button = event.currentTarget;
+        if (!confirmed) return;
+
         button.disabled = true;
         button.textContent = 'Deleting Account...';
 
@@ -514,7 +518,9 @@ if (!confirmed) return;
             if (sessionError) throw sessionError;
 
             if (!sessionData.session) {
-                throw new Error('Your login session has expired. Please sign in again.');
+                throw new Error(
+                    'Your login session has expired. Please sign in again.'
+                );
             }
 
             const { data, error } =
@@ -531,7 +537,10 @@ if (!confirmed) return;
                 if (error.context) {
                     try {
                         const result = await error.context.json();
-                        if (result.error) message = result.error;
+
+                        if (result.error) {
+                            message = result.error;
+                        }
                     } catch (_) {}
                 }
 
@@ -539,7 +548,9 @@ if (!confirmed) return;
             }
 
             if (!data?.success) {
-                throw new Error(data?.error || 'Account deletion failed.');
+                throw new Error(
+                    data?.error || 'Account deletion failed.'
+                );
             }
 
             passwordInput.value = '';
@@ -549,7 +560,6 @@ if (!confirmed) return;
                 'success'
             );
 
-            // Clear the deleted account's local session.
             await supabase.auth.signOut();
 
             setTimeout(() => {
@@ -557,6 +567,8 @@ if (!confirmed) return;
             }, 2500);
 
         } catch (error) {
+            console.error('Account deletion failed:', error);
+
             showNotice(error.message, 'error');
 
             button.disabled = false;
